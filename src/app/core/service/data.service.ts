@@ -15,8 +15,8 @@ export class DataService {
 
     constructor(private http: HttpClient) { }
 
-    public GetAll(url: string, headers: any, data: any): Observable<Object> {
-        return this.http.post(environment.baseUrl + url, data, headers)
+    public GetAll(url: string, headers: any): Observable<Object> {
+        return this.http.get(environment.baseUrl + url, headers)
             .pipe(catchError(this.HandleError));
     }
 

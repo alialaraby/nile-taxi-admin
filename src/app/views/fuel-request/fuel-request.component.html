@@ -1,0 +1,83 @@
+<div class="page-header">
+    <h3 class="page-title">
+        Fuel Requests
+    </h3>
+    <nav aria-label="breadcrumb">
+        <button type="button" class="btn btn-warning btn-fw">Add</button>
+    </nav>
+</div>
+
+<ng-container *ngIf="gettingData; else elseFoundDataTemplate">
+    <loading-spinner></loading-spinner>
+</ng-container>
+<ng-template #elseFoundDataTemplate>
+    <empty-list *ngIf="fuelRequests.length <= 0"></empty-list>
+    <div class="col-lg-12 grid-margin stretch-card" *ngIf="fuelRequests.length > 0">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Fuel Request List</h4>
+                <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                </p> -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Pilot
+                                </th>
+                                <th>
+                                    Liters
+                                </th>
+                                <th>
+                                    Request Date
+                                </th>
+                                <th>
+                                    Accepted
+                                </th>
+                                <th>
+                                    Completed
+                                </th>
+                                <th>
+                                    Creation Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of fuelRequests">
+                                <td>
+                                    {{ item.pilot.fullName }}
+                                </td>
+                                <td>
+                                    {{ item.liters }}
+                                </td>
+                                <td>
+                                    {{ item.fuelRequestDate | date:'mediumDate' }}
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.isAccepted; else elseNotAcceptedTemplate">
+                                        <label class="badge badge-success">YES</label>
+                                    </ng-container>
+                                    <ng-template #elseNotAcceptedTemplate>
+                                        <label class="badge badge-danger">NO</label>
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.isCompleted; else elseNotAcceptedTemplate">
+                                        <label class="badge badge-success">YES</label>
+                                    </ng-container>
+                                    <ng-template #elseNotAcceptedTemplate>
+                                        <label class="badge badge-danger">NO</label>
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    {{ item.createdAt | date:'mediumDate' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

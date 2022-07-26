@@ -19,6 +19,16 @@ import { TodoListComponent } from './apps/todo-list/todo-list.component';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './views/admin/admin.component';
+import { PilotComponent } from './views/pilot/pilot.component';
+import { BoatComponent } from './views/boat/boat.component';
+import { PassengerComponent } from './views/passenger/passenger.component';
+import { StationComponent } from './views/station/station.component';
+import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
+import { DailyTripComponent } from './views/trip/daily-trip/daily-trip.component';
+import { PrivateTripComponent } from './views/trip/private-trip/private-trip.component';
+import { TourComponent } from './views/trip/tour/tour.component';
+import { EmptyListComponent } from './shared/empty-list/empty-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +40,17 @@ import { HttpClientModule } from '@angular/common/http';
     TodoListComponent,
     TodoComponent,
     SpinnerComponent,
-    ContentAnimateDirective
+    ContentAnimateDirective,
+    AdminComponent,
+    PilotComponent,
+    BoatComponent,
+    PassengerComponent,
+    StationComponent,
+    FuelRequestComponent,
+    DailyTripComponent,
+    PrivateTripComponent,
+    TourComponent,
+    EmptyListComponent,
   ],
   imports: [
     BrowserModule,

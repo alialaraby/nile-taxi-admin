@@ -1,0 +1,72 @@
+<div class="page-header">
+    <h3 class="page-title">
+        Admins
+    </h3>
+    <nav aria-label="breadcrumb">
+        <button type="button" class="btn btn-warning btn-fw">Add</button>
+    </nav>
+</div>
+
+<ng-container *ngIf="gettingData; else elseFoundDataTemplate">
+    <loading-spinner></loading-spinner>
+</ng-container>
+<ng-template #elseFoundDataTemplate>
+    <empty-list *ngIf="admins.length <= 0"></empty-list>
+    <div class="col-lg-12 grid-margin stretch-card" *ngIf="admins.length > 0">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Admins List</h4>
+                <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                </p> -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    User
+                                </th>
+                                <th>
+                                    Full Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    Creation Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of admins">
+                                <td class="py-1">
+                                    <ng-container *ngIf="(item.avatarUrl && item.avatarUrl.length > 0); else elseNoImageTemplate">
+                                        <img [src]="item.imageurl" alt="user image" onError="this.src='./assets/images/faces/face1.jpg'">
+                                    </ng-container>
+                                    <ng-template #elseNoImageTemplate>
+                                        <img src="./assets/images/faces/face1.jpg" alt="user photo">                                    
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    {{ item.fullName }}
+                                </td>
+                                <td>
+                                    {{ item.email }}
+                                </td>
+                                <td>
+                                    {{ item.phone }}
+                                </td>
+                                <td>
+                                    {{ item.createdAt | date:'mediumDate' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

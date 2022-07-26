@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Admin } from 'src/app/core/model/admin';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
+import { SharedDataService } from 'src/app/core/service/shared-data.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
-    private responseHandler: ResponseHandlerService
+    private responseHandler: ResponseHandlerService,
+    private sharedData: SharedDataService,
     // private sharedData: SharedDataService,
     // private _dataService: DataService
   ) { }
@@ -39,10 +42,10 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.loginForm.value)
         .subscribe(
           (res: any) => {
-            this.router.navigate(['/dashboard']);
-            // this.sharedData.setuserData(new UserCredentials(res.userId, res.token, res.fullname, res.username, RoleTypes.ADMIN));
-            // this.sharedData.setauthenticated(true);
-            // this.SetLocalStorageData(res, RoleTypes.ADMIN);
+            this.sharedData.setuserData(new Admin(res.item._id, res.item.accessToken));
+            this.sharedData.setauthenticated(true);
+            this.SetLocalStorageData(res.item);
+            this.router.navigate(['/admin']);
           }, (error) => {
             this.loginForm.setErrors({
               invalidLogin: true
@@ -58,6 +61,11 @@ export class LoginComponent implements OnInit {
       this.loading = false;
       this.loadingText = 'Login';
     }
+  }
+
+  SetLocalStorageData(data: Admin) {
+    localStorage.setItem("_id", data._id);
+    localStorage.setItem("accessToken", data.accessToken);
   }
 
 }

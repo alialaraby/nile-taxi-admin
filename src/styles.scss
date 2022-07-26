@@ -62,3 +62,16 @@
 
 /* === Layout === */
 @import "./assets/scss/layout";
+
+.not-found-wrap {
+    height: 100vh;
+    padding: 120px 0;
+    h1 {
+        font-weight: 800;
+        margin-bottom: 16px;
+        line-height: 1;
+    }
+    .subheading {
+        font-weight: 800;
+    }
+}

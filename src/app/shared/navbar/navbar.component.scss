@@ -42,19 +42,21 @@
       }
 
       img {
-        width: calc(#{$sidebar-width-lg} - 120px );
-        max-width: 100%;
-        height: 28px;
-        margin: auto;
-        vertical-align: middle;
+        // width: calc(#{$sidebar-width-lg} - 120px );
+        // max-width: 100%;
+        // height: 28px;
+        // margin: auto;
+        // vertical-align: middle;
+        height: 60px;
       }
       &.brand-logo-mini {
         display: none;
         img {
-          width: calc(#{$sidebar-width-icon} - 50px );
-          max-width: 100%;
-          height: 28px;
-          margin: auto;
+          // width: calc(#{$sidebar-width-icon} - 50px );
+          // max-width: 100%;
+          // height: 28px;
+          // margin: auto;
+          height: 60px;
         }
       }
     }
