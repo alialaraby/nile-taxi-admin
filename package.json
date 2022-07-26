@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~10.1.6",
+    "@angular/animations": "^10.1.6",
     "@angular/cdk": "^10.2.5",
     "@angular/common": "~10.1.6",
     "@angular/compiler": "~10.1.6",
@@ -27,6 +27,7 @@
     "compass-mixins": "^0.12.10",
     "jquery": "^3.5.1",
     "ng2-charts": "^2.4.2",
+    "ngx-toastr": "^13.2.1",
     "node-sass": "^4.14.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",
