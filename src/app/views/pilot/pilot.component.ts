@@ -36,9 +36,7 @@ export class PilotComponent implements OnInit {
   }
 
   getAll(){
-    // const data = {'_id': this.sharedUserData._id};
-    const headers = { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.sharedUserData.accessToken) }
-    this.dataService.GetAll(Constant.GET_PILOTS, headers)
+    this.dataService.GetAll(Constant.GET_PILOTS)
     .subscribe(
       (res: any) => {
         this.pilots = res.items;

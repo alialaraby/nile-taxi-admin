@@ -7,6 +7,7 @@ import { BadRequestError } from "../app-error/bad-request-error";
 import { NotFoundError } from "../app-error/not-found-error";
 import { UnAuthorizedError } from "../app-error/unauthorized-error";
 import { AppError } from "../app-error/app-error";
+import { DuplicateItemError } from "../app-error/duplicate-item-error";
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +16,8 @@ export class DataService {
 
     constructor(private http: HttpClient) { }
 
-    public GetAll(url: string, headers: any): Observable<Object> {
-        return this.http.get(environment.baseUrl + url, headers)
+    public GetAll(url: string): Observable<Object> {
+        return this.http.get(environment.baseUrl + url)
             .pipe(catchError(this.HandleError));
     }
 
@@ -25,8 +26,8 @@ export class DataService {
             .pipe(catchError(this.HandleError));
     }
 
-    public Add(url: string, item: any, headers: any): Observable<Object> {
-        return this.http.post(environment.baseUrl + url, item, headers)
+    public Add(url: string, item: any): Observable<Object> {
+        return this.http.post(environment.baseUrl + url, item)
             .pipe(catchError(this.HandleError));
     }
 
@@ -45,6 +46,8 @@ export class DataService {
         switch (error.status) {
             case 400:
                 return throwError(new BadRequestError(error));
+            case 409:
+                return throwError(new DuplicateItemError(error));
             case 404:
                 return throwError(new NotFoundError(error));
             case 401:

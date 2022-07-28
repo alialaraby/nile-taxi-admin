@@ -2,6 +2,7 @@ export class Constant {
 
     public static LOGIN = 'admin-login';
     public static GET_ADMINS = 'get-admins';
+    public static ADD_ADMIN = 'add-admin';
     public static GET_PILOTS = 'get-pilots';
     public static GET_BOATS = 'get-boats';
     public static GET_STATIONS = 'get-stations';
