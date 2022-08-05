@@ -16,32 +16,37 @@ export class DataService {
 
     constructor(private http: HttpClient) { }
 
-    public GetAll(url: string): Observable<Object> {
-        return this.http.get(environment.baseUrl + url)
-            .pipe(catchError(this.HandleError));
+    public getAll(url: string, pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
+        return this.http.post(environment.baseUrl + url, {pageIndex, pageSize})
+            .pipe(catchError(this.handleError));
     }
 
-    public GetById(url: string, Id: number, headers: any, data: any): Observable<Object> {
+    public getById(url: string, Id: number, headers: any, data: any): Observable<Object> {
         return this.http.post(environment.baseUrl + url + Id, data, headers)
-            .pipe(catchError(this.HandleError));
+            .pipe(catchError(this.handleError));
     }
 
-    public Add(url: string, item: any): Observable<Object> {
+    public add(url: string, item: any): Observable<Object> {
         return this.http.post(environment.baseUrl + url, item)
-            .pipe(catchError(this.HandleError));
+            .pipe(catchError(this.handleError));
     }
 
-    public Update(url: string, item: any, headers: any) {
-        return this.http.post(environment.baseUrl + url, item, headers)
-            .pipe(catchError(this.HandleError));
+    public update(url: string, item: any) {
+        return this.http.post(environment.baseUrl + url, item)
+            .pipe(catchError(this.handleError));
     }
 
-    public Delete(url: string, data: any, headers: any): Observable<Object> {
-        return this.http.post(environment.baseUrl + url, data, headers)
-            .pipe(catchError(this.HandleError));
+    public delete(url: string, data: any): Observable<Object> {
+        return this.http.post(environment.baseUrl + url, data)
+            .pipe(catchError(this.handleError));
     }
 
-    protected HandleError(error: Response) {
+    public approveReject(url: string, data: any): Observable<Object> {
+        return this.http.post(environment.baseUrl + url, data)
+            .pipe(catchError(this.handleError));
+    }
+
+    protected handleError(error: Response) {
 
         switch (error.status) {
             case 400:

@@ -44,6 +44,8 @@ export class ResponseHandlerService {
             actionType = 'Updated'
         } else if (action === ResponseActionType.Sent) {
             actionType = 'Sent'
+        } else if (action === ResponseActionType.Done) {
+            actionType = 'Done'
         } else {
             actionType = 'Deleted'
         }

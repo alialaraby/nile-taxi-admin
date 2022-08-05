@@ -27,9 +27,9 @@ import { StationComponent } from './views/station/station.component';
 import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
 import { DailyTripComponent } from './views/trip/daily-trip/daily-trip.component';
 import { PrivateTripComponent } from './views/trip/private-trip/private-trip.component';
-import { TourComponent } from './views/trip/tour/tour.component';
 import { EmptyListComponent } from './shared/empty-list/empty-list.component';
 import { JWTInterceptor } from './core/interceptors/jwt-interceptor';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,6 @@ import { JWTInterceptor } from './core/interceptors/jwt-interceptor';
     FuelRequestComponent,
     DailyTripComponent,
     PrivateTripComponent,
-    TourComponent,
     EmptyListComponent,
   ],
   imports: [
@@ -64,6 +63,7 @@ import { JWTInterceptor } from './core/interceptors/jwt-interceptor';
     ChartsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    NgSelectModule
   ],
   providers: [
     ThemeService,

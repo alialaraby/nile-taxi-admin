@@ -9,7 +9,6 @@ import { PilotComponent } from './views/pilot/pilot.component';
 import { StationComponent } from './views/station/station.component';
 import { DailyTripComponent } from './views/trip/daily-trip/daily-trip.component';
 import { PrivateTripComponent } from './views/trip/private-trip/private-trip.component';
-import { TourComponent } from './views/trip/tour/tour.component';
 
 
 const routes: Routes = [
@@ -23,7 +22,6 @@ const routes: Routes = [
   { path: 'fuel-request', component: FuelRequestComponent },
   { path: 'daily-trip', component: DailyTripComponent },
   { path: 'private-trip', component: PrivateTripComponent },
-  { path: 'tour', component: TourComponent },
   { path: 'passenger', component: PassengerComponent },
   // { path: 'basic-ui', loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule) },
   // { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },

@@ -19,12 +19,12 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': boat.isActive }">
+    <!-- <li class="nav-item" [ngClass]="{ 'active': boat.isActive }">
       <a class="nav-link" routerLink="/boat" routerLinkActive #boat="routerLinkActive">
         <span class="menu-title">Boats</span>
         <i class="mdi mdi-home menu-icon"></i>
       </a>
-    </li>
+    </li> -->
     <li class="nav-item" [ngClass]="{ 'active': station.isActive }">
       <a class="nav-link" routerLink="/station" routerLinkActive #station="routerLinkActive">
         <span class="menu-title">Stations</span>
@@ -44,7 +44,7 @@
       </a>
     </li>
 
-    <li class="nav-item" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tour.isActive }">
+    <li class="nav-item" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive }">
       <a class="nav-link" (click)="tripsCollapsed = !tripsCollapsed" [attr.aria-expanded]="tripsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Trips</span>
         <i class="menu-arrow"></i>
@@ -52,9 +52,9 @@
       </a>
       <div class="collapse" id="ui-basic" [ngbCollapse]="!tripsCollapsed">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" routerLink="/daily-trip" routerLinkActive="active" #dailyTrip="routerLinkActive">Daily Trips</a></li>
-          <li class="nav-item"> <a class="nav-link" routerLink="/private-trip" routerLinkActive="active" #privateTrip="routerLinkActive">Private Trips</a></li>
-          <li class="nav-item"> <a class="nav-link" routerLink="/tour" routerLinkActive="active" #tour="routerLinkActive">Tours</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/daily-trip" routerLinkActive="active" #dailyTrip="routerLinkActive">Trips</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/private-trip" routerLinkActive="active" #privateTrip="routerLinkActive">Trip Requests</a></li>
+          <!-- <li class="nav-item"> <a class="nav-link" routerLink="/tour" routerLinkActive="active" #tour="routerLinkActive">Tours</a></li> -->
         </ul>
       </div>
     </li>

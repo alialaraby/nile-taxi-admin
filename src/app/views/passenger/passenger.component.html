@@ -2,9 +2,9 @@
     <h3 class="page-title">
         Passengers
     </h3>
-    <nav aria-label="breadcrumb">
+    <!-- <nav aria-label="breadcrumb">
         <button type="button" class="btn btn-warning btn-fw">Add</button>
-    </nav>
+    </nav> -->
 </div>
 
 <ng-container *ngIf="gettingData; else elseFoundDataTemplate">
@@ -71,4 +71,6 @@
             </div>
         </div>
     </div>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
+
 </ng-template>

@@ -3,7 +3,7 @@
         Stations
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -32,6 +32,9 @@
                                 <th>
                                     Creation Date
                                 </th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,11 +48,73 @@
                                 <td>
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                        (click)="openAddModal(addModal, item)">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        (click)="openDeleteItem(deleteModal, item)">Delete</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
+
+</ng-template>
+
+<ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Add Admin</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <form [formGroup]="addEditForm" class="pt-3" (ngSubmit)="add()">
+                <div class="form-group">
+                    <label for="name">Station name</label>
+                    <input type="text" class="form-control form-control-lg" id="name" autocomplete="false"
+                        formControlName="name" placeholder="Enter station name.">
+                </div>
+                <div class="form-group">
+                    <label for="longitude">Longitude</label>
+                    <input type="number" class="form-control form-control-lg" id="longitude" autocomplete="false"
+                        formControlName="longitude" placeholder="Enter longitude.">
+                </div>
+                <div class="form-group">
+                    <label for="latitude">Latitude</label>
+                    <input type="number" class="form-control form-control-lg" id="latitude" autocomplete="false"
+                        formControlName="latitude" placeholder="Enter latitude.">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
+                    <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Delete item</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            Confirm deleting item.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteItem()">Delete</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
         </div>
     </div>
 </ng-template>

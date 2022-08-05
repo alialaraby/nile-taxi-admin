@@ -36,11 +36,9 @@ export class BoatComponent implements OnInit {
   }
 
   getAll() {
-    this.dataService.GetAll(Constant.GET_BOATS)
+    this.dataService.getAll(Constant.GET_BOATS)
       .subscribe(
         (res: any) => {
-          console.log(res);
-          
           this.boats = res.items;
           this.gettingData = false;
         },

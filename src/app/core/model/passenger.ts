@@ -1,6 +1,6 @@
 import { Genders } from "./enums";
 
-export interface IPassenger extends Document {
+export interface IPassenger {
     _id: string;
     fullName: string;
     avatarUrl: string;

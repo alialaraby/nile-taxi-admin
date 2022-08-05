@@ -3,7 +3,7 @@
         Pilots
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -16,9 +16,6 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Pilots List</h4>
-                <!-- <p class="card-description">
-                    Add class <code>.table-striped</code>
-                </p> -->
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -36,7 +33,13 @@
                                     Phone
                                 </th>
                                 <th>
+                                    Boat
+                                </th>
+                                <th>
                                     Creation Date
+                                </th>
+                                <th>
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
@@ -62,7 +65,17 @@
                                     {{ item.phone }}
                                 </td>
                                 <td>
+                                    <button type="button" class="btn btn-outline-info btn-sm" *ngIf="item.boat"
+                                        (click)="openBoatDetails(boatModal, item.boat)">Details</button>
+                                </td>
+                                <td>
                                     {{ item.createdAt | date:'mediumDate' }}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                        (click)="openAddModal(addModal, item, item.boat)">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        (click)="openDeleteItem(deleteModal, item)">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -70,5 +83,179 @@
                 </div>
             </div>
         </div>
+    </div>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
+</ng-template>
+
+<ng-template #boatModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content p-3">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Boat details</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">Boat name</h4>
+                    <p class="card-description text-muted">{{selectedBoat.boatName}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">Model</h4>
+                    <p class="card-description text-muted">{{selectedBoat.model}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">Capacity</h4>
+                    <p class="card-description text-muted">{{selectedBoat.capacity}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">Status</h4>
+                    <p [ngSwitch]="selectedBoat.status">
+                        <label *ngSwitchCase="'ready'" class="badge badge-success">Ready</label>
+                        <label *ngSwitchCase="'needMaintenance'" class="badge badge-danger">Need Maint.</label>
+                        <label *ngSwitchDefault class="badge badge-warning">In Maint.</label>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">(km)s For Maint.</h4>
+                    <p class="card-description text-muted">{{selectedBoat.kilosNeededForMaintenance}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">Kilos Travelled</h4>
+                    <p class="card-description text-muted">{{selectedBoat.kilosTravelled | number}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">Last Maintained At</h4>
+                    <ng-container *ngIf="selectedBoat.lastMaintenanceDate; else elseStillFreshTemplate">
+                        <p class="card-description text-muted">{{selectedBoat.lastMaintenanceDate | date: 'mediumDate'}}
+                        </p>
+                    </ng-container>
+                    <ng-template #elseStillFreshTemplate>
+                        <p class="card-description text-muted">Still Fresh</p>
+                    </ng-template>
+                </div>
+                <div class="col-sm-3">
+                    <h4 class="card-title font-weight-bold">Needs Maintenance?</h4>
+                    <ng-container *ngIf="selectedBoat.needsMaintenance; else elseNotAcceptedTemplate">
+                        <label class="badge badge-danger">YES</label>
+                    </ng-container>
+                    <ng-template #elseNotAcceptedTemplate>
+                        <label class="badge badge-success">NO</label>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Delete item</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            Confirm deleting item.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteItem()">Delete</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Add Admin</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body mx-3">
+            <form [formGroup]="addEditForm" (ngSubmit)="add()">
+                <p class="card-description">
+                    Pilot Details
+                </p>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="fullName">Full name</label>
+                        <input type="text" class="form-control form-control-lg" id="fullName" autocomplete="false"
+                            formControlName="fullName" placeholder="Enter full name.">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="phone">Phone</label>
+                        <input type="tel" class="form-control form-control-lg" id="phone" autocomplete="false"
+                            formControlName="phone" placeholder="Enter phone.">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control form-control-lg" id="email" autocomplete="false"
+                            formControlName="email" placeholder="Enter email.">
+                    </div>
+                    <div class="form-group col-md-12 mb-0">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Gender</label>
+                            <div class="col-sm-4">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" formControlName="gender"
+                                            id="optionsRadios1" value="male" checked>
+                                        Male
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" formControlName="gender"
+                                            id="optionsRadios2" value="option2">
+                                        Female
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="card-description">
+                    Boat Details
+                </p>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="boatName">Boat name</label>
+                        <input type="text" class="form-control form-control-lg" id="boatName" autocomplete="false"
+                            formControlName="boatName" placeholder="Enter boat name.">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="boatModel">Boat model</label>
+                        <input type="text" class="form-control form-control-lg" id="boatModel" autocomplete="false"
+                            formControlName="boatModel" placeholder="Enter boat model.">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="boatCapacity">Boat capacity</label>
+                        <input type="number" class="form-control form-control-lg" id="boatCapacity" autocomplete="false"
+                            formControlName="boatCapacity" placeholder="Enter boat capacity.">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
+                    <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </ng-template>

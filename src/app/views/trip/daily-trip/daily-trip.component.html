@@ -1,1 +1,235 @@
-<p>daily-trip works!</p>
+<!-- Breadcrumb -->
+<div class="page-header">
+    <h3 class="page-title">
+        Daily Trips $ Tours
+    </h3>
+    <nav aria-label="breadcrumb">
+        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+    </nav>
+</div>
+
+<!-- Loader and Data -->
+<ng-container *ngIf="gettingData; else elseFoundDataTemplate">
+    <loading-spinner></loading-spinner>
+</ng-container>
+<ng-template #elseFoundDataTemplate>
+    <empty-list *ngIf="trips.length <= 0"></empty-list>
+    <div class="col-lg-12 grid-margin stretch-card" *ngIf="trips.length > 0">
+        <div class="card">
+            <div class="card-body">
+
+                <!-- Filters -->
+                <div class="form-group w-25">
+                    <label for="code">Select Type</label>
+                    <select class="form-control" (change)="filterTypes($event.target.value)">
+                        <option value="" selected>Trip Type</option>
+                        <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Code
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    From/To
+                                </th>
+                                <th>
+                                    Pilot
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Creation Date
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of trips">
+                                <td>
+                                    {{ item.code }}
+                                </td>
+                                <td>
+                                    {{ item.type }}
+                                </td>
+                                <td>
+                                    <p class="m-0">
+                                        <span>{{ item.pickupStation.name }}</span> -
+                                        <span>{{ item.pickupDate | date: 'MMM d, y, h:mm a' }}</span>
+                                    </p>
+                                    <p class="m-0">
+                                        <span>{{ item.terminalStation.name }}</span> -
+                                        <span>{{ item.terminalDate | date: 'MMM d, y, h:mm a' }}</span>
+                                    </p>
+                                </td>
+                                <td>
+                                    {{ item.pilot.fullName }}
+                                </td>
+                                <td>
+                                    {{ item.price }}
+                                </td>
+                                <td>
+                                    {{ item.status }}
+                                </td>
+                                <td>
+                                    {{ item.createdAt | date:'mediumDate' }}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                        (click)="openAddModal(addModal, item, item.boat)">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        (click)="openDeleteItem(deleteModal, item)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pagination -->
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)"
+        [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
+        aria-label="Default pagination"></ngb-pagination>
+</ng-template>
+
+<!-- Modals -->
+<ng-template #deleteModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Delete item</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            Confirm deleting item.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteItem()">Delete</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Add Admin</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <form [formGroup]="addEditForm" class="pt-3" (ngSubmit)="add()">
+                <div class="form-group">
+                    <label for="code">Code</label>
+                    <input type="text" class="form-control form-control-lg" id="code" autocomplete="false"
+                        formControlName="code" placeholder="Enter code.">
+                </div>
+                <div class="form-group">
+                    <label for="code">Type</label>
+                    <select class="form-control" formControlName="type">
+                        <option value="" selected>Trip Type</option>
+                        <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pickupStation">Pickup station</label>
+                    <select class="form-control" formControlName="pickupStation">
+                        <option value="" selected>Pickup station</option>
+                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="terminalStation">Terminal station</label>
+                    <select class="form-control" formControlName="terminalStation">
+                        <option value="" selected>Terminal station</option>
+                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="terminalStation">Stations</label>
+                    <ng-select [items]="stations" [multiple]="true" [closeOnSelect]="false" [searchable]="true"
+                        bindLabel="name" formControlName="stations" placeholder="Select stations"
+                        [(ngModel)]="selectedStations">
+                    </ng-select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pilot">Pilot</label>
+                    <select class="form-control" formControlName="pilot">
+                        <option value="" selected>Pilot</option>
+                        <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control form-control-lg" id="price" autocomplete="false"
+                        formControlName="price" placeholder="Enter price.">
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="pickupDate">Pickup date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" formControlName="pickupDate"
+                                [(ngModel)]="pickupDateModel" ngbDatepicker #d="ngbDatepicker">
+                            <button class="btn btn-outline-warning btn-icon-text btn-sm" (click)="d.toggle()"
+                                type="button">
+                                <i class="mdi mdi-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="pickupTime">Pickup time</label>
+                        <div class="input-group">
+                            <ngb-timepicker [(ngModel)]="pickupTime" formControlName="pickupTime"></ngb-timepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="terminalDate">Terminal date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" formControlName="terminalDate"
+                                [(ngModel)]="terminalDateModel" ngbDatepicker #d2="ngbDatepicker">
+                            <button class="btn btn-outline-warning btn-icon-text btn-sm" (click)="d2.toggle()"
+                                type="button">
+                                <i class="mdi mdi-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="terminalTime">Terminal time</label>
+                        <div class="input-group">
+                            <ngb-timepicker [(ngModel)]="terminalTime" formControlName="terminalTime"></ngb-timepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
+                    <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</ng-template>

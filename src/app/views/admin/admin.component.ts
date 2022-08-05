@@ -20,6 +20,9 @@ export class AdminComponent implements OnInit {
   sharedUserData: Admin = new Admin();
   gettingData: boolean = true;
   addEditForm: FormGroup;
+  pageIndex: number = 1;
+  pageSize: number = 10;
+  totalCount: number = 0;
 
   constructor(
     private dataService: DataService,
@@ -37,14 +40,15 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAll();
+    this.getAll(this.pageIndex - 1, this.pageSize);
   }
 
-  getAll() {
-    this.dataService.GetAll(Constant.GET_ADMINS)
+  getAll(pageIndex: number = 0, pageSize: number = 10) {
+    this.dataService.getAll(Constant.GET_ADMINS, pageIndex, pageSize)
       .subscribe(
         (res: any) => {
           this.admins = res.items;
+          this.totalCount = res.count;
           this.gettingData = false;
         },
         (error) => {
@@ -72,7 +76,7 @@ export class AdminComponent implements OnInit {
   add() {
     this.gettingData = true;
     if (!this.addEditForm.invalid) {
-      this.dataService.Add(Constant.ADD_ADMIN, this.addEditForm.value)
+      this.dataService.add(Constant.ADD_ADMIN, this.addEditForm.value)
         .subscribe(
           (res: any) => {
             this._responseHandler.HandleSuccess(res, ResponseActionType.Added);
@@ -87,4 +91,9 @@ export class AdminComponent implements OnInit {
         );
     }
   }
+
+  pageChange(pageIndex: number){
+    this.getAll(pageIndex - 1);
+  }
+
 }

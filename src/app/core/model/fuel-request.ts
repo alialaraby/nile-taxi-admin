@@ -1,6 +1,6 @@
 import { IPilot } from "./pilot";
 
-export interface IFuelRequest extends Document {
+export interface IFuelRequest {
     _id: string;
     liters: number;
     fuelRequestDate: Date;

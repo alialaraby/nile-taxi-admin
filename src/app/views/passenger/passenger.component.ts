@@ -18,6 +18,10 @@ export class PassengerComponent implements OnInit {
   sharedUserData: Admin = new Admin();
   gettingData: boolean = true;
 
+  pageIndex: number = 1;
+  pageSize: number = 10;
+  totalCount: number = 0;
+
   constructor(
     private dataService: DataService,
     private sharedData: SharedDataService,
@@ -35,11 +39,12 @@ export class PassengerComponent implements OnInit {
     this.getAll();
   }
 
-  getAll() {
-    this.dataService.GetAll(Constant.GET_PASSENGERS)
+  getAll(pageIndex: number = 0, pageSize: number = 10) {
+    this.dataService.getAll(Constant.GET_PASSENGERS, pageIndex, pageSize)
       .subscribe(
         (res: any) => {
           this.passengers = res.items;
+          this.totalCount = res.count;
           this.gettingData = false;
         },
         (error) => {
@@ -47,6 +52,10 @@ export class PassengerComponent implements OnInit {
           this._responseHandler.HandelError(error);
         }
       );
+  }
+
+  pageChange(pageIndex: number) {
+    this.getAll(pageIndex - 1);
   }
 
 }
