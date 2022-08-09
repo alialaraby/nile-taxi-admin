@@ -80,7 +80,7 @@ export class PilotComponent implements OnInit {
     });
   }
 
-  openAddModal(modal, itemToEdit: IPilot) {
+  openAddModal(modal, itemToEdit: IPilot = null) {
     if(itemToEdit){
       this.isEditItem = true;
       this.pilotToEditId = itemToEdit._id;

@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
-import { RequestedTripStatus, ResponseActionType } from 'src/app/core/model/enums';
+import { RequestedTripStatus, ResponseActionType, TripStatus, TripTypes } from 'src/app/core/model/enums';
 import { IPilot } from 'src/app/core/model/pilot';
 import { IRequestedTrip } from 'src/app/core/model/requested-trip';
 import { DataService } from 'src/app/core/service/data.service';
@@ -28,11 +28,16 @@ export class PrivateTripComponent implements OnInit {
   isEditItem: boolean = false;
   requestToEditId: string;
   addEditForm: FormGroup;
-  requestStatuses = [RequestedTripStatus.Accepted, RequestedTripStatus.Pending, RequestedTripStatus.Rejected];
+  // requestStatuses = [RequestedTripStatus.Accepted, RequestedTripStatus.Pending, RequestedTripStatus.Rejected];
 
   pageIndex: number = 1;
   pageSize: number = 10;
   totalCount: number = 0;
+
+  tripTypes = [TripTypes.Private, TripTypes.Pooling];
+  selectedTypes = [TripTypes.Private, TripTypes.Pooling];
+  tripStatuses = Object.values(RequestedTripStatus);
+  selectedStatuses = Object.values(RequestedTripStatus);
 
   constructor(
     private requestedTripService: RequestedTripService,
@@ -61,8 +66,13 @@ export class PrivateTripComponent implements OnInit {
     )
   }
 
-  getAll(pageIndex: number = 0, pageSize: number = 10, statuses: RequestedTripStatus[] = this.requestStatuses) {
-    this.requestedTripService.getRequestedTrips(Constant.GET_REQUESTED_TRIPS, statuses, pageIndex, pageSize)
+  getAll(
+    pageIndex: number = 0,
+    pageSize: number = 10,
+    statuses: RequestedTripStatus[] = this.tripStatuses,
+    types: TripTypes[] = this.tripTypes
+  ) {
+    this.requestedTripService.getRequestedTrips(Constant.GET_REQUESTED_TRIPS, types, statuses, pageIndex, pageSize)
       .subscribe(
         (res: any) => {
           this.requestedTrips = res.items;
@@ -92,7 +102,7 @@ export class PrivateTripComponent implements OnInit {
     this.modalService.open(modal, { size: 'sm' });
   }
 
-  getPrice(price){
+  getPrice(price) {
     this.selectedPrice = price;
   }
 
@@ -126,6 +136,24 @@ export class PrivateTripComponent implements OnInit {
           this.modalService.dismissAll();
         }
       );
+  }
+
+  filterTypes(selectedType: string) {
+    let type = Object.values(TripTypes).find(x => x == selectedType);
+    this.selectedTypes = type ? [type] : [TripTypes.Private, TripTypes.Pooling];
+    this.getAll(this.pageIndex - 1, this.pageSize, this.selectedStatuses, this.selectedTypes);
+  }
+
+  filterStatuses(selectedStatus: string) {
+    let status = Object.values(RequestedTripStatus).find(x => x == selectedStatus);
+    this.selectedStatuses = status ? [status] : Object.values(RequestedTripStatus);
+    this.getAll(this.pageIndex - 1, this.pageSize, this.selectedStatuses, this.selectedTypes);
+  }
+
+  resetFilters(){
+    this.selectedTypes = [TripTypes.Private, TripTypes.Pooling];
+    this.selectedStatuses = Object.values(RequestedTripStatus);
+    this.getAll(this.pageIndex - 1, this.pageSize, this.selectedStatuses, this.selectedTypes);
   }
 
   pageChange(pageIndex: number) {

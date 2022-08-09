@@ -146,7 +146,7 @@ export class DailyTripComponent implements OnInit {
       );
   }
 
-  openAddModal(modal, itemToEdit: ITrip) {
+  openAddModal(modal, itemToEdit: ITrip = null) {
     if(itemToEdit){
       this.isEditItem = true;
       this.tripToEditId = itemToEdit._id;
@@ -220,7 +220,7 @@ export class DailyTripComponent implements OnInit {
   filterTypes(selectedType: string){
     let type = Object.values(TripTypes).find(x => x == selectedType);
     let types = type ? [type] : [TripTypes.Daily, TripTypes.Tour];
-    
+
     this.getAll(this.pageIndex - 1, this.pageSize, types);
   }
 

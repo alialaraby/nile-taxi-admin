@@ -13,8 +13,7 @@
     <loading-spinner></loading-spinner>
 </ng-container>
 <ng-template #elseFoundDataTemplate>
-    <empty-list *ngIf="trips.length <= 0"></empty-list>
-    <div class="col-lg-12 grid-margin stretch-card" *ngIf="trips.length > 0">
+    <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
 
@@ -27,8 +26,10 @@
                     </select>
                 </div>
 
+                <empty-list *ngIf="trips.length <= 0"></empty-list>
+                
                 <!-- Table -->
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="trips.length > 0">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -90,7 +91,7 @@
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-warning btn-sm"
-                                        (click)="openAddModal(addModal, item, item.boat)">Edit</button>
+                                        (click)="openAddModal(addModal, item)">Edit</button>
                                     <button type="button" class="btn btn-danger btn-sm"
                                         (click)="openDeleteItem(deleteModal, item)">Delete</button>
                                 </td>
@@ -98,13 +99,14 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Pagination -->
+                <ngb-pagination class="d-flex mt-4 justify-content-center pagination-warning" (pageChange)="pageChange($event)"
+                    [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
+                    aria-label="Default pagination"></ngb-pagination>
             </div>
         </div>
     </div>
-    <!-- Pagination -->
-    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)"
-        [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
-        aria-label="Default pagination"></ngb-pagination>
 </ng-template>
 
 <!-- Modals -->

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
-import { RequestedTripStatus } from "../model/enums";
+import { RequestedTripStatus, TripTypes } from "../model/enums";
 import { DataService } from "./data.service";
 
 @Injectable({
@@ -15,8 +15,8 @@ export class RequestedTripService extends DataService {
         super(http);
     }
 
-    public getRequestedTrips(url: string, statuses: RequestedTripStatus[], pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
-        return this._http.post(environment.baseUrl + url, {statuses , pageIndex, pageSize})
+    public getRequestedTrips(url: string, types: TripTypes[], statuses: RequestedTripStatus[], pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
+        return this._http.post(environment.baseUrl + url, {statuses, types, pageIndex, pageSize})
             .pipe(catchError(this.handleError));
     }
 

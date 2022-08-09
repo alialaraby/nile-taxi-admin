@@ -63,7 +63,7 @@ export class StationComponent implements OnInit {
       );
   }
 
-  openAddModal(modal, itemToEdit: IStation) {
+  openAddModal(modal, itemToEdit: IStation = null) {
     if (itemToEdit) {
       this.isEditItem = true;
       this.stationToEditId = itemToEdit._id;
