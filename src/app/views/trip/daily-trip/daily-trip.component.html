@@ -1,7 +1,7 @@
 <!-- Breadcrumb -->
 <div class="page-header">
     <h3 class="page-title">
-        Daily Trips $ Tours
+        Daily Trips & Tours
     </h3>
     <nav aria-label="breadcrumb">
         <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
@@ -18,16 +18,32 @@
             <div class="card-body">
 
                 <!-- Filters -->
-                <div class="form-group w-25">
-                    <label for="code">Select Type</label>
-                    <select class="form-control" (change)="filterTypes($event.target.value)">
-                        <option value="" selected>Trip Type</option>
-                        <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
-                    </select>
+                <div class="row w-75">
+                    <div class="form-group col-md-4">
+                        <label for="code">Select Type</label>
+                        <select class="form-control" #type (change)="filterTypes($event.target.value)">
+                            <option value="" [selected]="tripTypes.length > 1">Trip Type</option>
+                            <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4" *ngIf="selectedType == 'tour'">
+                        <label for="code">Select Category</label>
+                        <select class="form-control" (change)="filterCategories($event.target.value)">
+                            <option value="" [selected]="!selectedCategory">Tour Category</option>
+                            <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-warning btn-rounded btn-icon mt-3"
+                            (click)="resetFilters()">
+                            <i class="mdi mdi-reload"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <empty-list *ngIf="trips.length <= 0"></empty-list>
-                
+
                 <!-- Table -->
                 <div class="table-responsive" *ngIf="trips.length > 0">
                     <table class="table table-striped">
@@ -65,17 +81,11 @@
                                     {{ item.code }}
                                 </td>
                                 <td>
-                                    {{ item.type }}
+                                    {{ item.type }} <span *ngIf="item.type == 'tour'"> - {{ item.category.name }}</span>
                                 </td>
                                 <td>
-                                    <p class="m-0">
-                                        <span>{{ item.pickupStation.name }}</span> -
-                                        <span>{{ item.pickupDate | date: 'MMM d, y, h:mm a' }}</span>
-                                    </p>
-                                    <p class="m-0">
-                                        <span>{{ item.terminalStation.name }}</span> -
-                                        <span>{{ item.terminalDate | date: 'MMM d, y, h:mm a' }}</span>
-                                    </p>
+                                    <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
+                                        (click)="openTripDetails(moreModal, item)">Details</button>
                                 </td>
                                 <td>
                                     {{ item.pilot.fullName }}
@@ -90,9 +100,9 @@
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm"
+                                    <button type="button" class="btn btn-warning btn-sm btn-p8"
                                         (click)="openAddModal(addModal, item)">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-sm"
+                                    <button type="button" class="btn btn-danger btn-sm btn-p8"
                                         (click)="openDeleteItem(deleteModal, item)">Delete</button>
                                 </td>
                             </tr>
@@ -101,9 +111,9 @@
                 </div>
 
                 <!-- Pagination -->
-                <ngb-pagination class="d-flex mt-4 justify-content-center pagination-warning" (pageChange)="pageChange($event)"
-                    [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
-                    aria-label="Default pagination"></ngb-pagination>
+                <ngb-pagination class="d-flex mt-4 justify-content-center pagination-warning"
+                    (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize"
+                    [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
             </div>
         </div>
     </div>
@@ -150,6 +160,32 @@
                         <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
                     </select>
                 </div>
+
+                <!-- only tour related -->
+                <div class="form-group" *ngIf="addEditForm && addEditForm.controls['type'].value == 'tour'">
+                    <label for="code">Tour Category</label>
+                    <select class="form-control" formControlName="tripCategory">
+                        <option value="" selected>Tour Category</option>
+                        <option *ngFor="let categ of categories" [value]="categ._id">{{ categ.name }}</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="addEditForm && addEditForm.controls['type'].value == 'tour'">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control form-control-lg" id="description" autocomplete="false"
+                        formControlName="description" placeholder="Enter description.">
+                </div>
+                <div class="form-group" *ngIf="addEditForm && addEditForm.controls['type'].value == 'tour'">
+                    <label for="tourImage">Tour Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="OnChangeFile($event.target.files)"
+                                id="tourImage" aria-describedby="tourImage" placeholder="Enter Tour Image">
+                            <label class="custom-file-label" for="tourImage">{{shortImageName}}</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- only tour related -->
+
                 <div class="form-group">
                     <label for="pickupStation">Pickup station</label>
                     <select class="form-control" formControlName="pickupStation">
@@ -231,6 +267,51 @@
                     <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
                 </div>
             </form>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #moreModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content p-3">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">More details</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <div class="row">
+                <div class="col-md-12 text-center mb-4" *ngIf="selectedTripDetails.tourImage">
+                    <img [src]="selectedTripDetails.tourImage" alt="user image" class="item_image w-25 rounded"
+                        onError="this.src='./assets/images/login-logo.png'">
+                </div>
+                <div class="col-md-12" *ngIf="selectedTripDetails.description">
+                    <h4 class="card-title font-weight-bold">Description</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.description}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="card-title font-weight-bold">Pickup</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.pickupStation.name}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="card-title font-weight-bold">Terminal</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.terminalStation.name}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="card-title font-weight-bold">From</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.pickupDate | date: 'MMM d, y, h:mm a'}}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="card-title font-weight-bold">To</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.terminalDate | date: 'MMM d, y, h:mm
+                        a'}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
         </div>
 
     </div>

@@ -26,6 +26,11 @@ export class Constant {
     public static UPDATE_TRIP = 'update-trip';
     public static DELETE_TRIP = 'delete-trip';
 
+    public static ADD_TOURS_CATEGORY = 'add-tour-category';
+    public static UPDATE_TOURS_CATEGORY = 'update-tour-category';
+    public static GET_TOURS_CATEGORIES = 'get-tours-categories';
+    public static DELETE_TOURS_CATEGORIES = 'delete-tour-category';
+
     public static GET_REQUESTED_TRIPS = 'get-trip-requests';
     public static APPROVE_REQUESTED_TRIP = 'accept-trip-request';
     public static REJECT_REQUESTED_TRIP = 'reject-trip-request';

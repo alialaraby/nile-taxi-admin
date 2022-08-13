@@ -15,8 +15,8 @@ export class TripService extends DataService {
         super(http);
     }
 
-    public getTrips(url: string, types: TripTypes[], pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
-        return this._http.post(environment.baseUrl + url, {types , pageIndex, pageSize})
+    public getTrips(url: string, types: TripTypes[], pageIndex: number = 0, pageSize: number = 10, categoryId?: string): Observable<Object> {
+        return this._http.post(environment.baseUrl + url, {types, pageIndex, pageSize, categoryId})
             .pipe(catchError(this.handleError));
     }
 

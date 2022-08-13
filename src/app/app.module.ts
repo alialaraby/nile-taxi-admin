@@ -30,6 +30,7 @@ import { PrivateTripComponent } from './views/trip/private-trip/private-trip.com
 import { EmptyListComponent } from './shared/empty-list/empty-list.component';
 import { JWTInterceptor } from './core/interceptors/jwt-interceptor';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TourCategoryComponent } from './views/trip/tour-category/tour-category.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     DailyTripComponent,
     PrivateTripComponent,
     EmptyListComponent,
+    TourCategoryComponent,
   ],
   imports: [
     BrowserModule,

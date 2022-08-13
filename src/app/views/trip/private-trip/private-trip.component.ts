@@ -22,6 +22,8 @@ export class PrivateTripComponent implements OnInit {
   selectedPilotId: string = '';
   selectedPrice: string = '';
   requestedTrips: IRequestedTrip[] = [];
+  selectedTripDetails: IRequestedTrip;
+
   sharedUserData: Admin = new Admin();
   gettingData: boolean = true;
   selectedRequest: IRequestedTrip;
@@ -154,6 +156,11 @@ export class PrivateTripComponent implements OnInit {
     this.selectedTypes = [TripTypes.Private, TripTypes.Pooling];
     this.selectedStatuses = Object.values(RequestedTripStatus);
     this.getAll(this.pageIndex - 1, this.pageSize, this.selectedStatuses, this.selectedTypes);
+  }
+
+  openTripDetails(modal: any, trip: IRequestedTrip) {
+    this.selectedTripDetails = trip;
+    this.modalService.open(modal, { size: 'md' });
   }
 
   pageChange(pageIndex: number) {

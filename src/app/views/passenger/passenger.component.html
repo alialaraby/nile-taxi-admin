@@ -44,8 +44,8 @@
                             <tr *ngFor="let item of passengers">
                                 <td class="py-1">
                                     <ng-container
-                                        *ngIf="(item.avatarUrl && item.avatarUrl.length > 0); else elseNoImageTemplate">
-                                        <img [src]="item.imageurl" alt="user image"
+                                        *ngIf="(item.passengerImage && item.passengerImage.length > 0); else elseNoImageTemplate">
+                                        <img [src]="item.passengerImage" alt="user image" class="item_image"
                                             onError="this.src='./assets/images/faces/face1.jpg'">
                                     </ng-container>
                                     <ng-template #elseNoImageTemplate>

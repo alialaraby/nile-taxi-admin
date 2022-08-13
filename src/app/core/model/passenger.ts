@@ -3,7 +3,6 @@ import { Genders } from "./enums";
 export interface IPassenger {
     _id: string;
     fullName: string;
-    avatarUrl: string;
     email: string;
     phone: string;
     location: any;
@@ -15,7 +14,7 @@ export interface IPassenger {
     // dateOfBirth: string;
     createdAt: Date;
     // password: string;
-    // OTP: string;
+    passengerImage: string;
     // lastOTPTime: Date;
     // isDeleted: boolean;
     // isVerified: boolean;

@@ -28,9 +28,10 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-warning btn-rounded btn-icon mt-3" (click)="resetFilters()">
+                        <button type="button" class="btn btn-warning btn-rounded btn-icon mt-3"
+                            (click)="resetFilters()">
                             <i class="mdi mdi-reload"></i>
-                          </button>
+                        </button>
                     </div>
                 </div>
 
@@ -46,9 +47,6 @@
                                 </th>
                                 <th>
                                     From/To
-                                </th>
-                                <th>
-                                    Pickup
                                 </th>
                                 <th>
                                     Seats
@@ -76,13 +74,8 @@
                                     {{ item.passenger.fullName }}
                                 </td>
                                 <td>
-                                    <p class="m-0">
-                                        <span>{{ item.pickupStation.name }}</span> -
-                                        <span>{{ item.terminalStation.name }}</span>
-                                    </p>
-                                </td>
-                                <td>
-                                    {{ item.pickupDate | date: 'MMM d, y, h:mm a' }}
+                                    <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
+                                        (click)="openTripDetails(moreModal, item)">Details</button>
                                 </td>
                                 <td>
                                     {{ item.numberOfSeats }}
@@ -109,10 +102,10 @@
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm"
+                                    <button type="button" class="btn btn-warning btn-sm btn-p8"
                                         [disabled]="['accepted', 'rejected'].includes(item.status)"
                                         (click)="openApproveModal(approveModal, item)">Approve</button>
-                                    <button type="button" class="btn btn-danger btn-sm"
+                                    <button type="button" class="btn btn-danger btn-sm btn-p8"
                                         [disabled]="['accepted', 'rejected'].includes(item.status)"
                                         (click)="openRejectModal(rejectModal, item)">Reject</button>
                                 </td>
@@ -176,5 +169,37 @@
             <button type="button" class="btn btn-primary" (click)="approveRequest()">Approve</button>
             <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #moreModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content p-3">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">More details</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="card-title font-weight-bold">Pickup</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.pickupStation.name}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="card-title font-weight-bold">Terminal</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.terminalStation.name}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="card-title font-weight-bold">Pickup Date</h4>
+                    <p class="card-description text-muted">{{selectedTripDetails.pickupDate | date: 'MMM d, y, h:mm a'}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+
     </div>
 </ng-template>

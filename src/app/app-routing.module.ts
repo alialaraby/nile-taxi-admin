@@ -9,6 +9,7 @@ import { PilotComponent } from './views/pilot/pilot.component';
 import { StationComponent } from './views/station/station.component';
 import { DailyTripComponent } from './views/trip/daily-trip/daily-trip.component';
 import { PrivateTripComponent } from './views/trip/private-trip/private-trip.component';
+import { TourCategoryComponent } from './views/trip/tour-category/tour-category.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'boat', component: BoatComponent },
   { path: 'station', component: StationComponent },
   { path: 'fuel-request', component: FuelRequestComponent },
+  { path: 'tour-category', component: TourCategoryComponent },
   { path: 'daily-trip', component: DailyTripComponent },
   { path: 'private-trip', component: PrivateTripComponent },
   { path: 'passenger', component: PassengerComponent },

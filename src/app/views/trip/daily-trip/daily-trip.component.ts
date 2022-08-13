@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbDateStruct, NgbModal, NgbTimepickerConfig, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, forkJoin  } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
 import { ResponseActionType, TripTypes } from 'src/app/core/model/enums';
 import { IPilot } from 'src/app/core/model/pilot';
 import { IStation } from 'src/app/core/model/station';
+import { ITripCategory } from 'src/app/core/model/tour-category';
 import { ITrip } from 'src/app/core/model/trip';
 import { DataService } from 'src/app/core/service/data.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
 import { SharedDataService } from 'src/app/core/service/shared-data.service';
 import { TripService } from 'src/app/core/service/trip.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-daily-trip',
@@ -20,6 +22,7 @@ import { TripService } from 'src/app/core/service/trip.service';
 })
 export class DailyTripComponent implements OnInit {
 
+  categories: ITripCategory[] = [];
   pilots: IPilot[] = [];
   stations: IStation[] = [];
   trips: ITrip[] = [];
@@ -27,6 +30,7 @@ export class DailyTripComponent implements OnInit {
   gettingData: boolean = true;
 
   selectedTrip: ITrip;
+  selectedTripDetails: ITrip;
   isEditItem: boolean = false;
   tripToEditId: string;
 
@@ -37,14 +41,18 @@ export class DailyTripComponent implements OnInit {
   totalCount: number = 0;
 
   pickupDateModel: NgbDateStruct;
-  pickupTime: NgbTimeStruct = {hour: 1, minute: 0, second: 0};
+  pickupTime: NgbTimeStruct = { hour: 1, minute: 0, second: 0 };
 
   terminalDateModel: NgbDateStruct;
-  terminalTime: NgbTimeStruct = {hour: 1, minute: 0, second: 0};
+  terminalTime: NgbTimeStruct = { hour: 1, minute: 0, second: 0 };
 
   tripTypes = [TripTypes.Daily, TripTypes.Tour];
+  selectedType: string;
+  selectedCategory: string;
 
   selectedStations: any[];
+  shortImageName: string = 'Enter Image';
+  fileToUpload: File = null;
 
   constructor(
     private tripService: TripService,
@@ -68,19 +76,21 @@ export class DailyTripComponent implements OnInit {
     this.getInitialData();
   }
 
-  getInitialData(){
+  getInitialData() {
+    let getCategories = this.tripService.getAll(Constant.GET_TOURS_CATEGORIES);
     let getPilots = this.tripService.getAll(Constant.GET_PILOTS);
     let getStations = this.tripService.getAll(Constant.GET_STATIONS);
-    forkJoin([getPilots, getStations]).subscribe(
+    forkJoin([getPilots, getStations, getCategories]).subscribe(
       (res: any) => {
         this.pilots = res[0].items;
         this.stations = res[1].items;
+        this.categories = res[2].items;
       }
     )
   }
 
-  getAll(pageIndex: number = 0, pageSize: number = 10, types: TripTypes[] = [TripTypes.Daily, TripTypes.Tour]) {
-    this.tripService.getTrips(Constant.GET_TRIPS, types, pageIndex, pageSize)
+  getAll(pageIndex: number = 0, pageSize: number = 10, types: TripTypes[] = [TripTypes.Daily, TripTypes.Tour], categoryId?: string) {
+    this.tripService.getTrips(Constant.GET_TRIPS, types, pageIndex, pageSize, categoryId)
       .subscribe(
         (res: any) => {
           this.trips = res.items;
@@ -147,11 +157,11 @@ export class DailyTripComponent implements OnInit {
   }
 
   openAddModal(modal, itemToEdit: ITrip = null) {
-    if(itemToEdit){
+    if (itemToEdit) {
       this.isEditItem = true;
       this.tripToEditId = itemToEdit._id;
       this.buildForm(itemToEdit);
-    }else{
+    } else {
       this.isEditItem = false;
       this.buildForm();
     }
@@ -159,7 +169,7 @@ export class DailyTripComponent implements OnInit {
   }
 
   buildForm(itemToEdit?: ITrip) {
-    if(itemToEdit){
+    if (itemToEdit) {
       let pickupDate = new Date(itemToEdit.pickupDate);
       let terminalDate = new Date(itemToEdit.terminalDate);
       this.pickupDateModel = { year: pickupDate.getFullYear(), month: pickupDate.getMonth() + 1, day: pickupDate.getDate() };
@@ -180,6 +190,9 @@ export class DailyTripComponent implements OnInit {
       terminalDate: ['', Validators.required],
       terminalTime: ['', Validators.required],
       stations: ['', Validators.required],
+      description: [itemToEdit ? itemToEdit.description : ''],
+      tourImage: [itemToEdit ? itemToEdit.tourImage : ''],
+      tripCategory: [itemToEdit ? itemToEdit.category._id : ''],
     });
   }
 
@@ -189,39 +202,101 @@ export class DailyTripComponent implements OnInit {
   }
 
   getModelFromForm(form: FormGroup) {
-    let model = {
-      _id: this.tripToEditId ? this.tripToEditId : null,
-      code: form.get('code').value,
-      type: form.get('type').value,
-      pickupStation: form.get('pickupStation').value,
-      terminalStation: form.get('terminalStation').value,
-      pilot: form.get('pilot').value,
-      price: form.get('price').value,
-      stations: this.selectedStations.map((x, index) => {
-        return {stationId: x._id, order: index + 1}
-      }),
+    let formData = new FormData();
+    formData.append('_id', this.tripToEditId ? this.tripToEditId : null);
+    formData.append('code', form.get('code').value);
+    formData.append('type', form.get('type').value);
+    formData.append('pickupStation', form.get('pickupStation').value);
+    formData.append('terminalStation', form.get('terminalStation').value);
+    formData.append('pilot', form.get('pilot').value);
+    formData.append('price', form.get('price').value);
+    formData.append('description', form.get('description').value);
+    formData.append(
+      'stations',
+      JSON.stringify(
+        this.selectedStations.map((x, index) => {
+          return { stationId: x._id, order: index + 1 }
+        })
+      )
+    );
+    formData.append('pickupDateYear', this.pickupDateModel.year.toString());
+    formData.append('pickupDateMonth', this.pickupDateModel.month.toString());
+    formData.append('pickupDateDay', this.pickupDateModel.day.toString());
+    formData.append('pickupDateHour', this.pickupTime.hour.toString());
+    formData.append('pickupDateMinute', this.pickupTime.minute.toString());
 
-      pickupDateYear: this.pickupDateModel.year,
-      pickupDateMonth: this.pickupDateModel.month,
-      pickupDateDay: this.pickupDateModel.day,
-      pickupDateHour: this.pickupTime.hour,
-      pickupDateMinute: this.pickupTime.minute,
+    formData.append('terminalDateYear', this.terminalDateModel.year.toString());
+    formData.append('terminalDateMonth', this.terminalDateModel.month.toString());
+    formData.append('terminalDateDay', this.terminalDateModel.day.toString());
+    formData.append('terminalDateHour', this.terminalTime.hour.toString());
+    formData.append('terminalDateMinute', this.terminalTime.minute.toString());
+    formData.append('tripCategory', (form.get('type').value == TripTypes.Tour) ? form.get('tripCategory').value : null);
 
-      terminalDateYear: this.terminalDateModel.year,
-      terminalDateMonth: this.terminalDateModel.month,
-      terminalDateDay: this.terminalDateModel.day,
-      terminalDateHour: this.terminalTime.hour,
-      terminalDateMinute: this.terminalTime.minute,
-    };
+    if(this.fileToUpload !== null)
+      formData.append('tourImage', this.fileToUpload, this.fileToUpload.name);
 
-    return model;
+
+    // let model = {
+    //   _id: this.tripToEditId ? this.tripToEditId : null,
+    //   code: form.get('code').value,
+    //   type: form.get('type').value,
+    //   pickupStation: form.get('pickupStation').value,
+    //   terminalStation: form.get('terminalStation').value,
+    //   pilot: form.get('pilot').value,
+    //   price: form.get('price').value,
+    //   description: form.get('description').value,
+    //   stations: this.selectedStations.map((x, index) => {
+    //     return { stationId: x._id, order: index + 1 }
+    //   }),
+
+    //   pickupDateYear: this.pickupDateModel.year,
+    //   pickupDateMonth: this.pickupDateModel.month,
+    //   pickupDateDay: this.pickupDateModel.day,
+    //   pickupDateHour: this.pickupTime.hour,
+    //   pickupDateMinute: this.pickupTime.minute,
+
+    //   terminalDateYear: this.terminalDateModel.year,
+    //   terminalDateMonth: this.terminalDateModel.month,
+    //   terminalDateDay: this.terminalDateModel.day,
+    //   terminalDateHour: this.terminalTime.hour,
+    //   terminalDateMinute: this.terminalTime.minute,
+    //   tripCategory: (form.get('type').value == TripTypes.Tour) ? form.get('tripCategory').value : null
+    // };
+
+    return formData;
   }
 
-  filterTypes(selectedType: string){
+  filterTypes(selectedType: string) {
     let type = Object.values(TripTypes).find(x => x == selectedType);
-    let types = type ? [type] : [TripTypes.Daily, TripTypes.Tour];
+    this.tripTypes = type ? [type] : [TripTypes.Daily, TripTypes.Tour];
+    this.selectedType = selectedType;
 
-    this.getAll(this.pageIndex - 1, this.pageSize, types);
+    this.getAll(this.pageIndex - 1, this.pageSize, this.tripTypes);
+  }
+
+  filterCategories(categoryId: string) {
+    let type = Object.values(TripTypes).find(x => x == this.selectedType);
+    this.tripTypes = type ? [type] : [TripTypes.Daily, TripTypes.Tour];
+    this.selectedCategory = categoryId;
+
+    this.getAll(this.pageIndex - 1, this.pageSize, this.tripTypes, categoryId);
+  }
+
+  resetFilters() {
+    this.selectedCategory = null;
+    this.tripTypes = [TripTypes.Daily, TripTypes.Tour];
+    this.getAll(this.pageIndex - 1, this.pageSize);
+  }
+
+  OnChangeFile(files: FileList) {
+    this.fileToUpload = files.item(0);
+    this.addEditForm.get('tourImage').setValue(environment.baseUrl + this.fileToUpload.name)
+    this.shortImageName = this.fileToUpload.name;
+  }
+
+  openTripDetails(modal: any, trip: ITrip) {
+    this.selectedTripDetails = trip;
+    this.modalService.open(modal, { size: 'md' });
   }
 
   pageChange(pageIndex: number) {
