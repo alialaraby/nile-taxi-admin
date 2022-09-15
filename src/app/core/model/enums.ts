@@ -48,3 +48,9 @@ export enum UserType{
     Pilot = 'pilot',
     Passenger = 'passenger',
 }
+
+export enum FuelType{
+    Diesel = 'diesel',
+    Gasoline = 'gasoline',
+    Electric = 'electric',
+}

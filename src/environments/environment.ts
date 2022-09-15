@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  // baseUrl: "http://46.101.230.98:82/api/"
+  // baseUrl: "https://api.niletaxi.app/api/"
   baseUrl: "http://localhost:3000/api/"
 };
 

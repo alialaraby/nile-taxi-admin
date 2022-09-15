@@ -1,3 +1,4 @@
+import { IBoat } from "./boat";
 import { Genders } from "./enums";
 
 export class PilotWithBoat {
@@ -7,9 +8,9 @@ export class PilotWithBoat {
     email: string;
     phone: string;
     gender: Genders;
+    // boat: IBoat;
 
-    boatId: string;
-    boatName: string;
-    boatModel: string;
-    boatCapacity: number; // no. of seats in the boat
+    // boatName: string;
+    // boatModel: string;
+    // boatCapacity: number; // no. of seats in the boat
 }

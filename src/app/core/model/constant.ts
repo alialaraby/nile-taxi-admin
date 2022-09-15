@@ -5,6 +5,7 @@ export class Constant {
     public static ADD_ADMIN = 'add-admin';
 
     public static GET_PILOTS = 'get-pilots';
+    public static GET_UNASSIGNED_PILOTS = 'get-unassigned-pilots';
     public static ADD_PILOT = 'add-pilot-with-boat';
     public static UPDATE_PILOT = 'update-pilot-with-boat';
     public static DELETE_PILOT = 'delete-pilot';
@@ -13,6 +14,10 @@ export class Constant {
     public static APPROVE_REJECT_FUEL_REQUESTS = 'approve-reject-fuel-requests';
 
     public static GET_BOATS = 'get-boats';
+    public static ADD_BOAT = 'add-boat';
+    public static UPDATE_BOAT = 'update-boat';
+    public static DELETE_BOAT = 'delete-boat';
+    public static ACTIVATE_BOAT = 'activate-boat';
 
     public static GET_STATIONS = 'get-stations';
     public static ADD_STATION = 'add-station';

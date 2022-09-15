@@ -73,10 +73,11 @@ export class PilotComponent implements OnInit {
       phone: [itemToEdit ? itemToEdit.phone : '', Validators.required],
       email: [itemToEdit ? itemToEdit.email : '', Validators.required],
       gender: [itemToEdit ? itemToEdit.gender : '', Validators.required],
+      // boat: [itemToEdit ? itemToEdit.boat._id : ''],
 
-      boatName: [itemToEdit ? itemToEdit.boat.boatName : '', Validators.required],
-      boatModel: [itemToEdit ? itemToEdit.boat.model : '', Validators.required],
-      boatCapacity: [itemToEdit ? itemToEdit.boat.capacity : '', Validators.required],
+      // boatName: [itemToEdit ? itemToEdit.boat.boatName : '', Validators.required],
+      // boatModel: [itemToEdit ? itemToEdit.boat.model : '', Validators.required],
+      // boatCapacity: [itemToEdit ? itemToEdit.boat.capacity : '', Validators.required],
     });
   }
 
@@ -84,7 +85,7 @@ export class PilotComponent implements OnInit {
     if(itemToEdit){
       this.isEditItem = true;
       this.pilotToEditId = itemToEdit._id;
-      this.boatToEditId = itemToEdit.boat._id;
+      // this.boatToEditId = itemToEdit.boat._id;
       this.buildForm(itemToEdit);
     }else{
       this.isEditItem = false;
@@ -146,11 +147,12 @@ export class PilotComponent implements OnInit {
     model.email = form.get('email').value;
     model.phone = form.get('phone').value;
     model.gender = form.get('gender').value;
+    // model.boat = form.get('boat').value;
      
-    if(this.boatToEditId) model.boatId = this.boatToEditId;
-    model.boatName = form.get('boatName').value;
-    model.boatModel = form.get('boatModel').value;
-    model.boatCapacity = form.get('boatCapacity').value;
+    // if(this.boatToEditId) model.boatId = this.boatToEditId;
+    // model.boatName = form.get('boatName').value;
+    // model.boatModel = form.get('boatModel').value;
+    // model.boatCapacity = form.get('boatCapacity').value;
     
     return model;
   }

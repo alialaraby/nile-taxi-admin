@@ -46,6 +46,11 @@ export class DataService {
             .pipe(catchError(this.handleError));
     }
 
+    public activateBoat(url: string, data: any): Observable<Object> {
+        return this.http.post(environment.baseUrl + url, data)
+            .pipe(catchError(this.handleError));
+    }
+
     protected handleError(error: Response) {
 
         switch (error.status) {

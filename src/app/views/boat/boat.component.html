@@ -3,7 +3,7 @@
         Boats
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -26,32 +26,41 @@
                                 <th>
                                     Name
                                 </th>
-                                <th>
+                                <!-- <th>
                                     Model
+                                </th> -->
+                                <th>
+                                    Serial
                                 </th>
                                 <th>
                                     Capacity
                                 </th>
                                 <th>
-                                    Maintained At
+                                    Skipper
+                                </th>
+                                <!-- <th>
+                                    Maint. At
                                 </th>
                                 <th>
-                                    (km)s For Maint.
-                                </th>
-                                <th>
+                                    Maint. (km)s
+                                </th> -->
+                                <!-- <th>
                                     Travelled (km)
-                                </th>
+                                </th> -->
                                 <th>
                                     Status
                                 </th>
                                 <th>
                                     Needs Maint.
                                 </th>
-                                <th>
+                                <!-- <th>
                                     Active
-                                </th>
-                                <th>
+                                </th> -->
+                                <!-- <th>
                                     Created
+                                </th> -->
+                                <th>
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
@@ -60,13 +69,19 @@
                                 <td>
                                     {{ item.boatName }}
                                 </td>
-                                <td>
+                                <!-- <td>
                                     {{ item.model }}
+                                </td> -->
+                                <td>
+                                    {{ item.serial }}
                                 </td>
                                 <td>
                                     {{ item.capacity }}
                                 </td>
                                 <td>
+                                    {{ item.assignedPilotId ? item.assignedPilotId.fullName : 'Not Assigned' }}
+                                </td>
+                                <!-- <td>
                                     <ng-container *ngIf="item.lastMaintenanceDate; else elseStillFreshTemplate">
                                         {{ item.lastMaintenanceDate | date:'mediumDate' }}
                                     </ng-container>
@@ -76,10 +91,10 @@
                                 </td>
                                 <td>
                                     {{ item.kilosNeededForMaintenance }}
-                                </td>
-                                <td>
+                                </td> -->
+                                <!-- <td>
                                     {{ item.kilosTravelled | number }}
-                                </td>
+                                </td> -->
                                 <td>
                                     <span [ngSwitch]="item.status">
                                         <label *ngSwitchCase="'ready'" class="badge badge-success">Ready</label>
@@ -89,28 +104,147 @@
                                 </td>
                                 <td>
                                     <ng-container *ngIf="item.needsMaintenance; else elseNotAcceptedTemplate">
-                                        <label class="badge badge-success">YES</label>
+                                        <label class="badge badge-danger">YES</label>
                                     </ng-container>
                                     <ng-template #elseNotAcceptedTemplate>
-                                        <label class="badge badge-danger">NO</label>
+                                        <label class="badge badge-success">NO</label>
                                     </ng-template>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <ng-container *ngIf="item.isActive; else elseNotAcceptedTemplate">
                                         <label class="badge badge-success">YES</label>
                                     </ng-container>
                                     <ng-template #elseNotAcceptedTemplate>
                                         <label class="badge badge-gradient-danger">NO</label>
                                     </ng-template>
-                                </td>
-                                <td>
+                                </td> -->
+                                <!-- <td>
                                     {{ item.createdAt | date:'mediumDate' }}
+                                </td> -->
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm btn-p5 mt-2"
+                                        (click)="openAddModal(addModal, item)">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm btn-p5 mt-2"
+                                        (click)="openDeleteItem(deleteModal, item)">Delete</button>
+                                    <button type="button" class="btn btn-sm btn-p5 mt-2"
+                                        [ngClass]="item.isActive ? 'btn-danger' : 'btn-dark'"
+                                        (click)="openActivateItem(activateModal, item, !item.isActive)">
+                                        {{ item.isActive ? 'Suspend' : 'Activate' }}
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
+</ng-template>
+
+<ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Add Boat</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <form [formGroup]="addEditForm" class="pt-3" (ngSubmit)="add()">
+                <div class="form-group">
+                    <label for="boatName">Boat name</label>
+                    <input type="text" class="form-control form-control-lg" id="boatName" autocomplete="false"
+                        formControlName="boatName" placeholder="Enter boat name.">
+                </div>
+                <div class="form-group">
+                    <label for="serial">Serial</label>
+                    <input type="text" class="form-control form-control-lg" id="serial" autocomplete="false"
+                        formControlName="serial" placeholder="Enter serial.">
+                </div>
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <input type="text" class="form-control form-control-lg" id="model" autocomplete="false"
+                        formControlName="model" placeholder="Enter model.">
+                </div>
+
+                <div class="form-group">
+                    <label for="capacity">Capacity</label>
+                    <input type="number" class="form-control form-control-lg" id="capacity" autocomplete="false"
+                        formControlName="capacity" placeholder="Enter capacity.">
+                </div>
+
+                <div class="form-group">
+                    <label for="kilosNeededForMaintenance">kilos Needed For Maintenance</label>
+                    <input type="number" class="form-control form-control-lg" id="kilosNeededForMaintenance"
+                        autocomplete="false" formControlName="kilosNeededForMaintenance"
+                        placeholder="Enter maintenance kilos.">
+                </div>
+
+                <div class="form-group">
+                    <label for="assignedPilotId">Pilot</label>
+                    <select class="form-control" formControlName="assignedPilotId">
+                        <option value="" selected>Pilot</option>
+                        <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fuelCapacity">Fuel capacity</label>
+                    <input type="number" class="form-control form-control-lg" id="fuelCapacity" autocomplete="false"
+                        formControlName="fuelCapacity" placeholder="Enter fuel capacity.">
+                </div>
+
+                <div class="form-group">
+                    <label for="fuelType">Fuel type</label>
+                    <select class="form-control" formControlName="fuelType">
+                        <option value="" selected>Fuel Type</option>
+                        <option *ngFor="let type of fuelTypes" [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
+                    <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Delete item</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            Confirm deleting item.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteItem()">Delete</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #activateModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Suspend/Activate Boat</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            {{ activateBoat ? 'Activate' : 'Suspend' }} Boat ?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="activate()">{{ activateBoat ? 'Activate' : 'Suspend' }}</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
         </div>
     </div>
 </ng-template>
