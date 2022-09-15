@@ -6,6 +6,7 @@ import { BoatComponent } from './views/boat/boat.component';
 import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
 import { PassengerComponent } from './views/passenger/passenger.component';
 import { PilotComponent } from './views/pilot/pilot.component';
+import { PromocodeComponent } from './views/promocode/promocode.component';
 import { StationComponent } from './views/station/station.component';
 import { DailyTripComponent } from './views/trip/daily-trip/daily-trip.component';
 import { PrivateTripComponent } from './views/trip/private-trip/private-trip.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'daily-trip', component: DailyTripComponent },
   { path: 'private-trip', component: PrivateTripComponent },
   { path: 'passenger', component: PassengerComponent },
+  { path: 'promocode', component: PromocodeComponent },
   // { path: 'basic-ui', loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule) },
   // { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },
   // { path: 'forms', loadChildren: () => import('./forms/form.module').then(m => m.FormModule) },

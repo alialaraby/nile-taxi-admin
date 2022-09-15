@@ -13,9 +13,9 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': pilot.isActive }">
-      <a class="nav-link" routerLink="/pilot" routerLinkActive #pilot="routerLinkActive">
-        <span class="menu-title">Skippers</span>
+    <li class="nav-item" [ngClass]="{ 'active': station.isActive }">
+      <a class="nav-link" routerLink="/station" routerLinkActive #station="routerLinkActive">
+        <span class="menu-title">Stations</span>
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
@@ -25,9 +25,9 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': station.isActive }">
-      <a class="nav-link" routerLink="/station" routerLinkActive #station="routerLinkActive">
-        <span class="menu-title">Stations</span>
+    <li class="nav-item" [ngClass]="{ 'active': pilot.isActive }">
+      <a class="nav-link" routerLink="/pilot" routerLinkActive #pilot="routerLinkActive">
+        <span class="menu-title">Skippers</span>
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
@@ -40,6 +40,12 @@
     <li class="nav-item" [ngClass]="{ 'active': passenger.isActive }">
       <a class="nav-link" routerLink="/passenger" routerLinkActive #passenger="routerLinkActive">
         <span class="menu-title">Passengers</span>
+        <i class="mdi mdi-home menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': promocode.isActive }">
+      <a class="nav-link" routerLink="/promocode" routerLinkActive #promocode="routerLinkActive">
+        <span class="menu-title">Promocodes</span>
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>

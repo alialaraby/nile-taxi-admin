@@ -40,4 +40,9 @@ export class Constant {
     public static APPROVE_REQUESTED_TRIP = 'accept-trip-request';
     public static REJECT_REQUESTED_TRIP = 'reject-trip-request';
 
+    public static ADD_PROMOCODE = 'add-promocode';
+    public static UPDATE_PROMOCODE = 'update-promocode';
+    public static DELETE_PROMOCODE = 'delete-promocode';
+    public static GET_PROMOCODES = 'get-promocodes';
+
 }

@@ -54,3 +54,9 @@ export enum FuelType{
     Gasoline = 'gasoline',
     Electric = 'electric',
 }
+
+export enum PromocodeType{
+    PerUserTimely = 'perUserTimely',
+    PerUser = 'perUserPerUsage',
+    // SpecificUser = 'specificUsers',
+}
