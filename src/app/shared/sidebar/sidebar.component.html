@@ -10,7 +10,7 @@
     <li class="nav-item" [ngClass]="{ 'active': admin.isActive }">
       <a class="nav-link" routerLink="/admin" routerLinkActive #admin="routerLinkActive">
         <span class="menu-title">Admins</span>
-        <i class="mdi mdi-home menu-icon"></i>
+        <i class="mdi mdi-account menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': station.isActive }">
@@ -22,25 +22,31 @@
     <li class="nav-item" [ngClass]="{ 'active': boat.isActive }">
       <a class="nav-link" routerLink="/boat" routerLinkActive #boat="routerLinkActive">
         <span class="menu-title">Boats</span>
-        <i class="mdi mdi-home menu-icon"></i>
+        <i class="mdi mdi-taxi menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': pilot.isActive }">
       <a class="nav-link" routerLink="/pilot" routerLinkActive #pilot="routerLinkActive">
         <span class="menu-title">Skippers</span>
-        <i class="mdi mdi-home menu-icon"></i>
+        <i class="mdi mdi-account menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': fuelRequest.isActive }">
       <a class="nav-link" routerLink="/fuel-request" routerLinkActive #fuelRequest="routerLinkActive">
         <span class="menu-title">Fuel Requests</span>
-        <i class="mdi mdi-home menu-icon"></i>
+        <i class="mdi mdi-gas-station menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': passenger.isActive }">
       <a class="nav-link" routerLink="/passenger" routerLinkActive #passenger="routerLinkActive">
         <span class="menu-title">Passengers</span>
-        <i class="mdi mdi-home menu-icon"></i>
+        <i class="mdi mdi-human-greeting menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': complaint.isActive }">
+      <a class="nav-link" routerLink="/complaint" routerLinkActive #complaint="routerLinkActive">
+        <span class="menu-title">Complaints</span>
+        <i class="mdi mdi-headset menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': promocode.isActive }">

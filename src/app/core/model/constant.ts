@@ -45,4 +45,7 @@ export class Constant {
     public static DELETE_PROMOCODE = 'delete-promocode';
     public static GET_PROMOCODES = 'get-promocodes';
 
+    public static GET_COMPLAINS = 'get-complains';
+    public static RESOLVE_COMPLAIN = 'resolve-complain';
+
 }

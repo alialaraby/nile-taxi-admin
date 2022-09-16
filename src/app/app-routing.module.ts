@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from './views/admin/admin.component';
 import { BoatComponent } from './views/boat/boat.component';
+import { ComplainComponent } from './views/complain/complain.component';
 import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
 import { PassengerComponent } from './views/passenger/passenger.component';
 import { PilotComponent } from './views/pilot/pilot.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'private-trip', component: PrivateTripComponent },
   { path: 'passenger', component: PassengerComponent },
   { path: 'promocode', component: PromocodeComponent },
+  { path: 'complaint', component: ComplainComponent },
   // { path: 'basic-ui', loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule) },
   // { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },
   // { path: 'forms', loadChildren: () => import('./forms/form.module').then(m => m.FormModule) },

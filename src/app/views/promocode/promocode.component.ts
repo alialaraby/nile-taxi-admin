@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { throwError } from 'rxjs';
+import { UnAuthorizedError } from 'src/app/core/app-error/unauthorized-error';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
 import { PromocodeType, ResponseActionType } from 'src/app/core/model/enums';
@@ -33,7 +35,6 @@ export class PromocodeComponent implements OnInit {
 
   validFromDateModel: NgbDateStruct;
   validToDateModel: NgbDateStruct;
-
 
   constructor(
     private dataService: DataService,

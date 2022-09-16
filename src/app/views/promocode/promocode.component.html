@@ -108,12 +108,12 @@
                         <option *ngFor="let type of codeTypes" [value]="type">{{ type }}</option>
                     </select>
                 </div>
-                <div class="form-group" *ngIf="addEditForm && addEditForm.controls['type'].value == 'perUserPerUsage'">
+                <div class="form-group">
                     <label for="noOfRidesPerUser">Rides per user</label>
                     <input type="number" class="form-control form-control-lg" id="noOfRidesPerUser" autocomplete="false"
                         formControlName="noOfRidesPerUser" placeholder="Enter rides per user.">
                 </div>
-                <div class="form-group" *ngIf="addEditForm && addEditForm.controls['type'].value == 'perUserTimely'">
+                <div class="form-group">
                     <label for="validFrom">Valid From</label>
                     <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd" formControlName="validFrom"
@@ -124,7 +124,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="form-group" *ngIf="addEditForm && addEditForm.controls['type'].value == 'perUserTimely'">
+                <div class="form-group">
                     <label for="validTo">Valid To</label>
                     <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd" formControlName="validTo"

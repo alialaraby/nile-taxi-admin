@@ -32,6 +32,7 @@ import { JWTInterceptor } from './core/interceptors/jwt-interceptor';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TourCategoryComponent } from './views/trip/tour-category/tour-category.component';
 import { PromocodeComponent } from './views/promocode/promocode.component';
+import { ComplainComponent } from './views/complain/complain.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PromocodeComponent } from './views/promocode/promocode.component';
     EmptyListComponent,
     TourCategoryComponent,
     PromocodeComponent,
+    ComplainComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Route, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { BadRequestError } from "../app-error/bad-request-error";
 import { DuplicateItemError } from "../app-error/duplicate-item-error";
@@ -12,7 +13,7 @@ import { ResponseActionType } from "../model/enums";
 })
 export class ResponseHandlerService {
 
-    constructor(private toastr: ToastrService) { }
+    constructor(private toastr: ToastrService, private router: Router) { }
 
     public HandelError(error: HttpErrorResponse) {
         if (error instanceof BadRequestError) {
@@ -23,6 +24,7 @@ export class ResponseHandlerService {
             this.toastr.error('Item Already Exists', 'Failed', { timeOut: 4000 });
         } else if (error instanceof UnAuthorizedError) {
             this.toastr.error('Unauthorized to Take That Action', 'Failed', { timeOut: 4000 });
+            this.router.navigate(['/']);
         } else {
             // if (error.OriginalError && error.OriginalError.status && error.OriginalError.status === 409) {
             //     this.toastr.error('Template Already Created', 'Duplicate', { timeOut: 4000 });
