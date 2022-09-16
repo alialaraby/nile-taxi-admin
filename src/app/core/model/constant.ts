@@ -48,4 +48,10 @@ export class Constant {
     public static GET_COMPLAINS = 'get-complains';
     public static RESOLVE_COMPLAIN = 'resolve-complain';
 
+    public static ADD_PACKAGE = 'add-package';
+    public static UPDATE_PACKAGE = 'update-package';
+    public static DELETE_PACKAGE = 'delete-package';
+    public static ACTIVATE_PACKAGE = 'activate-package';
+    public static GET_PACKAGES = 'get-packages';
+
 }

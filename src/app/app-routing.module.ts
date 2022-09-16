@@ -5,6 +5,7 @@ import { AdminComponent } from './views/admin/admin.component';
 import { BoatComponent } from './views/boat/boat.component';
 import { ComplainComponent } from './views/complain/complain.component';
 import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
+import { PackageComponent } from './views/package/package.component';
 import { PassengerComponent } from './views/passenger/passenger.component';
 import { PilotComponent } from './views/pilot/pilot.component';
 import { PromocodeComponent } from './views/promocode/promocode.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'passenger', component: PassengerComponent },
   { path: 'promocode', component: PromocodeComponent },
   { path: 'complaint', component: ComplainComponent },
+  { path: 'package', component: PackageComponent },
   { path: 'user-pages', loadChildren: () => import('./user-pages/user-pages.module').then(m => m.UserPagesModule) },
 ];
 

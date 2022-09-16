@@ -37,23 +37,34 @@
         <i class="mdi mdi-gas-station menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': passenger.isActive }">
-      <a class="nav-link" routerLink="/passenger" routerLinkActive #passenger="routerLinkActive">
-        <span class="menu-title">Passengers</span>
+
+    <li class="nav-item" [ngClass]="{'active' : passenger.isActive || complaint.isActive}">
+      <a class="nav-link" (click)="passengersCollapsed = !passengersCollapsed" [attr.aria-expanded]="passengersCollapsed" aria-controls="ui-basic">
+        <span class="menu-title">Passengers Settings</span>
+        <i class="menu-arrow"></i>
         <i class="mdi mdi-human-greeting menu-icon"></i>
       </a>
+      <div class="collapse" id="ui-basic" [ngbCollapse]="!passengersCollapsed">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" routerLink="/passenger" routerLinkActive="active" #passenger="routerLinkActive">Passengers</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/complaint" routerLinkActive="active" #complaint="routerLinkActive">Complaints</a></li>
+        </ul>
+      </div>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': complaint.isActive }">
-      <a class="nav-link" routerLink="/complaint" routerLinkActive #complaint="routerLinkActive">
-        <span class="menu-title">Complaints</span>
-        <i class="mdi mdi-headset menu-icon"></i>
+    
+
+    <li class="nav-item" [ngClass]="{'active' : package.isActive || promocode.isActive}">
+      <a class="nav-link" (click)="packagesCollapsed = !packagesCollapsed" [attr.aria-expanded]="packagesCollapsed" aria-controls="ui-basic">
+        <span class="menu-title">Packages Settings</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-shopping menu-icon"></i>
       </a>
-    </li>
-    <li class="nav-item" [ngClass]="{ 'active': promocode.isActive }">
-      <a class="nav-link" routerLink="/promocode" routerLinkActive #promocode="routerLinkActive">
-        <span class="menu-title">Promocodes</span>
-        <i class="mdi mdi-home menu-icon"></i>
-      </a>
+      <div class="collapse" id="ui-basic" [ngbCollapse]="!packagesCollapsed">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" routerLink="/package" routerLinkActive="active" #package="routerLinkActive">Packages</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/promocode" routerLinkActive="active" #promocode="routerLinkActive">Promo Codes</a></li>
+        </ul>
+      </div>
     </li>
 
     <li class="nav-item" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive }">
