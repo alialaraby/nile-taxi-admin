@@ -12,10 +12,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TodoComponent } from './apps/todo-list/todo/todo.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ContentAnimateDirective } from './shared/directives/content-animate.directive';
-import { TodoListComponent } from './apps/todo-list/todo-list.component';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -33,6 +31,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { TourCategoryComponent } from './views/trip/tour-category/tour-category.component';
 import { PromocodeComponent } from './views/promocode/promocode.component';
 import { ComplainComponent } from './views/complain/complain.component';
+import { PackageComponent } from './views/package/package.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +40,6 @@ import { ComplainComponent } from './views/complain/complain.component';
     SidebarComponent,
     FooterComponent,
     DashboardComponent,
-    TodoListComponent,
-    TodoComponent,
     SpinnerComponent,
     ContentAnimateDirective,
     AdminComponent,
@@ -57,6 +54,7 @@ import { ComplainComponent } from './views/complain/complain.component';
     TourCategoryComponent,
     PromocodeComponent,
     ComplainComponent,
+    PackageComponent,
   ],
   imports: [
     BrowserModule,
