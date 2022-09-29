@@ -54,4 +54,11 @@ export class Constant {
     public static ACTIVATE_PACKAGE = 'activate-package';
     public static GET_PACKAGES = 'get-packages';
 
+    public static ADD_CORPORATE = 'add-corporate';
+    public static Edit_CORPORATE = 'edit-corporate';
+    public static DELETE_CORPORATE = 'delete-corporate';
+    public static GET_CORPORATES = 'get-corporate-accounts';
+    public static GET_CORPORATE_BY_ID = 'get-corporate';
+    public static ADD_CORPORATE_MEMBER = 'passenger-registration';
+
 }

@@ -83,4 +83,8 @@ export class ComplainComponent implements OnInit {
       );
   }
 
+  pageChange(pageIndex: number) {
+    this.getAll(pageIndex - 1);
+  }
+
 }

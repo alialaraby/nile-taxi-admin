@@ -1,0 +1,150 @@
+<div class="page-header">
+    <h3 class="page-title">
+        Corporate Members
+    </h3>
+    <nav aria-label="breadcrumb">
+        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+    </nav>
+</div>
+
+<ng-container *ngIf="gettingData; else elseFoundDataTemplate">
+    <loading-spinner></loading-spinner>
+</ng-container>
+<ng-template #elseFoundDataTemplate>
+    <empty-list *ngIf="members.length <= 0"></empty-list>
+    <div class="col-lg-12 grid-margin stretch-card" *ngIf="members.length > 0">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Corporate Members List</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    User
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of members">
+                                <td class="py-1">
+                                    <ng-container
+                                        *ngIf="(item.passengerImage && item.passengerImage.length > 0); else elseNoImageTemplate">
+                                        <img [src]="item.passengerImage" alt="user image" class="item_image"
+                                            onError="this.src='./assets/images/faces/face1.jpg'">
+                                    </ng-container>
+                                    <ng-template #elseNoImageTemplate>
+                                        <img src="./assets/images/faces/face1.jpg" alt="user photo">
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    {{ item.fullName }}
+                                </td>
+                                <td>
+                                    {{ item.email }}
+                                </td>
+                                <td>
+                                    {{ item.phone }}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        (click)="openDeleteItem(deleteModal, item)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)"
+        [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
+        aria-label="Default pagination"></ngb-pagination>
+
+</ng-template>
+
+<ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Add Member</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <form [formGroup]="addEditForm" class="pt-3" (ngSubmit)="add()">
+                <div class="form-group">
+                    <label for="fullName">Member name</label>
+                    <input type="text" class="form-control form-control-lg" id="fullName" autocomplete="false"
+                        formControlName="fullName" placeholder="Enter member name.">
+                </div>
+                <div class="form-group">
+                    <label for="email">Member email</label>
+                    <input type="email" class="form-control form-control-lg" id="email" autocomplete="false"
+                        formControlName="email" placeholder="Enter member email.">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Member phone</label>
+                    <input type="tel" class="form-control form-control-lg" id="phone" autocomplete="false"
+                        formControlName="phone" placeholder="Enter member phone.">
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="gender" id="optionsRadios1"
+                                value="male" checked>
+                            Male
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="gender" id="optionsRadios2"
+                                value="female">
+                            Female
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
+                    <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Delete item</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            Confirm deleting item.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteItem()">Delete</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+    </div>
+</ng-template>

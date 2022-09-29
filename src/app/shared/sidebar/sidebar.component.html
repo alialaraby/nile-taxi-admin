@@ -7,37 +7,42 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': admin.isActive }">
-      <a class="nav-link" routerLink="/admin" routerLinkActive #admin="routerLinkActive">
-        <span class="menu-title">Admins</span>
+
+    <!-- Accounts -->
+    <li class="nav-item" [ngClass]="{'active' : admin.isActive || corporateAccount.isActive}">
+      <a class="nav-link" (click)="accountsCollapsed = !accountsCollapsed" [attr.aria-expanded]="accountsCollapsed" aria-controls="ui-basic">
+        <span class="menu-title">Accounts</span>
+        <i class="menu-arrow"></i>
         <i class="mdi mdi-account menu-icon"></i>
       </a>
+      <div class="collapse" id="ui-basic" [ngbCollapse]="!accountsCollapsed">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" routerLink="/admin" routerLinkActive="active" #admin="routerLinkActive">Admins</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/corporate-account" routerLinkActive="active" #corporateAccount="routerLinkActive">Corporate Accounts</a></li>
+        </ul>
+      </div>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': station.isActive }">
-      <a class="nav-link" routerLink="/station" routerLinkActive #station="routerLinkActive">
-        <span class="menu-title">Stations</span>
-        <i class="mdi mdi-home menu-icon"></i>
-      </a>
-    </li>
-    <li class="nav-item" [ngClass]="{ 'active': boat.isActive }">
-      <a class="nav-link" routerLink="/boat" routerLinkActive #boat="routerLinkActive">
-        <span class="menu-title">Boats</span>
+    <!-- Accounts -->
+    
+    <!-- Boat Settings -->
+    <li class="nav-item" [ngClass]="{'active' : station.isActive || boat.isActive || pilot.isActive || fuelRequest.isActive}">
+      <a class="nav-link" (click)="boatsCollapsed = !boatsCollapsed" [attr.aria-expanded]="boatsCollapsed" aria-controls="ui-basic">
+        <span class="menu-title">Boats Settings</span>
+        <i class="menu-arrow"></i>
         <i class="mdi mdi-taxi menu-icon"></i>
       </a>
+      <div class="collapse" id="ui-basic" [ngbCollapse]="!boatsCollapsed">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" routerLink="/station" routerLinkActive="active" #station="routerLinkActive">Stations</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/boat" routerLinkActive="active" #boat="routerLinkActive">Boats</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/pilot" routerLinkActive="active" #pilot="routerLinkActive">Skippers</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/fuel-request" routerLinkActive="active" #fuelRequest="routerLinkActive">Fuel Requests</a></li>
+        </ul>
+      </div>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': pilot.isActive }">
-      <a class="nav-link" routerLink="/pilot" routerLinkActive #pilot="routerLinkActive">
-        <span class="menu-title">Skippers</span>
-        <i class="mdi mdi-account menu-icon"></i>
-      </a>
-    </li>
-    <li class="nav-item" [ngClass]="{ 'active': fuelRequest.isActive }">
-      <a class="nav-link" routerLink="/fuel-request" routerLinkActive #fuelRequest="routerLinkActive">
-        <span class="menu-title">Fuel Requests</span>
-        <i class="mdi mdi-gas-station menu-icon"></i>
-      </a>
-    </li>
+    <!-- Boat Settings -->
 
+    <!-- Passengers Settings -->
     <li class="nav-item" [ngClass]="{'active' : passenger.isActive || complaint.isActive}">
       <a class="nav-link" (click)="passengersCollapsed = !passengersCollapsed" [attr.aria-expanded]="passengersCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Passengers Settings</span>
@@ -51,8 +56,9 @@
         </ul>
       </div>
     </li>
-    
+    <!-- Passengers Settings -->    
 
+    <!-- Packages Settings -->    
     <li class="nav-item" [ngClass]="{'active' : package.isActive || promocode.isActive}">
       <a class="nav-link" (click)="packagesCollapsed = !packagesCollapsed" [attr.aria-expanded]="packagesCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Packages Settings</span>
@@ -66,7 +72,9 @@
         </ul>
       </div>
     </li>
+    <!-- Packages Settings -->    
 
+    <!-- Trips Settings -->    
     <li class="nav-item" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive }">
       <a class="nav-link" (click)="tripsCollapsed = !tripsCollapsed" [attr.aria-expanded]="tripsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Trips</span>
@@ -82,5 +90,7 @@
         </ul>
       </div>
     </li>
+    <!-- Trips Settings -->    
+
   </ul>
 </nav>

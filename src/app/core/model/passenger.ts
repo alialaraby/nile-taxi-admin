@@ -1,3 +1,4 @@
+import { ICorporateAccount } from "./corporate-account";
 import { Genders } from "./enums";
 
 export interface IPassenger {
@@ -15,6 +16,7 @@ export interface IPassenger {
     createdAt: Date;
     // password: string;
     passengerImage: string;
+    corporateId?: ICorporateAccount;
     // lastOTPTime: Date;
     // isDeleted: boolean;
     // isVerified: boolean;

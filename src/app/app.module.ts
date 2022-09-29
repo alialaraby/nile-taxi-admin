@@ -32,6 +32,8 @@ import { TourCategoryComponent } from './views/trip/tour-category/tour-category.
 import { PromocodeComponent } from './views/promocode/promocode.component';
 import { ComplainComponent } from './views/complain/complain.component';
 import { PackageComponent } from './views/package/package.component';
+import { CorporateAccountComponent } from './views/corporate-account/corporate-account.component';
+import { CorporateMemberComponent } from './views/corporate-account/corporate-member/corporate-member.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { PackageComponent } from './views/package/package.component';
     PromocodeComponent,
     ComplainComponent,
     PackageComponent,
+    CorporateAccountComponent,
+    CorporateMemberComponent,
   ],
   imports: [
     BrowserModule,

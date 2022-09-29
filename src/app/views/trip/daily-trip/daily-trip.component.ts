@@ -13,7 +13,7 @@ import { DataService } from 'src/app/core/service/data.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
 import { SharedDataService } from 'src/app/core/service/shared-data.service';
 import { TripService } from 'src/app/core/service/trip.service';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-daily-trip',

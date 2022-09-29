@@ -4,6 +4,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from './views/admin/admin.component';
 import { BoatComponent } from './views/boat/boat.component';
 import { ComplainComponent } from './views/complain/complain.component';
+import { CorporateAccountComponent } from './views/corporate-account/corporate-account.component';
+import { CorporateMemberComponent } from './views/corporate-account/corporate-member/corporate-member.component';
 import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
 import { PackageComponent } from './views/package/package.component';
 import { PassengerComponent } from './views/passenger/passenger.component';
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/user-pages/login', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'corporate-account', component: CorporateAccountComponent },
+  { path: 'corporate-member/:_id', component: CorporateMemberComponent },
   { path: 'pilot', component: PilotComponent },
   { path: 'boat', component: BoatComponent },
   { path: 'station', component: StationComponent },
@@ -30,6 +34,8 @@ const routes: Routes = [
   { path: 'complaint', component: ComplainComponent },
   { path: 'package', component: PackageComponent },
   { path: 'user-pages', loadChildren: () => import('./user-pages/user-pages.module').then(m => m.UserPagesModule) },
+  { path: 'error-pages', loadChildren: () => import('./error-pages/error-pages.module').then(m => m.ErrorPagesModule) },
+  { path: '**', redirectTo: '/error-pages/404', pathMatch: 'full' }
 ];
 
 @NgModule({

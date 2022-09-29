@@ -17,12 +17,12 @@ export class DataService {
     constructor(private http: HttpClient) { }
 
     public getAll(url: string, pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
-        return this.http.post(environment.baseUrl + url, {pageIndex, pageSize})
+        return this.http.post(environment.baseUrl + url, { pageIndex, pageSize })
             .pipe(catchError(this.handleError));
     }
 
-    public getById(url: string, Id: number, headers: any, data: any): Observable<Object> {
-        return this.http.post(environment.baseUrl + url + Id, data, headers)
+    public getById(url: string, _id: string): Observable<Object> {
+        return this.http.post(environment.baseUrl + url, { _id })
             .pipe(catchError(this.handleError));
     }
 
@@ -48,6 +48,11 @@ export class DataService {
 
     public activateBoat(url: string, data: any): Observable<Object> {
         return this.http.post(environment.baseUrl + url, data)
+            .pipe(catchError(this.handleError));
+    }
+
+    public getCorporateMembers(url: string, _id: string, pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
+        return this.http.post(environment.baseUrl + url, { _id, pageIndex, pageSize })
             .pipe(catchError(this.handleError));
     }
 
