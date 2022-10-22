@@ -1,8 +1,8 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
-import { UserType } from 'src/app/core/model/enums';
+import { ResponseActionType } from 'src/app/core/model/enums';
 import { IPassenger } from 'src/app/core/model/passenger';
 import { DataService } from 'src/app/core/service/data.service';
 import { PassengerService } from 'src/app/core/service/passenger.service';
@@ -10,20 +10,18 @@ import { ResponseHandlerService } from 'src/app/core/service/response-handler.se
 import { SharedDataService } from 'src/app/core/service/shared-data.service';
 
 @Component({
-  selector: 'app-passenger',
-  templateUrl: './passenger.component.html',
-  styleUrls: ['./passenger.component.scss']
+  selector: 'app-student-account',
+  templateUrl: './student-account.component.html',
+  styleUrls: ['./student-account.component.scss']
 })
-export class PassengerComponent implements OnInit {
+export class StudentAccountComponent implements OnInit {
 
   passengers: IPassenger[] = [];
   sharedUserData: Admin = new Admin();
   gettingData: boolean = true;
 
-  userTypes = [UserType.Passenger, UserType.FamilyAdmin, UserType.Dependent, UserType.Student];
-  // selectedType: string;
-  selectedTypes: UserType[];
-  defaultType: boolean = true;
+  approveRequest: boolean = true;
+  selectedRequest: IPassenger;
 
   pageIndex: number = 1;
   pageSize: number = 10;
@@ -31,9 +29,10 @@ export class PassengerComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private passengerService: PassengerService,
     private sharedData: SharedDataService,
-    private _responseHandler: ResponseHandlerService
+    private _responseHandler: ResponseHandlerService,
+    private modalService: NgbModal,
+    private passengerService: PassengerService,
   ) {
     this.sharedData.userData$.subscribe(
       (userData) => {
@@ -47,8 +46,8 @@ export class PassengerComponent implements OnInit {
     this.getAll();
   }
 
-  getAll(pageIndex: number = 0, pageSize: number = 10, types: UserType[] = this.userTypes) {
-    this.passengerService.getPassengers(Constant.GET_PASSENGERS, types, pageIndex, pageSize)
+  getAll(pageIndex: number = 0, pageSize: number = 10) {
+    this.dataService.getAll(Constant.GET_STUDENT_REQUESTS, pageIndex, pageSize)
       .subscribe(
         (res: any) => {
           this.passengers = res.items;
@@ -66,18 +65,30 @@ export class PassengerComponent implements OnInit {
     this.getAll(pageIndex - 1);
   }
 
-  filterTypes(selectedType: string) {
-    this.defaultType = false;
-    let type = Object.values(UserType).find(x => x == selectedType);
-    this.selectedTypes = type ? [type] : this.userTypes;
-    // this.selectedType = selectedType;
-
-    this.getAll(this.pageIndex - 1, this.pageSize, this.selectedTypes);
+  downloadCertificate(item: IPassenger) {
+    window.open(item.studentCertificate, 'blank');
   }
 
-  resetFilters() {
-    this.defaultType = true;
-    this.getAll(this.pageIndex - 1, this.pageSize);
+  openApproveModal(modal: any, item: IPassenger, approved: boolean) {
+    this.selectedRequest = item;
+    this.approveRequest = approved as boolean
+    this.modalService.open(modal, { size: 'md' });
+  }
+
+  submit() {
+    this.passengerService.respondStudentRequest({ _id: this.selectedRequest._id, approved: this.approveRequest })
+      .subscribe(
+        (res: any) => {
+          this._responseHandler.HandleSuccess(res, ResponseActionType.Done);
+          this.getAll();
+          this.modalService.dismissAll();
+        },
+        (error) => {
+          this.gettingData = false;
+          this._responseHandler.HandelError(error);
+          this.modalService.dismissAll();
+        }
+      );
   }
 
 }

@@ -47,6 +47,10 @@ export enum UserType{
     Admin = 'admin',
     Pilot = 'pilot',
     Passenger = 'passenger',
+    CorporateAdmin = 'corporateAdmin',
+    FamilyAdmin = 'familyAdmin',
+    Dependent = 'dependent',
+    Student = 'student',
 }
 
 export enum FuelType{

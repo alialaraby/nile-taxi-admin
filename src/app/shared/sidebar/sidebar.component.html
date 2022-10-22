@@ -43,7 +43,7 @@
     <!-- Boat Settings -->
 
     <!-- Passengers Settings -->
-    <li class="nav-item" [ngClass]="{'active' : passenger.isActive || complaint.isActive}">
+    <li class="nav-item" [ngClass]="{'active' : passenger.isActive || complaint.isActive || studentRequests.isActive}">
       <a class="nav-link" (click)="passengersCollapsed = !passengersCollapsed" [attr.aria-expanded]="passengersCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Passengers Settings</span>
         <i class="menu-arrow"></i>
@@ -52,6 +52,7 @@
       <div class="collapse" id="ui-basic" [ngbCollapse]="!passengersCollapsed">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" routerLink="/passenger" routerLinkActive="active" #passenger="routerLinkActive">Passengers</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/student-request" routerLinkActive="active" #studentRequests="routerLinkActive">Student Requests</a></li>
           <li class="nav-item"> <a class="nav-link" routerLink="/complaint" routerLinkActive="active" #complaint="routerLinkActive">Complaints</a></li>
         </ul>
       </div>

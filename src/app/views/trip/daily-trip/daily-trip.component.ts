@@ -48,6 +48,7 @@ export class DailyTripComponent implements OnInit {
 
   tripTypes = [TripTypes.Daily, TripTypes.Tour];
   selectedType: string;
+  selectedTypes: TripTypes[];
   selectedCategory: string;
 
   selectedStations: any[];
@@ -268,10 +269,10 @@ export class DailyTripComponent implements OnInit {
 
   filterTypes(selectedType: string) {
     let type = Object.values(TripTypes).find(x => x == selectedType);
-    this.tripTypes = type ? [type] : [TripTypes.Daily, TripTypes.Tour];
+    this.selectedTypes = type ? [type] : [TripTypes.Daily, TripTypes.Tour];
     this.selectedType = selectedType;
 
-    this.getAll(this.pageIndex - 1, this.pageSize, this.tripTypes);
+    this.getAll(this.pageIndex - 1, this.pageSize, this.selectedTypes);
   }
 
   filterCategories(categoryId: string) {

@@ -34,6 +34,7 @@ import { ComplainComponent } from './views/complain/complain.component';
 import { PackageComponent } from './views/package/package.component';
 import { CorporateAccountComponent } from './views/corporate-account/corporate-account.component';
 import { CorporateMemberComponent } from './views/corporate-account/corporate-member/corporate-member.component';
+import { StudentAccountComponent } from './views/passenger/student-account/student-account.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CorporateMemberComponent } from './views/corporate-account/corporate-me
     PackageComponent,
     CorporateAccountComponent,
     CorporateMemberComponent,
+    StudentAccountComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { CorporateMemberComponent } from './views/corporate-account/corporate-me
 import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
 import { PackageComponent } from './views/package/package.component';
 import { PassengerComponent } from './views/passenger/passenger.component';
+import { StudentAccountComponent } from './views/passenger/student-account/student-account.component';
 import { PilotComponent } from './views/pilot/pilot.component';
 import { PromocodeComponent } from './views/promocode/promocode.component';
 import { StationComponent } from './views/station/station.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'daily-trip', component: DailyTripComponent },
   { path: 'private-trip', component: PrivateTripComponent },
   { path: 'passenger', component: PassengerComponent },
+  { path: 'student-request', component: StudentAccountComponent },
   { path: 'promocode', component: PromocodeComponent },
   { path: 'complaint', component: ComplainComponent },
   { path: 'package', component: PackageComponent },

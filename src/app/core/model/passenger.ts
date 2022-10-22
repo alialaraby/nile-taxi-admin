@@ -7,6 +7,9 @@ export interface IPassenger {
     email: string;
     phone: string;
     location: any;
+    age: string;
+    studentCertificate: string;
+    type: string;
     // country: string;
     // city: string;
     // notificationToken: string;

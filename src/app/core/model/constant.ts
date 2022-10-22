@@ -25,6 +25,8 @@ export class Constant {
     public static DELETE_STATION = 'delete-station';
     
     public static GET_PASSENGERS = 'get-passengers';
+    public static GET_STUDENT_REQUESTS = 'get-student-requests';
+    public static RESPOND_STUDENT_REQUEST = 'admin-respond-student-account';
 
     public static GET_TRIPS = 'get-trips';
     public static ADD_TRIP = 'add-trip';
