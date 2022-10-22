@@ -1,0 +1,77 @@
+<div class="page-header">
+    <h3 class="page-title">
+        Emergencies
+    </h3>
+</div>
+
+<ng-container *ngIf="gettingData; else elseFoundDataTemplate">
+    <loading-spinner></loading-spinner>
+</ng-container>
+<ng-template #elseFoundDataTemplate>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                <!-- Filters -->
+                <div class="row w-75">
+                    <div class="form-group col-md-4">
+                        <label for="code">Select Type</label>
+                        <select class="form-control" #type (change)="filterTypes($event.target.value)">
+                            <option value="" [selected]="defaultType">User Type</option>
+                            <option *ngFor="let type of emergencyTypes" [value]="type">{{ type }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-warning btn-rounded btn-icon mt-3"
+                            (click)="resetFilters()">
+                            <i class="mdi mdi-reload"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <empty-list *ngIf="emergencies.length <= 0"></empty-list>
+
+                <div class="table-responsive" *ngIf="emergencies.length > 0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Skipper
+                                </th>
+                                <th>
+                                    Emergency
+                                </th>
+                                <th>
+                                    Emergency Type
+                                </th>
+                                <th>
+                                    Reported At
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of emergencies">
+                                <td>
+                                    {{ item.pilot.fullName }}
+                                </td>
+                                <td>
+                                    {{ item.emergency }}
+                                </td>
+                                <td class="text-capitalize">
+                                    {{ item.emergencyType }}
+                                </td>
+                                <td>
+                                    {{ item.createdAt | date:'mediumDate' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)"
+        [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
+        aria-label="Default pagination"></ngb-pagination>
+
+</ng-template>

@@ -64,3 +64,8 @@ export enum PromocodeType{
     PerUser = 'perUserPerUsage',
     // SpecificUser = 'specificUsers',
 }
+
+export enum EmergencyType{
+    Maintenance = 'maintenance',
+    Emergency = 'emergency',
+}

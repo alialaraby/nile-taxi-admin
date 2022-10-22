@@ -18,11 +18,11 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminComponent } from './views/admin/admin.component';
-import { PilotComponent } from './views/pilot/pilot.component';
-import { BoatComponent } from './views/boat/boat.component';
+import { PilotComponent } from './views/boats-pilots/pilot/pilot.component';
+import { BoatComponent } from './views/boats-pilots/boat/boat.component';
 import { PassengerComponent } from './views/passenger/passenger.component';
-import { StationComponent } from './views/station/station.component';
-import { FuelRequestComponent } from './views/fuel-request/fuel-request.component';
+import { StationComponent } from './views/boats-pilots/station/station.component';
+import { FuelRequestComponent } from './views/boats-pilots/fuel-request/fuel-request.component';
 import { DailyTripComponent } from './views/trip/daily-trip/daily-trip.component';
 import { PrivateTripComponent } from './views/trip/private-trip/private-trip.component';
 import { EmptyListComponent } from './shared/empty-list/empty-list.component';
@@ -35,6 +35,7 @@ import { PackageComponent } from './views/package/package.component';
 import { CorporateAccountComponent } from './views/corporate-account/corporate-account.component';
 import { CorporateMemberComponent } from './views/corporate-account/corporate-member/corporate-member.component';
 import { StudentAccountComponent } from './views/passenger/student-account/student-account.component';
+import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { StudentAccountComponent } from './views/passenger/student-account/stude
     CorporateAccountComponent,
     CorporateMemberComponent,
     StudentAccountComponent,
+    EmergencyComponent,
   ],
   imports: [
     BrowserModule,

@@ -63,4 +63,7 @@ export class Constant {
     public static GET_CORPORATE_BY_ID = 'get-corporate';
     public static ADD_CORPORATE_MEMBER = 'passenger-registration';
 
+    public static GET_EMERGENCIES = 'get-emergencies';
+
+
 }
