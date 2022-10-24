@@ -3,7 +3,7 @@
         Admins
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="sharedUserData.isSuperAdmin" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -99,6 +99,13 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control form-control-lg" id="email" autocomplete="false"
                         formControlName="email" placeholder="Enter email.">
+                </div>
+                <div class="form-group">
+                    <label for="role">Admin role</label>
+                    <select class="form-control" formControlName="role">
+                        <option value="" selected>Admin role</option>
+                        <option *ngFor="let role of adminRoles" [value]="role">{{ role }}</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>

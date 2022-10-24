@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Admin } from 'src/app/core/model/admin';
+import { SharedDataService } from 'src/app/core/service/shared-data.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,7 +15,23 @@ export class SidebarComponent implements OnInit {
   public packagesCollapsed = false;
   public samplePagesCollapsed = false;
   
-  constructor() { }
+  sharedUserData: Admin = new Admin();
+
+  constructor(
+    private sharedData: SharedDataService
+  ) { 
+    this.sharedData.userData$.subscribe(
+      (userData) => {
+        this.sharedUserData._id = userData._id;
+        this.sharedUserData.accessToken = userData.accessToken;
+        this.sharedUserData.role = userData.role;
+        this.sharedUserData.isSuperAdmin = userData.isSuperAdmin;
+        this.sharedUserData.isAdmin = userData.isAdmin;
+        this.sharedUserData.isCorporateAdmin = userData.isCorporateAdmin;
+        this.sharedUserData.isAnalystAdmin = userData.isAnalystAdmin;
+      }
+    );
+  }
 
   ngOnInit() {
     const body = document.querySelector('body');

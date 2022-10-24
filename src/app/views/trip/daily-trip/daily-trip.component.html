@@ -4,7 +4,7 @@
         Daily Trips & Tours
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -70,7 +70,7 @@
                                 <th>
                                     Creation Date
                                 </th>
-                                <th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
                             </tr>
@@ -83,7 +83,7 @@
                                 <td>
                                     {{ item.type }} <span *ngIf="item.type == 'tour'"> - {{ item.category.name }}</span>
                                 </td>
-                                <td>
+                                <td >
                                     <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
                                         (click)="openTripDetails(moreModal, item)">Details</button>
                                 </td>
@@ -99,7 +99,7 @@
                                 <td>
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td>
-                                <td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm btn-p8"
                                         (click)="openAddModal(addModal, item)">Edit</button>
                                     <button type="button" class="btn btn-danger btn-sm btn-p8"

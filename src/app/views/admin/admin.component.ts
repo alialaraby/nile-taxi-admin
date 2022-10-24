@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
-import { ResponseActionType } from 'src/app/core/model/enums';
+import { AdminRoles, ResponseActionType } from 'src/app/core/model/enums';
 import { DataService } from 'src/app/core/service/data.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
 import { SharedDataService } from 'src/app/core/service/shared-data.service';
@@ -24,6 +24,8 @@ export class AdminComponent implements OnInit {
   pageSize: number = 10;
   totalCount: number = 0;
 
+  adminRoles = [AdminRoles.SuperAdmin, AdminRoles.Admin, AdminRoles.CorporateAdmin, AdminRoles.Analyst];
+
   constructor(
     private dataService: DataService,
     private sharedData: SharedDataService,
@@ -35,6 +37,11 @@ export class AdminComponent implements OnInit {
       (userData) => {
         this.sharedUserData._id = userData._id;
         this.sharedUserData.accessToken = userData.accessToken;
+        this.sharedUserData.role = userData.role;
+        this.sharedUserData.isSuperAdmin = userData.isSuperAdmin;
+        this.sharedUserData.isAdmin = userData.isAdmin;
+        this.sharedUserData.isCorporateAdmin = userData.isCorporateAdmin;
+        this.sharedUserData.isAnalystAdmin = userData.isAnalystAdmin;
       }
     );
   }
@@ -69,7 +76,8 @@ export class AdminComponent implements OnInit {
       phone: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
-      gender: ['', Validators.required]
+      gender: ['', Validators.required],
+      role: ['', Validators.required]
     });
   }
 

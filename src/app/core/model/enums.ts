@@ -69,3 +69,10 @@ export enum EmergencyType{
     Maintenance = 'maintenance',
     Emergency = 'emergency',
 }
+
+export enum AdminRoles{
+    SuperAdmin = 'superAdmin',
+    Admin = 'admin',
+    CorporateAdmin = 'corporateAdmin',
+    Analyst = 'analyst',
+}

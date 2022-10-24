@@ -3,7 +3,7 @@
         Packages
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -36,7 +36,7 @@
                                 <th>
                                     Status
                                 </th>
-                                <th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
                             </tr>
@@ -63,7 +63,7 @@
                                         <label class="badge badge-dark">Inavtice</label>
                                     </ng-template>
                                 </td>
-                                <td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm"
                                         (click)="openAddModal(addModal, item)">Edit</button>
                                     <button type="button" class="btn btn-danger btn-sm"

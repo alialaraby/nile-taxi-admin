@@ -3,7 +3,7 @@
         Corporate Members
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -33,7 +33,7 @@
                                 <th>
                                     Phone
                                 </th>
-                                <th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
                             </tr>
@@ -59,7 +59,7 @@
                                 <td>
                                     {{ item.phone }}
                                 </td>
-                                <td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-danger btn-sm"
                                         (click)="openDeleteItem(deleteModal, item)">Delete</button>
                                 </td>

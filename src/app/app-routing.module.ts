@@ -17,31 +17,32 @@ import { DailyTripComponent } from './views/trip/daily-trip/daily-trip.component
 import { PrivateTripComponent } from './views/trip/private-trip/private-trip.component';
 import { TourCategoryComponent } from './views/trip/tour-category/tour-category.component';
 import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.component';
+import { AuthGuard } from './core/service/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user-pages/login', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'corporate-account', component: CorporateAccountComponent },
   { path: 'corporate-member/:_id', component: CorporateMemberComponent },
   
-  { path: 'pilot', component: PilotComponent },
-  { path: 'boat', component: BoatComponent },
-  { path: 'station', component: StationComponent },
-  { path: 'fuel-request', component: FuelRequestComponent },
-  { path: 'emergency', component: EmergencyComponent },
+  { path: 'pilot', component: PilotComponent, canActivate: [AuthGuard] },
+  { path: 'boat', component: BoatComponent, canActivate: [AuthGuard] },
+  { path: 'station', component: StationComponent, canActivate: [AuthGuard] },
+  { path: 'fuel-request', component: FuelRequestComponent, canActivate: [AuthGuard] },
+  { path: 'emergency', component: EmergencyComponent, canActivate: [AuthGuard] },
   
-  { path: 'tour-category', component: TourCategoryComponent },
-  { path: 'daily-trip', component: DailyTripComponent },
-  { path: 'private-trip', component: PrivateTripComponent },
+  { path: 'tour-category', component: TourCategoryComponent, canActivate: [AuthGuard] },
+  { path: 'daily-trip', component: DailyTripComponent, canActivate: [AuthGuard] },
+  { path: 'private-trip', component: PrivateTripComponent, canActivate: [AuthGuard] },
   
-  { path: 'passenger', component: PassengerComponent },
-  { path: 'student-request', component: StudentAccountComponent },
-  { path: 'complaint', component: ComplainComponent },
+  { path: 'passenger', component: PassengerComponent, canActivate: [AuthGuard] },
+  { path: 'student-request', component: StudentAccountComponent, canActivate: [AuthGuard] },
+  { path: 'complaint', component: ComplainComponent, canActivate: [AuthGuard] },
   
-  { path: 'promocode', component: PromocodeComponent },
-  { path: 'package', component: PackageComponent },
+  { path: 'promocode', component: PromocodeComponent, canActivate: [AuthGuard] },
+  { path: 'package', component: PackageComponent, canActivate: [AuthGuard] },
   { path: 'user-pages', loadChildren: () => import('./user-pages/user-pages.module').then(m => m.UserPagesModule) },
   
   { path: 'error-pages', loadChildren: () => import('./error-pages/error-pages.module').then(m => m.ErrorPagesModule) },

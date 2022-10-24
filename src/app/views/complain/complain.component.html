@@ -32,7 +32,7 @@
                                 <th>
                                     Date
                                 </th>
-                                <th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
                             </tr>
@@ -59,7 +59,7 @@
                                 <td>
                                     {{ item.createdAt | date:'MMM d, y, h:mm a' }}
                                 </td>
-                                <td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm"
                                         (click)="openResolveItem(resolveModal, item)">Resolve</button>
                                 </td>

@@ -3,7 +3,7 @@
         Promocodes
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -35,7 +35,7 @@
                                 <th>
                                     Validity Period
                                 </th>
-                                <th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
                             </tr>
@@ -57,7 +57,7 @@
                                 <td>
                                     {{ item.validFrom | date:'mediumDate' }} - {{ item.validTo | date:'mediumDate' }}
                                 </td>
-                                <td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm"
                                         (click)="openAddModal(addModal, item)">Edit</button>
                                     <button type="button" class="btn btn-danger btn-sm"

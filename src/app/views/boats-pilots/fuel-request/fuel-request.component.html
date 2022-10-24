@@ -41,7 +41,7 @@
                                 <th>
                                     Creation Date
                                 </th>
-                                <th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
                             </tr>
@@ -76,7 +76,7 @@
                                 <td>
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td>
-                                <td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm" [disabled]="item.isCompleted"
                                         (click)="openApproveModal(approveModal, item, true)">Approve</button>
                                     <button type="button" class="btn btn-danger btn-sm" [disabled]="item.isCompleted"

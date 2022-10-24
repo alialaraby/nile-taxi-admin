@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Admin } from "../model/admin";
+import { AdminRoles } from "../model/enums";
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +20,12 @@ export class SharedDataService {
                 new Admin(
                     localStorage.getItem('_id'), 
                     localStorage.getItem('accessToken'),
+                    localStorage.getItem('fullName'),
+                    localStorage.getItem('role') as AdminRoles,
+                    JSON.parse(localStorage.getItem('isSuperAdmin')),
+                    JSON.parse(localStorage.getItem('isAdmin')),
+                    JSON.parse(localStorage.getItem('isCorporateAdmin')),
+                    JSON.parse(localStorage.getItem('isAnalystAdmin')),
                 )
             );
             this.setauthenticated(true);

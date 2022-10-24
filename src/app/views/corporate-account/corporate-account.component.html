@@ -3,7 +3,7 @@
         Corporate Accounts
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" (click)="openAddModal(addModal)">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -39,7 +39,7 @@
                                 <th>
                                     Contact Person
                                 </th>
-                                <th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
                             </tr>
@@ -64,7 +64,7 @@
                                 <td>
                                     {{ item.contactPerson }} - {{ item.contactPersonPhone }}
                                 </td>
-                                <td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-info btn-sm"
                                         (click)="downloadContract(item)">Contract</button>
                                     <button type="button" class="btn btn-success btn-sm"

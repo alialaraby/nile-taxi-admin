@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Admin } from 'src/app/core/model/admin';
+import { SharedDataService } from 'src/app/core/service/shared-data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,9 +12,25 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 export class NavbarComponent implements OnInit {
   public iconOnlyToggled = false;
   public sidebarToggled = false;
+  sharedUserData: Admin = new Admin();
   
-  constructor(config: NgbDropdownConfig) {
+  constructor(
+    config: NgbDropdownConfig,
+    private sharedData: SharedDataService,
+    ) {
     config.placement = 'bottom-right';
+    this.sharedData.userData$.subscribe(
+      (userData) => {
+        this.sharedUserData._id = userData._id;
+        this.sharedUserData.accessToken = userData.accessToken;
+        this.sharedUserData.fullName = userData.fullName;
+        this.sharedUserData.role = userData.role;
+        this.sharedUserData.isSuperAdmin = userData.isSuperAdmin;
+        this.sharedUserData.isAdmin = userData.isAdmin;
+        this.sharedUserData.isCorporateAdmin = userData.isCorporateAdmin;
+        this.sharedUserData.isAnalystAdmin = userData.isAnalystAdmin;
+      }
+    );
   }
 
   ngOnInit() {

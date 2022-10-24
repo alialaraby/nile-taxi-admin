@@ -38,6 +38,11 @@ export class StudentAccountComponent implements OnInit {
       (userData) => {
         this.sharedUserData._id = userData._id;
         this.sharedUserData.accessToken = userData.accessToken;
+        this.sharedUserData.role = userData.role;
+        this.sharedUserData.isSuperAdmin = userData.isSuperAdmin;
+        this.sharedUserData.isAdmin = userData.isAdmin;
+        this.sharedUserData.isCorporateAdmin = userData.isCorporateAdmin;
+        this.sharedUserData.isAnalystAdmin = userData.isAnalystAdmin;
       }
     );
   }

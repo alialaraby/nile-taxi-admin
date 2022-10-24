@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     
-    <li class="nav-item" [ngClass]="{ 'active': dashboard.isActive }">
+    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{ 'active': dashboard.isActive }">
       <a class="nav-link" routerLink="/dashboard" routerLinkActive #dashboard="routerLinkActive">
         <span class="menu-title">Dashboard</span>
         <i class="mdi mdi-home menu-icon"></i>
@@ -9,7 +9,7 @@
     </li>
 
     <!-- Accounts -->
-    <li class="nav-item" [ngClass]="{'active' : admin.isActive || corporateAccount.isActive}">
+    <li class="nav-item" [ngClass]="{'active' : (admin && admin.isActive) || corporateAccount.isActive}">
       <a class="nav-link" (click)="accountsCollapsed = !accountsCollapsed" [attr.aria-expanded]="accountsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Accounts</span>
         <i class="menu-arrow"></i>
@@ -17,7 +17,7 @@
       </a>
       <div class="collapse" id="ui-basic" [ngbCollapse]="!accountsCollapsed">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" routerLink="/admin" routerLinkActive="active" #admin="routerLinkActive">Admins</a></li>
+          <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin"> <a class="nav-link" routerLink="/admin" routerLinkActive="active" #admin="routerLinkActive">Admins</a></li>
           <li class="nav-item"> <a class="nav-link" routerLink="/corporate-account" routerLinkActive="active" #corporateAccount="routerLinkActive">Corporate Accounts</a></li>
         </ul>
       </div>
@@ -25,7 +25,7 @@
     <!-- Accounts -->
     
     <!-- Boat Settings -->
-    <li class="nav-item" [ngClass]="{'active' : station.isActive || boat.isActive || pilot.isActive || fuelRequest.isActive}">
+    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : station.isActive || boat.isActive || pilot.isActive || fuelRequest.isActive}">
       <a class="nav-link" (click)="boatsCollapsed = !boatsCollapsed" [attr.aria-expanded]="boatsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Boats Settings</span>
         <i class="menu-arrow"></i>
@@ -44,7 +44,7 @@
     <!-- Boat Settings -->
 
     <!-- Passengers Settings -->
-    <li class="nav-item" [ngClass]="{'active' : passenger.isActive || complaint.isActive || studentRequests.isActive}">
+    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : passenger.isActive || complaint.isActive || studentRequests.isActive}">
       <a class="nav-link" (click)="passengersCollapsed = !passengersCollapsed" [attr.aria-expanded]="passengersCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Passengers Settings</span>
         <i class="menu-arrow"></i>
@@ -61,7 +61,7 @@
     <!-- Passengers Settings -->    
 
     <!-- Packages Settings -->    
-    <li class="nav-item" [ngClass]="{'active' : package.isActive || promocode.isActive}">
+    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : package.isActive || promocode.isActive}">
       <a class="nav-link" (click)="packagesCollapsed = !packagesCollapsed" [attr.aria-expanded]="packagesCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Packages Settings</span>
         <i class="menu-arrow"></i>
@@ -77,7 +77,7 @@
     <!-- Packages Settings -->    
 
     <!-- Trips Settings -->    
-    <li class="nav-item" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive }">
+    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive }">
       <a class="nav-link" (click)="tripsCollapsed = !tripsCollapsed" [attr.aria-expanded]="tripsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Trips</span>
         <i class="menu-arrow"></i>
