@@ -3,6 +3,7 @@ export class Constant {
     public static LOGIN = 'admin-login';
     public static GET_ADMINS = 'get-admins';
     public static ADD_ADMIN = 'add-admin';
+    public static ADMIN_RESET_PASSWORD = 'admin-reset-password';
 
     public static GET_PILOTS = 'get-pilots';
     public static GET_UNASSIGNED_PILOTS = 'get-unassigned-pilots';

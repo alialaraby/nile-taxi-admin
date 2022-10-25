@@ -4,7 +4,8 @@
     <a class="navbar-brand brand-logo-mini" routerLink="/"><img src="assets/images/navbar_logo.png" alt="logo" /></a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-stretch">
-    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" (click)="toggleSidebar()">
+    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize"
+      (click)="toggleSidebar()">
       <span class="mdi mdi-menu"></span>
     </button>
     <!-- <div class="search-field d-none d-md-block">
@@ -34,7 +35,11 @@
             Activity Log
           </a>
           <div class="dropdown-divider"></div> -->
-          <a class="dropdown-item" href="javascript:;">
+          <a class="dropdown-item" href="javascript:;" (click)="openResetPassword(resetPasswordModal)">
+            <i class="mdi mdi-key-variant mr-2 text-primary"></i>
+            Change Password
+          </a>
+          <a class="dropdown-item" href="javascript:;" (click)="logout()">
             <i class="mdi mdi-logout mr-2 text-primary"></i>
             Signout
           </a>
@@ -151,8 +156,40 @@
         </a>
       </li> -->
     </ul>
-    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" (click)="toggleOffcanvas()">
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+      (click)="toggleOffcanvas()">
       <span class="mdi mdi-menu"></span>
     </button>
   </div>
 </nav>
+
+<ng-template #resetPasswordModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Reset Password</h5>
+      <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body m-3">
+      
+      <div class="form-group">
+        <label for="oldPasswordControl">Old password</label>
+        <input type="password" class="form-control form-control-lg" id="oldPasswordControl" autocomplete="false" [formControl]="oldPasswordControl"
+          placeholder="Enter Old password.">
+      </div>
+
+      <div class="form-group">
+        <label for="newPasswordControl">New password</label>
+        <input type="password" class="form-control form-control-lg" id="newPasswordControl" autocomplete="false" [formControl]="newPasswordControl"
+          placeholder="Enter New password.">
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" [disabled]="newPasswordControl.invalid || newPasswordControl.invalid" (click)="resetPassword()">Save</button>
+        <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</ng-template>

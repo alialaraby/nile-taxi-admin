@@ -9,7 +9,7 @@
     </li>
 
     <!-- Accounts -->
-    <li class="nav-item" [ngClass]="{'active' : (admin && admin.isActive) || corporateAccount.isActive}">
+    <li class="nav-item" [ngClass]="{'active' : admin.isActive || corporateAccount.isActive}" *ngIf="!sharedUserData.isCorporateAdmin">
       <a class="nav-link" (click)="accountsCollapsed = !accountsCollapsed" [attr.aria-expanded]="accountsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Accounts</span>
         <i class="menu-arrow"></i>
@@ -17,7 +17,22 @@
       </a>
       <div class="collapse" id="ui-basic" [ngbCollapse]="!accountsCollapsed">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin"> <a class="nav-link" routerLink="/admin" routerLinkActive="active" #admin="routerLinkActive">Admins</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/admin" routerLinkActive="active" #admin="routerLinkActive">Admins</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/corporate-account" routerLinkActive="active" #corporateAccount="routerLinkActive">Corporate Accounts</a></li>
+        </ul>
+      </div>
+    </li>
+    <!-- Accounts -->
+
+    <!-- Accounts - corporate only -->
+    <li class="nav-item" [ngClass]="{'active' : corporateAccount.isActive}" *ngIf="sharedUserData.isCorporateAdmin">
+      <a class="nav-link" (click)="accountsCollapsed = !accountsCollapsed" [attr.aria-expanded]="accountsCollapsed" aria-controls="ui-basic">
+        <span class="menu-title">Accounts</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-account menu-icon"></i>
+      </a>
+      <div class="collapse" id="ui-basic" [ngbCollapse]="!accountsCollapsed">
+        <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" routerLink="/corporate-account" routerLinkActive="active" #corporateAccount="routerLinkActive">Corporate Accounts</a></li>
         </ul>
       </div>
