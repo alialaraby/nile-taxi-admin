@@ -141,7 +141,7 @@
 <ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel-2">Add Admin</h5>
+            <h5 class="modal-title" id="exampleModalLabel-2">Add Trip</h5>
             <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -179,14 +179,14 @@
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" (change)="OnChangeFile($event.target.files)"
-                                id="tourImage" aria-describedby="tourImage" placeholder="Enter Tour Image">
+                                id="tourImage" aria-describedby="tourImage" placeholder="Enter Tour Image" multiple>
                             <label class="custom-file-label" for="tourImage">{{shortImageName}}</label>
                         </div>
                     </div>
                 </div>
                 <!-- only tour related -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="pickupStation">Pickup station</label>
                     <select class="form-control" formControlName="pickupStation">
                         <option value="" selected>Pickup station</option>
@@ -199,14 +199,37 @@
                         <option value="" selected>Terminal station</option>
                         <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
                     </select>
-                </div>
+                </div> -->
 
-                <div class="form-group">
-                    <label for="terminalStation">Stations</label>
+                <!-- <div class="form-group">
+                    <label for="stations">Stations</label>
                     <ng-select [items]="stations" [multiple]="true" [closeOnSelect]="false" [searchable]="true"
                         bindLabel="name" formControlName="stations" placeholder="Select stations"
                         [(ngModel)]="selectedStations">
                     </ng-select>
+                </div> -->
+
+                <div class="form-group">
+                    <h2 class="divider-h2"><span>Stations</span></h2>
+                </div>
+
+                <div class="form-group">
+                    <ng-container formArrayName="stations2">
+                        <div *ngFor="let item of stations2.controls; index as i">
+                            <label for="stations2">Stations - {{ i + 1 }} <span class="text-danger">*</span></label>
+                           
+                            <div class="row m-0 mb-2">
+                                <select class="form-control col-10" [formControlName]="i">
+                                    <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
+                                </select>
+                                <i class="mdi mdi-close col-1 mt-2 text-danger" style="cursor: pointer;" (click)="removeFormField(i)"></i>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-warning btn-fw" (click)="addFormField()">Add station</button>
                 </div>
 
                 <div class="form-group">
@@ -263,7 +286,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid || stations2.invalid">Submit</button>
                     <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
                 </div>
             </form>
@@ -282,8 +305,8 @@
         </div>
         <div class="modal-body m-3">
             <div class="row">
-                <div class="col-md-12 text-center mb-4" *ngIf="selectedTripDetails.tourImage">
-                    <img [src]="selectedTripDetails.tourImage" alt="user image" class="item_image w-25 rounded"
+                <div class="col-md-12 text-center mb-4" *ngIf="selectedTripDetails.tourImage && selectedTripDetails.tourImage.length > 0">
+                    <img *ngFor="let image of selectedTripDetails.tourImage" [src]="image" alt="user image" class="item_image w-25 rounded"
                         onError="this.src='./assets/images/login-logo.png'">
                 </div>
                 <div class="col-md-12" *ngIf="selectedTripDetails.description">

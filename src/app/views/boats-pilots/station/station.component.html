@@ -27,6 +27,12 @@
                                     Station
                                 </th>
                                 <th>
+                                    Station Number
+                                </th>
+                                <th>
+                                    Zone
+                                </th>
+                                <th>
                                     Location
                                 </th>
                                 <th>
@@ -41,6 +47,12 @@
                             <tr *ngFor="let item of stations">
                                 <td>
                                     {{ item.name }}
+                                </td>
+                                <td>
+                                    {{ item.stationNumber }}
+                                </td>
+                                <td>
+                                    {{ item.zoneId }}
                                 </td>
                                 <td>
                                     {{ item.location.coordinates }}
@@ -79,6 +91,18 @@
                     <label for="name">Station name</label>
                     <input type="text" class="form-control form-control-lg" id="name" autocomplete="false"
                         formControlName="name" placeholder="Enter station name.">
+                </div>
+                <div class="form-group">
+                    <label for="stationNumber">Station number</label>
+                    <input type="text" class="form-control form-control-lg" id="stationNumber" autocomplete="false"
+                        formControlName="stationNumber" placeholder="Enter station number.">
+                </div>
+                <div class="form-group">
+                    <label for="zoneId">Station zone Id</label>
+                    <select class="form-control" formControlName="zoneId">
+                        <option value="" selected>Station zone</option>
+                        <option *ngFor="let zone of stationZones" [value]="zone">{{ zone }}</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="longitude">Longitude</label>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDateStruct, NgbModal, NgbTimepickerConfig, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, forkJoin } from 'rxjs';
 import { Admin } from 'src/app/core/model/admin';
@@ -35,6 +35,7 @@ export class DailyTripComponent implements OnInit {
   tripToEditId: string;
 
   addEditForm: FormGroup;
+  stations2: FormArray = new FormArray([], Validators.required);
 
   pageIndex: number = 1;
   pageSize: number = 10;
@@ -53,7 +54,7 @@ export class DailyTripComponent implements OnInit {
 
   selectedStations: any[];
   shortImageName: string = 'Enter Image';
-  fileToUpload: File = null;
+  fileToUpload: File[] = null;
 
   constructor(
     private tripService: TripService,
@@ -99,6 +100,7 @@ export class DailyTripComponent implements OnInit {
     this.tripService.getTrips(Constant.GET_TRIPS, types, pageIndex, pageSize, categoryId)
       .subscribe(
         (res: any) => {
+          debugger
           this.trips = res.items;
           this.totalCount = res.count;
           this.gettingData = false;
@@ -121,6 +123,9 @@ export class DailyTripComponent implements OnInit {
               this._responseHandler.HandleSuccess(res, ResponseActionType.Updated);
               this.getAll();
               this.modalService.dismissAll();
+              this.fileToUpload = null;
+              this.shortImageName = 'Enter Image';
+              this.stations2 = new FormArray([], Validators.required);
             },
             (error) => {
               this.gettingData = false;
@@ -135,6 +140,9 @@ export class DailyTripComponent implements OnInit {
               this._responseHandler.HandleSuccess(res, ResponseActionType.Added);
               this.getAll();
               this.modalService.dismissAll();
+              this.fileToUpload = null;
+              this.shortImageName = 'Enter Image';
+              this.stations2 = new FormArray([], Validators.required);
             },
             (error) => {
               this.gettingData = false;
@@ -167,6 +175,10 @@ export class DailyTripComponent implements OnInit {
       this.isEditItem = true;
       this.tripToEditId = itemToEdit._id;
       this.buildForm(itemToEdit);
+
+      for (let i = 0; i < itemToEdit.stations.length; i++) {
+        this.addFormField(itemToEdit.stations[i]._id)
+      }
     } else {
       this.isEditItem = false;
       this.buildForm();
@@ -187,19 +199,22 @@ export class DailyTripComponent implements OnInit {
     this.addEditForm = this.fb.group({
       code: [itemToEdit ? itemToEdit.code : '', Validators.required],
       type: [itemToEdit ? itemToEdit.type : '', Validators.required],
-      pickupStation: [itemToEdit ? itemToEdit.pickupStation._id : '', Validators.required],
-      terminalStation: [itemToEdit ? itemToEdit.terminalStation._id : '', Validators.required],
+      // pickupStation: [itemToEdit ? itemToEdit.pickupStation._id : '', Validators.required],
+      // terminalStation: [itemToEdit ? itemToEdit.terminalStation._id : '', Validators.required],
       pilot: [itemToEdit ? itemToEdit.pilot._id : '', Validators.required],
       price: [itemToEdit ? itemToEdit.price : '', Validators.required],
       pickupDate: ['', Validators.required],
       pickupTime: ['', Validators.required],
       terminalDate: ['', Validators.required],
       terminalTime: ['', Validators.required],
-      stations: ['', Validators.required],
+      // stations: ['', Validators.required],
+      stations2: new FormArray([], Validators.required),
       description: [itemToEdit ? itemToEdit.description : ''],
       tourImage: [itemToEdit ? itemToEdit.tourImage : ''],
-      tripCategory: [itemToEdit ? itemToEdit.category._id : ''],
+      tripCategory: [itemToEdit ? itemToEdit?.category?._id : ''],
     });
+
+    this.stations2 = this.addEditForm.get('stations2') as FormArray;
   }
 
   openDeleteItem(modal: any, item: ITrip) {
@@ -212,19 +227,17 @@ export class DailyTripComponent implements OnInit {
     formData.append('_id', this.tripToEditId ? this.tripToEditId : null);
     formData.append('code', form.get('code').value);
     formData.append('type', form.get('type').value);
-    formData.append('pickupStation', form.get('pickupStation').value);
-    formData.append('terminalStation', form.get('terminalStation').value);
     formData.append('pilot', form.get('pilot').value);
     formData.append('price', form.get('price').value);
     formData.append('description', form.get('description').value);
-    formData.append(
-      'stations',
-      JSON.stringify(
-        this.selectedStations.map((x, index) => {
-          return { stationId: x._id, order: index + 1 }
-        })
-      )
-    );
+    // formData.append(
+    //   'stations',
+    //   JSON.stringify(
+    //     this.selectedStations.map((x, index) => {
+    //       return { stationId: x._id, order: index + 1 }
+    //     })
+    //   )
+    // );
     formData.append('pickupDateYear', this.pickupDateModel.year.toString());
     formData.append('pickupDateMonth', this.pickupDateModel.month.toString());
     formData.append('pickupDateDay', this.pickupDateModel.day.toString());
@@ -238,36 +251,17 @@ export class DailyTripComponent implements OnInit {
     formData.append('terminalDateMinute', this.terminalTime.minute.toString());
     formData.append('tripCategory', (form.get('type').value == TripTypes.Tour) ? form.get('tripCategory').value : null);
 
-    if(this.fileToUpload !== null)
-      formData.append('tourImage', this.fileToUpload, this.fileToUpload.name);
+    if(this.fileToUpload){
+      for (let i = 0; i < this.fileToUpload.length; i++) {
+        formData.append('tourImage', this.fileToUpload[i], this.fileToUpload[i].name);
+      }
+    }
 
+    let stations2 = this.extractStationsData(form.get('stations2').value);
+    formData.append('stations', JSON.stringify(stations2.map((x, index) => { return { stationId: x, order: index + 1 } })));
 
-    // let model = {
-    //   _id: this.tripToEditId ? this.tripToEditId : null,
-    //   code: form.get('code').value,
-    //   type: form.get('type').value,
-    //   pickupStation: form.get('pickupStation').value,
-    //   terminalStation: form.get('terminalStation').value,
-    //   pilot: form.get('pilot').value,
-    //   price: form.get('price').value,
-    //   description: form.get('description').value,
-    //   stations: this.selectedStations.map((x, index) => {
-    //     return { stationId: x._id, order: index + 1 }
-    //   }),
-
-    //   pickupDateYear: this.pickupDateModel.year,
-    //   pickupDateMonth: this.pickupDateModel.month,
-    //   pickupDateDay: this.pickupDateModel.day,
-    //   pickupDateHour: this.pickupTime.hour,
-    //   pickupDateMinute: this.pickupTime.minute,
-
-    //   terminalDateYear: this.terminalDateModel.year,
-    //   terminalDateMonth: this.terminalDateModel.month,
-    //   terminalDateDay: this.terminalDateModel.day,
-    //   terminalDateHour: this.terminalTime.hour,
-    //   terminalDateMinute: this.terminalTime.minute,
-    //   tripCategory: (form.get('type').value == TripTypes.Tour) ? form.get('tripCategory').value : null
-    // };
+    formData.append('pickupStation', stations2[0]);
+    formData.append('terminalStation', stations2[stations2.length - 1]);
 
     return formData;
   }
@@ -294,10 +288,10 @@ export class DailyTripComponent implements OnInit {
     this.getAll(this.pageIndex - 1, this.pageSize);
   }
 
-  OnChangeFile(files: FileList) {
-    this.fileToUpload = files.item(0);
-    this.addEditForm.get('tourImage').setValue(environment.baseUrl + this.fileToUpload.name)
-    this.shortImageName = this.fileToUpload.name;
+  OnChangeFile(files: File[]) {
+    this.fileToUpload = files;
+    // this.addEditForm.get('tourImage').setValue(environment.baseUrl + this.fileToUpload.name)
+    this.shortImageName = 'Image(s) added';
   }
 
   openTripDetails(modal: any, trip: ITrip) {
@@ -308,4 +302,22 @@ export class DailyTripComponent implements OnInit {
   pageChange(pageIndex: number) {
     this.getAll(pageIndex - 1);
   }
+
+  addFormField(con1 = '') {
+    const control1 = new FormControl(con1, Validators.required);
+    this.stations2.push(control1);
+  }
+
+  removeFormField(index: number) {
+    this.stations2.removeAt(index);
+  }
+
+  extractStationsData(stations: string[]) {
+    let values: string[] = [];
+    stations.forEach(element => {
+      values.push(element);
+    });
+    return values;
+  }
+
 }

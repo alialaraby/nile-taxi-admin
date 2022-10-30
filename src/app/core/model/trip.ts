@@ -20,7 +20,7 @@ export interface ITrip {
     currentStation: IStation;
     category: ITripCategory;
     description: string;
-    tourImage: string;
+    tourImage: string[];
     passengersReservingTrip: number; // No. of passengers reserving this trip
     onBoardedPassengers: number; // counts No. of passengers getting on the boat during the trip
     isFull: boolean;

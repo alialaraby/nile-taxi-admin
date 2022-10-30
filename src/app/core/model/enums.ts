@@ -76,3 +76,20 @@ export enum AdminRoles{
     CorporateAdmin = 'corporateAdmin',
     Analyst = 'analyst',
 }
+
+export enum StationZones{
+    Z1 = 'Z1',
+    Z2 = 'Z2',
+    Z3 = 'Z3',
+    Z4 = 'Z4',
+    Z5 = 'Z5',
+    Z6 = 'Z6',
+    Z7 = 'Z7',
+    Z8 = 'Z8',
+    Z9 = 'Z9',
+    Z10 = 'Z10',
+    Z11 = 'Z11',
+    Z12 = 'Z12',
+    Z13 = 'Z13',
+    Z14 = 'Z14',
+}

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
-import { ResponseActionType } from 'src/app/core/model/enums';
+import { ResponseActionType, StationZones } from 'src/app/core/model/enums';
 import { IStation } from 'src/app/core/model/station';
 import { DataService } from 'src/app/core/service/data.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
@@ -24,6 +24,8 @@ export class StationComponent implements OnInit {
   sharedUserData: Admin = new Admin();
   gettingData: boolean = true;
   addEditForm: FormGroup;
+
+  stationZones: StationZones[] = Object.values(StationZones);
 
   pageIndex: number = 1;
   pageSize: number = 10;
@@ -88,6 +90,8 @@ export class StationComponent implements OnInit {
   buildForm(itemToEdit?: IStation) {
     this.addEditForm = this.fb.group({
       name: [itemToEdit ? itemToEdit.name : '', Validators.required],
+      stationNumber: [itemToEdit ? itemToEdit.stationNumber : '', Validators.required],
+      zoneId: [itemToEdit ? itemToEdit.zoneId : '', Validators.required],
       longitude: [itemToEdit ? itemToEdit.location.coordinates[0] : '', Validators.required],
       latitude: [itemToEdit ? itemToEdit.location.coordinates[1] : '', Validators.required],
     });
@@ -133,6 +137,8 @@ export class StationComponent implements OnInit {
     let model = {
       _id: this.stationToEditId ? this.stationToEditId : null,
       name: form.get('name').value,
+      stationNumber: form.get('stationNumber').value,
+      zoneId: form.get('zoneId').value,
       longitude: +form.get('longitude').value,
       latitude: +form.get('latitude').value,
     };
