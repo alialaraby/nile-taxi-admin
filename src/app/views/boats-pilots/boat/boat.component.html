@@ -22,15 +22,60 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
-                            <tr>
+                            <tr class="text-capitalize">
+                                <!-- <th>
+                                    image
+                                </th> -->
                                 <th>
                                     Name
                                 </th>
-                                <!-- <th>
+                                <th>
+                                    type
+                                </th>
+                                <th>
                                     Model
-                                </th> -->
+                                </th>
+                                <th>
+                                    modelYear
+                                </th>
                                 <th>
                                     Serial
+                                </th>
+                                <th>
+                                    launchDate
+                                </th>
+                                <th>
+                                    length
+                                </th>
+                                <th>
+                                    beam
+                                </th>
+                                <th>
+                                    license
+                                </th>
+                                <th>
+                                    licenseRenewalDate
+                                </th>
+                                <th>
+                                    engineBrand
+                                </th>
+                                <th>
+                                    engineModel
+                                </th>
+                                <th>
+                                    engineModelYear
+                                </th>
+                                <th>
+                                    engineSerial
+                                </th>
+                                <th>
+                                    engineHours
+                                </th>
+                                <th>
+                                    topSpeed
+                                </th>
+                                <th>
+                                    averageSpeed
                                 </th>
                                 <th>
                                     Capacity
@@ -38,15 +83,24 @@
                                 <th>
                                     Skipper
                                 </th>
-                                <!-- <th>
+                                <th>
+                                    fuelCapacity
+                                </th>
+                                <th>
+                                    fuelType
+                                </th>
+                                <th>
+                                    expectedFuelConsumption
+                                </th>
+                                <th>
                                     Maint. At
                                 </th>
                                 <th>
                                     Maint. (km)s
-                                </th> -->
-                                <!-- <th>
+                                </th>
+                                <th>
                                     Travelled (km)
-                                </th> -->
+                                </th>
                                 <th>
                                     Status
                                 </th>
@@ -66,14 +120,59 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of boats">
+                                <!-- <td>
+                                    {{ item.image }}
+                                </td> -->
                                 <td>
                                     {{ item.boatName }}
                                 </td>
-                                <!-- <td>
+                                <td>
+                                    {{ item.type }}
+                                </td>
+                                <td>
                                     {{ item.model }}
-                                </td> -->
+                                </td>
+                                <td>
+                                    {{ item.modelYear }}
+                                </td>
                                 <td>
                                     {{ item.serial }}
+                                </td>
+                                <td>
+                                    {{ item.launchDate }}
+                                </td>
+                                <td>
+                                    {{ item.length }}
+                                </td>
+                                <td>
+                                    {{ item.beam }}
+                                </td>
+                                <td>
+                                    {{ item.license }}
+                                </td>
+                                <td>
+                                    {{ item.licenseRenewalDate }}
+                                </td>
+                                <td>
+                                    {{ item.engineBrand }}
+                                </td>
+                                <td>
+                                    {{ item.engineModel }}
+                                </td>
+                                <td>
+                                    {{ item.engineModelYear }}
+                                </td>
+                                <td>
+                                    {{ item.engineSerial }}
+                                </td>
+                                <td>
+                                    {{ item.engineHours }}
+                                </td>
+                                <td>
+                                    {{ item.topSpeed }}
+                                </td>
+                                <td>
+                                    {{ item.averageSpeed }}
                                 </td>
                                 <td>
                                     {{ item.capacity }}
@@ -81,7 +180,16 @@
                                 <td>
                                     {{ item.assignedPilotId ? item.assignedPilotId.fullName : 'Not Assigned' }}
                                 </td>
-                                <!-- <td>
+                                <td>
+                                    {{ item.fuelCapacity }}
+                                </td>
+                                <td>
+                                    {{ item.fuelType }}
+                                </td>
+                                <td>
+                                    {{ item.expectedFuelConsumption }}
+                                </td>
+                                <td>
                                     <ng-container *ngIf="item.lastMaintenanceDate; else elseStillFreshTemplate">
                                         {{ item.lastMaintenanceDate | date:'mediumDate' }}
                                     </ng-container>
@@ -91,10 +199,10 @@
                                 </td>
                                 <td>
                                     {{ item.kilosNeededForMaintenance }}
-                                </td> -->
-                                <!-- <td>
+                                </td>
+                                <td>
                                     {{ item.kilosTravelled | number }}
-                                </td> -->
+                                </td>
                                 <td>
                                     <span [ngSwitch]="item.status">
                                         <label *ngSwitchCase="'ready'" class="badge badge-success">Ready</label>
@@ -121,7 +229,7 @@
                                 <!-- <td>
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td> -->
-                                <td *ngIf="!sharedUserData.isAnalystAdmin">
+                                <td *ngIf="!sharedUserData.isAnalystAdmin" style="display: inline-flex !important;">
                                     <button type="button" class="btn btn-warning btn-sm btn-p5 mt-2"
                                         (click)="openAddModal(addModal, item)">Edit</button>
                                     <button type="button" class="btn btn-danger btn-sm btn-p5 mt-2"
@@ -201,6 +309,85 @@
                         <option value="" selected>Fuel Type</option>
                         <option *ngFor="let type of fuelTypes" [value]="type">{{ type }}</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="expectedFuelConsumption">expectedFuelConsumption</label>
+                    <input type="number" class="form-control form-control-lg" id="expectedFuelConsumption" autocomplete="false"
+                        formControlName="expectedFuelConsumption" placeholder="Enter expectedFuelConsumption.">
+                </div>
+
+                <div class="form-group">
+                    <label for="type">type</label>
+                    <input type="text" class="form-control form-control-lg" id="type" autocomplete="false"
+                        formControlName="type" placeholder="Enter type.">
+                </div>
+                <div class="form-group">
+                    <label for="modelYear">modelYear</label>
+                    <input type="text" class="form-control form-control-lg" id="modelYear" autocomplete="false"
+                        formControlName="modelYear" placeholder="Enter modelYear.">
+                </div>
+                <div class="form-group">
+                    <label for="launchDate">launchDate</label>
+                    <input type="date" class="form-control form-control-lg" id="launchDate" autocomplete="false"
+                        formControlName="launchDate" placeholder="Enter launchDate.">
+                </div>
+
+                <div class="form-group">
+                    <label for="length">length</label>
+                    <input type="text" class="form-control form-control-lg" id="length" autocomplete="false"
+                        formControlName="length" placeholder="Enter length.">
+                </div>
+                <div class="form-group">
+                    <label for="beam">beam</label>
+                    <input type="text" class="form-control form-control-lg" id="beam" autocomplete="false"
+                        formControlName="beam" placeholder="Enter beam.">
+                </div>
+                <div class="form-group">
+                    <label for="license">license</label>
+                    <input type="text" class="form-control form-control-lg" id="license" autocomplete="false"
+                        formControlName="license" placeholder="Enter license.">
+                </div>
+                <div class="form-group">
+                    <label for="licenseRenewalDate">licenseRenewalDate</label>
+                    <input type="date" class="form-control form-control-lg" id="licenseRenewalDate" autocomplete="false"
+                        formControlName="licenseRenewalDate" placeholder="Enter licenseRenewalDate.">
+                </div>
+
+                <div class="form-group">
+                    <label for="engineBrand">engineBrand</label>
+                    <input type="text" class="form-control form-control-lg" id="engineBrand" autocomplete="false"
+                        formControlName="engineBrand" placeholder="Enter engineBrand.">
+                </div>
+                <div class="form-group">
+                    <label for="engineModel">engineModel</label>
+                    <input type="text" class="form-control form-control-lg" id="engineModel" autocomplete="false"
+                        formControlName="engineModel" placeholder="Enter engineModel.">
+                </div>
+                <div class="form-group">
+                    <label for="engineModelYear">engineModelYear</label>
+                    <input type="text" class="form-control form-control-lg" id="engineModelYear" autocomplete="false"
+                        formControlName="engineModelYear" placeholder="Enter engineModelYear.">
+                </div>
+                <div class="form-group">
+                    <label for="engineSerial">engineSerial</label>
+                    <input type="text" class="form-control form-control-lg" id="engineSerial" autocomplete="false"
+                        formControlName="engineSerial" placeholder="Enter engineSerial.">
+                </div>
+                <div class="form-group">
+                    <label for="engineHours">engineHours</label>
+                    <input type="text" class="form-control form-control-lg" id="engineHours" autocomplete="false"
+                        formControlName="engineHours" placeholder="Enter engineHours.">
+                </div>
+                <div class="form-group">
+                    <label for="topSpeed">topSpeed</label>
+                    <input type="text" class="form-control form-control-lg" id="topSpeed" autocomplete="false"
+                        formControlName="topSpeed" placeholder="Enter topSpeed.">
+                </div>
+                <div class="form-group">
+                    <label for="averageSpeed">averageSpeed</label>
+                    <input type="text" class="form-control form-control-lg" id="averageSpeed" autocomplete="false"
+                        formControlName="averageSpeed" placeholder="Enter averageSpeed.">
                 </div>
 
                 <div class="modal-footer">

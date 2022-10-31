@@ -14,7 +14,24 @@ export interface IBoat {
     assignedPilotId: IPilot;
     fuelCapacity: number;
     fuelType: FuelType;
+    expectedFuelConsumption: number;
     needsMaintenance: boolean;
     isActive: boolean;
     createdAt: Date;
+
+    type: string;
+    modelYear: string;
+    launchDate: string;
+    length: number;
+    beam: string;
+    license: string;
+    licenseRenewalDate: string;
+    image: string;
+    engineBrand: string;
+    engineModel: string;
+    engineModelYear: string;
+    engineSerial: string;
+    engineHours: number;
+    topSpeed: number;
+    averageSpeed: number;
 }

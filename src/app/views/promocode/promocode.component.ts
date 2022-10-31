@@ -105,6 +105,7 @@ export class PromocodeComponent implements OnInit {
       noOfRidesPerUser: [itemToEdit ? itemToEdit.noOfRidesPerUser : ''],
       discountPercentage: [itemToEdit ? itemToEdit.discountPercentage : '', Validators.required],
       type: [itemToEdit ? itemToEdit.type : '', Validators.required],
+      gender: [itemToEdit ? itemToEdit.gender : ''],
       validFrom: [''],
       validTo: [''],
     });
@@ -121,6 +122,7 @@ export class PromocodeComponent implements OnInit {
         noOfRidesPerUser: form.get('noOfRidesPerUser').value,
         discountPercentage: form.get('discountPercentage').value,
         type: form.get('type').value,
+        gender: form.get('gender').value,
   
         validFromDateYear: this.validFromDateModel.year,
         validFromDateMonth: this.validFromDateModel.month,
@@ -137,7 +139,8 @@ export class PromocodeComponent implements OnInit {
         noOfUsers: form.get('noOfUsers').value,
         noOfRidesPerUser: form.get('noOfRidesPerUser').value,
         discountPercentage: form.get('discountPercentage').value,
-        type: form.get('type').value
+        type: form.get('type').value,
+        gender: form.get('gender').value,
       };
     }
 

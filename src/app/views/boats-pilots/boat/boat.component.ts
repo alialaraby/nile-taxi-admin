@@ -100,6 +100,25 @@ export class BoatComponent implements OnInit {
       kilosNeededForMaintenance: [itemToEdit ? itemToEdit.kilosNeededForMaintenance : '', Validators.required],
       fuelCapacity: [itemToEdit ? itemToEdit.fuelCapacity : '', Validators.required],
       fuelType: [itemToEdit ? itemToEdit.fuelType : '', Validators.required],
+      expectedFuelConsumption: [itemToEdit ? itemToEdit.expectedFuelConsumption : ''],
+    
+      type: [itemToEdit ? itemToEdit.type : ''],
+      modelYear: [itemToEdit ? itemToEdit.modelYear : ''],
+      launchDate: [itemToEdit ? itemToEdit.launchDate : ''],
+    
+      length: [itemToEdit ? itemToEdit.length : ''],
+      beam: [itemToEdit ? itemToEdit.beam : ''],
+      license: [itemToEdit ? itemToEdit.license : ''],
+      licenseRenewalDate: [itemToEdit ? itemToEdit.licenseRenewalDate : ''],
+      
+      // image: [itemToEdit ? itemToEdit.image : '', Validators.required],
+      engineBrand: [itemToEdit ? itemToEdit.engineBrand : ''],
+      engineModel: [itemToEdit ? itemToEdit.engineModel : ''],
+      engineModelYear: [itemToEdit ? itemToEdit.engineModelYear : ''],
+      engineSerial: [itemToEdit ? itemToEdit.engineSerial : ''],
+      engineHours: [itemToEdit ? itemToEdit.engineHours : ''],
+      topSpeed: [itemToEdit ? itemToEdit.topSpeed : ''],
+      averageSpeed: [itemToEdit ? itemToEdit.averageSpeed : ''],
     });
   }
 
@@ -170,6 +189,24 @@ export class BoatComponent implements OnInit {
       kilosNeededForMaintenance: form.get('kilosNeededForMaintenance').value,
       fuelCapacity: form.get('fuelCapacity').value,
       fuelType: form.get('fuelType').value,
+      expectedFuelConsumption: form.get('expectedFuelConsumption').value,
+
+      type: form.get('type').value,
+      modelYear: form.get('modelYear').value,
+      launchDate: form.get('launchDate').value,
+
+      length: form.get('length').value,
+      beam: form.get('beam').value,
+      license: form.get('license').value,
+      licenseRenewalDate: form.get('licenseRenewalDate').value,
+
+      engineBrand: form.get('engineBrand').value,
+      engineModel: form.get('engineModel').value,
+      engineModelYear: form.get('engineModelYear').value,
+      engineSerial: form.get('engineSerial').value,
+      engineHours: form.get('engineHours').value,
+      topSpeed: form.get('topSpeed').value,
+      averageSpeed: form.get('averageSpeed').value,
     };
 
     return model;

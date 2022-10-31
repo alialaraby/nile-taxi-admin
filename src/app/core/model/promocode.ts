@@ -1,4 +1,4 @@
-import { PromocodeType } from "./enums";
+import { Genders, PromocodeType } from "./enums";
 
 export interface IPromocode {
     _id?: string;
@@ -20,4 +20,6 @@ export interface IPromocode {
     validToDateYear?: number;
     validToDateMonth?: number;
     validToDateDay?: number;
+    gender: Genders;
+
 }
