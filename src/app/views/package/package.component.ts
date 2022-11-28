@@ -5,6 +5,7 @@ import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
 import { ResponseActionType } from 'src/app/core/model/enums';
 import { IPackage } from 'src/app/core/model/package';
+import { IPriceMatrix } from 'src/app/core/model/price-matrix';
 import { DataService } from 'src/app/core/service/data.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
 import { SharedDataService } from 'src/app/core/service/shared-data.service';
@@ -17,6 +18,8 @@ import { SharedDataService } from 'src/app/core/service/shared-data.service';
 export class PackageComponent implements OnInit {
 
   packages: IPackage[] = [];
+  priceMatrix: IPriceMatrix[] = [];
+  matrixRow: any[] = [];
   selectedPackage: IPackage;
   isEditItem: boolean = false;
   packageToEditId: string;
@@ -51,6 +54,7 @@ export class PackageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+    this.getPriceMatrix();
   }
 
   getAll(pageIndex: number = 0, pageSize: number = 10) {
@@ -59,6 +63,20 @@ export class PackageComponent implements OnInit {
         (res: any) => {
           this.packages = res.items;
           this.totalCount = res.count;
+          this.gettingData = false;
+        },
+        (error) => {
+          this.gettingData = false;
+          this._responseHandler.HandelError(error);
+        }
+      );
+  }
+
+  getPriceMatrix() {
+    this.dataService.getPriceMatrix(Constant.GET_PRICE_MATRIX)
+      .subscribe(
+        (res: any) => {
+          this.priceMatrix = res.items;
           this.gettingData = false;
         },
         (error) => {
@@ -180,6 +198,39 @@ export class PackageComponent implements OnInit {
           this.gettingData = false;
           this._responseHandler.HandelError(error);
           this.modalService.dismissAll();
+        }
+      );
+  }
+
+  openPriceMatrix(modal) {
+    this.modalService.open(modal, { size: 'lg' });
+  }
+
+  changePrice(row, column, value){
+    let priceM: IPriceMatrix;
+    if(row == 4){
+      priceM = this.priceMatrix.find(x => x.name == 'zone 5A');
+      priceM.toZonesPrices[column] = value;
+    }else if(row == 5){
+      priceM = this.priceMatrix.find(x => x.name == 'zone 5B');
+      priceM.toZonesPrices[column] = value;
+    }else{
+      priceM = this.priceMatrix.find(x => x.name == `zone ${row + 1}`);
+      priceM.toZonesPrices[column] = value;
+    }
+    
+
+    this.dataService.update(Constant.UPDATE_PRICE_MATRIX, { item: priceM })
+      .subscribe(
+        (res: any) => {
+          this._responseHandler.HandleSuccess(res, ResponseActionType.Updated);
+          this.getPriceMatrix();
+          // this.modalService.dismissAll();
+        },
+        (error) => {
+          this.gettingData = false;
+          this._responseHandler.HandelError(error);
+          // this.modalService.dismissAll();
         }
       );
   }

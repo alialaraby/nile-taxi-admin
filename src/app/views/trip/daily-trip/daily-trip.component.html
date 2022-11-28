@@ -59,7 +59,7 @@
                                     From/To
                                 </th>
                                 <th>
-                                    Pilot
+                                    Skipper
                                 </th>
                                 <th>
                                     Price
@@ -233,9 +233,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="pilot">Pilot</label>
+                    <label for="pilot">Skipper</label>
                     <select class="form-control" formControlName="pilot">
-                        <option value="" selected>Pilot</option>
+                        <option value="" selected>Skipper</option>
                         <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
                     </select>
                 </div>

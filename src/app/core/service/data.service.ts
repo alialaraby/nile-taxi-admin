@@ -61,6 +61,11 @@ export class DataService {
             .pipe(catchError(this.handleError));
     }
 
+    public getPriceMatrix(url: string): Observable<Object> {
+        return this.http.get(environment.baseUrl + url)
+            .pipe(catchError(this.handleError));
+    }
+
     protected handleError(error: Response) {
 
         switch (error.status) {

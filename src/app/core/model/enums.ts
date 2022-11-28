@@ -78,18 +78,11 @@ export enum AdminRoles{
 }
 
 export enum StationZones{
-    Z1 = 'Z1',
-    Z2 = 'Z2',
-    Z3 = 'Z3',
-    Z4 = 'Z4',
-    Z5 = 'Z5',
-    Z6 = 'Z6',
-    Z7 = 'Z7',
-    Z8 = 'Z8',
-    Z9 = 'Z9',
-    Z10 = 'Z10',
-    Z11 = 'Z11',
-    Z12 = 'Z12',
-    Z13 = 'Z13',
-    Z14 = 'Z14',
+    zone_1 = 'zone 1',
+    zone_2 = 'zone 2',
+    zone_3 = 'zone 3',
+    zone_4 = 'zone 4',
+    zone_5A = 'zone 5A',
+    zone_5B = 'zone 5B',
+    zone_6 = 'zone 6',
 }

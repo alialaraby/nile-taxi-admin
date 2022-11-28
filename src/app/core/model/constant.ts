@@ -66,5 +66,7 @@ export class Constant {
 
     public static GET_EMERGENCIES = 'get-emergencies';
 
+    public static GET_PRICE_MATRIX = 'get-price-matrix';
+    public static UPDATE_PRICE_MATRIX = 'update-price-matrix';
 
 }

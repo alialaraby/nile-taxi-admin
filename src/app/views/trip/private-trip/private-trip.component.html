@@ -153,9 +153,9 @@
         <div class="modal-body m-3">
             <h3>Approve - {{ selectedRequest.passenger.fullName }} - trip request.</h3>
             <div class="form-group">
-                <label for="pilot">Choose Pilot</label>
+                <label for="pilot">Choose Skipper</label>
                 <select class="form-control" (change)="selectPilot($event.target.value)">
-                    <option value="" selected>Pilot</option>
+                    <option value="" selected>Skipper</option>
                     <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
                 </select>
             </div>

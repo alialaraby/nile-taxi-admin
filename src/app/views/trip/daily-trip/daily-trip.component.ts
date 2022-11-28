@@ -100,7 +100,6 @@ export class DailyTripComponent implements OnInit {
     this.tripService.getTrips(Constant.GET_TRIPS, types, pageIndex, pageSize, categoryId)
       .subscribe(
         (res: any) => {
-          debugger
           this.trips = res.items;
           this.totalCount = res.count;
           this.gettingData = false;

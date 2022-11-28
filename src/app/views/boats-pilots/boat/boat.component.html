@@ -290,9 +290,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="assignedPilotId">Pilot</label>
+                    <label for="assignedPilotId">Skipper</label>
                     <select class="form-control" formControlName="assignedPilotId">
-                        <option value="" selected>Pilot</option>
+                        <option value="" selected>Skipper</option>
                         <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
                     </select>
                 </div>
