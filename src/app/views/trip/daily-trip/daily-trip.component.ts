@@ -53,7 +53,7 @@ export class DailyTripComponent implements OnInit {
   selectedCategory: string;
 
   selectedStations: any[];
-  shortImageName: string = 'Enter Image';
+  shortImageName: string = 'Enter Image(s)';
   fileToUpload: File[] = null;
 
   constructor(
@@ -123,7 +123,7 @@ export class DailyTripComponent implements OnInit {
               this.getAll();
               this.modalService.dismissAll();
               this.fileToUpload = null;
-              this.shortImageName = 'Enter Image';
+              this.shortImageName = 'Enter Image(s)';
               this.stations2 = new FormArray([], Validators.required);
             },
             (error) => {
@@ -140,7 +140,7 @@ export class DailyTripComponent implements OnInit {
               this.getAll();
               this.modalService.dismissAll();
               this.fileToUpload = null;
-              this.shortImageName = 'Enter Image';
+              this.shortImageName = 'Enter Image(s)';
               this.stations2 = new FormArray([], Validators.required);
             },
             (error) => {
@@ -201,7 +201,7 @@ export class DailyTripComponent implements OnInit {
       // pickupStation: [itemToEdit ? itemToEdit.pickupStation._id : '', Validators.required],
       // terminalStation: [itemToEdit ? itemToEdit.terminalStation._id : '', Validators.required],
       pilot: [itemToEdit ? itemToEdit.pilot._id : '', Validators.required],
-      price: [itemToEdit ? itemToEdit.price : '', Validators.required],
+      price: [itemToEdit ? itemToEdit.price : '0'],
       pickupDate: ['', Validators.required],
       pickupTime: ['', Validators.required],
       terminalDate: ['', Validators.required],
