@@ -285,6 +285,14 @@
                     </div>
                 </div>
 
+                <div class="form-check form-check-flat form-check-warning">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" formControlName="isRepeatedDaily">
+                      Repeat daily
+                      <i class="input-helper"></i>
+                    </label>
+                  </div>
+
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid || stations2.invalid">Submit</button>
                     <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>

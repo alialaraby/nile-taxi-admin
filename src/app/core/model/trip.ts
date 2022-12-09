@@ -29,6 +29,7 @@ export interface ITrip {
     isActive: boolean;
     stations: any[];
     createdAt: Date;
+    isRepeatedDaily: boolean;
 
     pickupDateYear?: string;
     pickupDateMonth?: string;

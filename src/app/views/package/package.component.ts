@@ -208,31 +208,37 @@ export class PackageComponent implements OnInit {
 
   changePrice(row, column, value){
     let priceM: IPriceMatrix;
+    let oldValue;
     if(row == 4){
       priceM = this.priceMatrix.find(x => x.name == 'zone 5A');
+      oldValue = priceM.toZonesPrices[column];
       priceM.toZonesPrices[column] = value;
     }else if(row == 5){
       priceM = this.priceMatrix.find(x => x.name == 'zone 5B');
+      oldValue = priceM.toZonesPrices[column];
       priceM.toZonesPrices[column] = value;
     }else{
       priceM = this.priceMatrix.find(x => x.name == `zone ${row + 1}`);
+      oldValue = priceM.toZonesPrices[column];
       priceM.toZonesPrices[column] = value;
     }
     
-
-    this.dataService.update(Constant.UPDATE_PRICE_MATRIX, { item: priceM })
-      .subscribe(
-        (res: any) => {
-          this._responseHandler.HandleSuccess(res, ResponseActionType.Updated);
-          this.getPriceMatrix();
-          // this.modalService.dismissAll();
-        },
-        (error) => {
-          this.gettingData = false;
-          this._responseHandler.HandelError(error);
-          // this.modalService.dismissAll();
-        }
-      );
+    if(oldValue != value){
+      this.dataService.update(Constant.UPDATE_PRICE_MATRIX, { item: priceM })
+        .subscribe(
+          (res: any) => {
+            this._responseHandler.HandleSuccess(res, ResponseActionType.Updated);
+            this.getPriceMatrix();
+            // this.modalService.dismissAll();
+          },
+          (error) => {
+            this.gettingData = false;
+            this._responseHandler.HandelError(error);
+            // this.modalService.dismissAll();
+          }
+        );
+    }
+    
   }
 
 }

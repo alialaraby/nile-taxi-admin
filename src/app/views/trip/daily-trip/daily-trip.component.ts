@@ -211,6 +211,7 @@ export class DailyTripComponent implements OnInit {
       description: [itemToEdit ? itemToEdit.description : ''],
       tourImage: [itemToEdit ? itemToEdit.tourImage : ''],
       tripCategory: [itemToEdit ? itemToEdit?.category?._id : ''],
+      isRepeatedDaily: [itemToEdit ? itemToEdit?.isRepeatedDaily : false],
     });
 
     this.stations2 = this.addEditForm.get('stations2') as FormArray;
@@ -249,6 +250,7 @@ export class DailyTripComponent implements OnInit {
     formData.append('terminalDateHour', this.terminalTime.hour.toString());
     formData.append('terminalDateMinute', this.terminalTime.minute.toString());
     formData.append('tripCategory', (form.get('type').value == TripTypes.Tour) ? form.get('tripCategory').value : null);
+    formData.append('isRepeatedDaily', form.get('isRepeatedDaily').value);
 
     if(this.fileToUpload){
       for (let i = 0; i < this.fileToUpload.length; i++) {
