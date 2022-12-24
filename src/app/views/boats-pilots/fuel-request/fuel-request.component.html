@@ -27,6 +27,12 @@
                                     Skipper
                                 </th>
                                 <th>
+                                    Boat
+                                </th>
+                                <th>
+                                    Boat Serial
+                                </th>
+                                <th>
                                     Liters
                                 </th>
                                 <th>
@@ -50,6 +56,12 @@
                             <tr *ngFor="let item of fuelRequests">
                                 <td>
                                     {{ item.pilot.fullName }}
+                                </td>
+                                <td>
+                                    {{ item.pilot.boat.boatName }}
+                                </td>
+                                <td>
+                                    {{ item.pilot.boat.serial }}
                                 </td>
                                 <td>
                                     {{ item.liters }}
