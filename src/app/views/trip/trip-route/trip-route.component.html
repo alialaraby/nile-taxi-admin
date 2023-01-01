@@ -1,0 +1,301 @@
+<div class="page-header">
+    <h3 class="page-title">
+        Routes
+    </h3>
+    <nav aria-label="breadcrumb">
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin"
+            (click)="openAddModal(addModal)">Add</button>
+    </nav>
+</div>
+
+<ng-container *ngIf="gettingData; else elseFoundDataTemplate">
+    <loading-spinner></loading-spinner>
+</ng-container>
+<ng-template #elseFoundDataTemplate>
+    <empty-list *ngIf="tripRoutes.length <= 0"></empty-list>
+    <div class="col-lg-12 grid-margin stretch-card" *ngIf="tripRoutes.length > 0">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Routes List</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Stops
+                                </th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tripRoutes">
+                                <td>
+                                    {{ item.name }}
+                                </td>
+                                <td>
+                                    {{ item.ID }}
+                                </td>
+                                <td>
+                                    {{ item.description }}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
+                                        (click)="openTripDetails(moreModal, item)">Details</button>
+                                </td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin">
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                        (click)="openAddModal(addModal, item)">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        (click)="openDeleteItem(deleteModal, item)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)"
+        [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
+        aria-label="Default pagination"></ngb-pagination>
+
+</ng-template>
+
+<ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Add Route</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <form [formGroup]="addEditForm" class="pt-3" (ngSubmit)="add()">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control form-control-lg" id="name" autocomplete="false"
+                        formControlName="name" placeholder="Enter Name.">
+                </div>
+
+                <div class="form-group">
+                    <label for="ID">Route ID</label>
+                    <input type="text" class="form-control form-control-lg" id="ID" autocomplete="false"
+                        formControlName="ID" placeholder="Enter Route ID.">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">description</label>
+                    <input type="text" class="form-control form-control-lg" id="description" autocomplete="false"
+                        formControlName="description" placeholder="Enter description.">
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Route Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="OnChangeFile($event.target.files)"
+                                id="image" aria-describedby="image" placeholder="Enter route image" multiple>
+                            <label class="custom-file-label" for="image">{{shortImageName}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h2 class="divider-h2"><span>Stops</span></h2>
+                </div>
+
+                <div class="row ml-3" style="width: 105%;">
+                    <div class="form-group col-2 px-0">
+                        <ng-container formArrayName="stops">
+                            <div class="row m-0 w-100" *ngFor="let item of stops.controls; index as i">
+                                <label for="stops" class="d-block w-100">Stop - {{ i + 1 }} <span
+                                        class="text-danger">*</span></label>
+                                <div class="row w-100 m-0 mb-2">
+                                    <select class="form-control col-10" [formControlName]="i">
+                                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name
+                                            }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group col-3 px-0 stops-time-picker">
+                        <ng-container formArrayName="stopsArrivalTimes">
+                            <div class="row" *ngFor="let item of stopsArrivalTimes.controls; index as i">
+                                <div class="col-12">
+                                    <label for="stopsArrivalTimes">Arrival Time <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <ngb-timepicker meridian="true" [formControlName]="i"></ngb-timepicker>
+                                        <!-- <input type="text" class="form-control form-control-lg" autocomplete="false"
+                                            [formControlName]="i" placeholder="Enter Arrival Time."> -->
+                                    </div>
+                                </div>
+                                <!-- <div class="col-2">
+                                    <i class="mdi mdi-close text-danger d-inline-block" style="cursor: pointer; margin-top: 30px;" (click)="removeFormField(i)"></i>
+                                </div> -->
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group col-3 px-0 stops-time-picker">
+                        <ng-container formArrayName="stopsDepartureTimes">
+                            <div class="row" *ngFor="let item of stopsDepartureTimes.controls; index as i">
+                                <div class="col-12">
+                                    <label for="stopsDepartureTimes">Departure Time <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <ngb-timepicker meridian="true" [formControlName]="i"></ngb-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group col-2 px-0">
+                        <ng-container formArrayName="stopsHeadings">
+                            <div class="row m-0 w-100" *ngFor="let item of stopsHeadings.controls; index as i">
+                                <label for="stops" class="d-block w-100">Stop - {{ i + 1 }} - Heading <span
+                                        class="text-danger">*</span></label>
+                                <div class="row w-100 m-0 mb-2">
+                                    <select class="form-control col-10" [formControlName]="i">
+                                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name
+                                            }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group col-2 px-0">
+                        <ng-container formArrayName="timesBetweenStations">
+                            <div class="row" *ngFor="let item of timesBetweenStations.controls; index as i">
+                                <div class="col-9 px-0">
+                                    <label>Time Between Stations <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-lg" autocomplete="false"
+                                            [formControlName]="i" placeholder="Enter Time.">
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <i class="mdi mdi-close text-danger d-inline-block"
+                                        style="cursor: pointer; margin-top: 30px;" (click)="removeFormField(i)"></i>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-warning btn-fw" (click)="addFormField()">Add Stop</button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"
+                        [disabled]="addEditForm.invalid || stops.invalid || stopsArrivalTimes.invalid">Submit</button>
+                    <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Delete item</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            Confirm deleting item.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteItem()">Delete</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #moreModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content p-3">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">More details</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <div class="row">
+                <!-- <div class="col-md-12 text-center mb-4" *ngIf="selectedTripRouteDetails.image">
+                    <img [src]="selectedTripRouteDetails.image" alt="user image" class="item_image w-25 rounded" onError="this.src='./assets/images/login-logo.png'">
+                </div> -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Stop
+                                </th>
+                                <th>
+                                    Order
+                                </th>
+                                <th>
+                                    Arrival Time
+                                </th>
+                                <th>
+                                    Departure Time
+                                </th>
+                                <th>
+                                    Stop Heading
+                                </th>
+                                <th>
+                                    Time Between Stations
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of selectedTripRouteDetails.stops">
+                                <td>
+                                    {{ item.stop.name }}
+                                </td>
+                                <td>
+                                    {{ item.order }}
+                                </td>
+                                <td>
+                                    {{ formateTime(item.arrivalTime) }}
+                                </td>
+                                <td>
+                                    {{ formateTime(item.departureTime) }}
+                                </td>
+                                <td>
+                                    {{ item.stopHeading.name }}
+                                </td>
+                                <td>
+                                    {{ item.timeBetweenStations }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+
+    </div>
+</ng-template>

@@ -36,6 +36,7 @@ import { CorporateAccountComponent } from './views/corporate-account/corporate-a
 import { CorporateMemberComponent } from './views/corporate-account/corporate-member/corporate-member.component';
 import { StudentAccountComponent } from './views/passenger/student-account/student-account.component';
 import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.component';
+import { TripRouteComponent } from './views/trip/trip-route/trip-route.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.com
     CorporateMemberComponent,
     StudentAccountComponent,
     EmergencyComponent,
+    TripRouteComponent,
   ],
   imports: [
     BrowserModule,

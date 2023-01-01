@@ -69,4 +69,8 @@ export class Constant {
     public static GET_PRICE_MATRIX = 'get-price-matrix';
     public static UPDATE_PRICE_MATRIX = 'update-price-matrix';
 
+    public static GET_TRIP_ROUTES = 'get-trip-routes';
+    public static ADD_TRIP_ROUTE = 'add-trip-route';
+    public static UPDATE_TRIP_ROUTE = 'update-trip-route';
+
 }

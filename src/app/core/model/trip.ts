@@ -2,6 +2,7 @@ import { TripStatus, TripTypes } from "./enums";
 import { IPilot } from "./pilot";
 import { IStation } from "./station";
 import { ITripCategory } from "./tour-category";
+import { ITripRoute } from "./trip-route";
 
 export interface ITrip {
     _id?: string;
@@ -30,6 +31,7 @@ export interface ITrip {
     stations: any[];
     createdAt: Date;
     isRepeatedDaily: boolean;
+    route: ITripRoute;
 
     pickupDateYear?: string;
     pickupDateMonth?: string;

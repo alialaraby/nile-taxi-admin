@@ -18,6 +18,7 @@ import { PrivateTripComponent } from './views/trip/private-trip/private-trip.com
 import { TourCategoryComponent } from './views/trip/tour-category/tour-category.component';
 import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.component';
 import { AuthGuard } from './core/service/auth.guard';
+import { TripRouteComponent } from './views/trip/trip-route/trip-route.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user-pages/login', pathMatch: 'full' },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'tour-category', component: TourCategoryComponent, canActivate: [AuthGuard] },
   { path: 'daily-trip', component: DailyTripComponent, canActivate: [AuthGuard] },
   { path: 'private-trip', component: PrivateTripComponent, canActivate: [AuthGuard] },
+  { path: 'route', component: TripRouteComponent, canActivate: [AuthGuard] },
   
   { path: 'passenger', component: PassengerComponent, canActivate: [AuthGuard] },
   { path: 'student-request', component: StudentAccountComponent, canActivate: [AuthGuard] },

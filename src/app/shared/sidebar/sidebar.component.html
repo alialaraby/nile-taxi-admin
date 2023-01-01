@@ -92,15 +92,16 @@
     <!-- Packages Settings -->    
 
     <!-- Trips Settings -->    
-    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive }">
+    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive || tripRoute.isActive }">
       <a class="nav-link" (click)="tripsCollapsed = !tripsCollapsed" [attr.aria-expanded]="tripsCollapsed" aria-controls="ui-basic">
-        <span class="menu-title">Trips</span>
+        <span class="menu-title">Trips Settings</span>
         <i class="menu-arrow"></i>
         <i class="mdi mdi-crosshairs-gps menu-icon"></i>
       </a>
       <div class="collapse" id="ui-basic" [ngbCollapse]="!tripsCollapsed">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" routerLink="/tour-category" routerLinkActive="active" #tourCategory="routerLinkActive">Tour Categories</a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/route" routerLinkActive="active" #tripRoute="routerLinkActive">Trip Routes</a></li>
           <li class="nav-item"> <a class="nav-link" routerLink="/daily-trip" routerLinkActive="active" #dailyTrip="routerLinkActive">Trips</a></li>
           <li class="nav-item"> <a class="nav-link" routerLink="/private-trip" routerLinkActive="active" #privateTrip="routerLinkActive">Trip Requests</a></li>
           <!-- <li class="nav-item"> <a class="nav-link" routerLink="/tour" routerLinkActive="active" #tour="routerLinkActive">Tours</a></li> -->

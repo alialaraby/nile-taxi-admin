@@ -56,8 +56,11 @@
                                     Type
                                 </th>
                                 <th>
-                                    From/To
+                                    Route
                                 </th>
+                                <!-- <th>
+                                    From/To
+                                </th> -->
                                 <th>
                                     Skipper
                                 </th>
@@ -83,10 +86,13 @@
                                 <td>
                                     {{ item.type }} <span *ngIf="item.type == 'tour'"> - {{ item.category.name }}</span>
                                 </td>
-                                <td >
+                                <td>
+                                    {{ item.route.name }}
+                                </td>
+                                <!-- <td >
                                     <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
                                         (click)="openTripDetails(moreModal, item)">Details</button>
-                                </td>
+                                </td> -->
                                 <td>
                                     {{ item.pilot.fullName }}
                                 </td>
@@ -141,7 +147,7 @@
 <ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel-2">Add Trip</h5>
+            <h5 class="modal-title" id="exampleModalLabel-2">Add/Update Trip</h5>
             <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -186,33 +192,18 @@
                 </div>
                 <!-- only tour related -->
 
-                <!-- <div class="form-group">
-                    <label for="pickupStation">Pickup station</label>
-                    <select class="form-control" formControlName="pickupStation">
-                        <option value="" selected>Pickup station</option>
-                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
+                <div class="form-group">
+                    <label for="route">Route</label>
+                    <select class="form-control" formControlName="route">
+                        <option value="" selected>Trip Route</option>
+                        <option *ngFor="let route of tripRoutes" [value]="route._id">{{ route.name }}</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="terminalStation">Terminal station</label>
-                    <select class="form-control" formControlName="terminalStation">
-                        <option value="" selected>Terminal station</option>
-                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
-                    </select>
-                </div> -->
 
+                <!-- stations -->
                 <!-- <div class="form-group">
-                    <label for="stations">Stations</label>
-                    <ng-select [items]="stations" [multiple]="true" [closeOnSelect]="false" [searchable]="true"
-                        bindLabel="name" formControlName="stations" placeholder="Select stations"
-                        [(ngModel)]="selectedStations">
-                    </ng-select>
-                </div> -->
-
-                <div class="form-group">
                     <h2 class="divider-h2"><span>Stations</span></h2>
                 </div>
-
                 <div class="form-group">
                     <ng-container formArrayName="stations2">
                         <div *ngFor="let item of stations2.controls; index as i">
@@ -227,10 +218,10 @@
                         </div>
                     </ng-container>
                 </div>
-
                 <div class="form-group text-center">
                     <button type="button" class="btn btn-warning btn-fw" (click)="addFormField()">Add station</button>
-                </div>
+                </div> -->
+                <!-- stations -->
 
                 <div class="form-group">
                     <label for="pilot">Skipper</label>
@@ -245,7 +236,8 @@
                         formControlName="price" placeholder="Enter price.">
                 </div>
 
-                <div class="row">
+                <!-- pickup/terminal dates -->
+                <!-- <div class="row">
                     <div class="form-group col-md-8">
                         <label for="pickupDate">Pickup date</label>
                         <div class="input-group">
@@ -264,7 +256,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="form-group col-md-8">
                         <label for="terminalDate">Terminal date</label>
@@ -283,7 +274,8 @@
                             <ngb-timepicker [(ngModel)]="terminalTime" formControlName="terminalTime"></ngb-timepicker>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <!-- pickup/terminal dates -->
 
                 <div class="form-check form-check-flat form-check-warning">
                     <label class="form-check-label">
@@ -294,7 +286,8 @@
                   </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid || stations2.invalid">Submit</button>
+                    <!-- <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid || stations2.invalid">Submit</button> -->
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
                     <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
                 </div>
             </form>
