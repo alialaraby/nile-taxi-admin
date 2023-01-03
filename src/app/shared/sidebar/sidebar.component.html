@@ -1,15 +1,29 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     
-    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{ 'active': dashboard.isActive }">
+    <li class="nav-item" *ngIf="isAuthorized()" [ngClass]="{ 'active': dashboard.isActive }">
       <a class="nav-link" routerLink="/dashboard" routerLinkActive #dashboard="routerLinkActive">
         <span class="menu-title">Dashboard</span>
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
 
+    <li class="nav-item" *ngIf="isAuthorized()" [ngClass]="{ 'active': walkInUser.isActive }">
+      <a class="nav-link" routerLink="/walk-in-user" routerLinkActive #walkInUser="routerLinkActive">
+        <span class="menu-title">Walk-In User</span>
+        <i class="mdi mdi-account menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item" *ngIf="sharedUserData.isWalkInAdmin" [ngClass]="{ 'active': walkInUser.isActive }">
+      <a class="nav-link" routerLink="/walk-in-user" routerLinkActive #walkInUser="routerLinkActive">
+        <span class="menu-title">Walk-In User</span>
+        <i class="mdi mdi-account menu-icon"></i>
+      </a>
+    </li>
+
     <!-- Accounts -->
-    <li class="nav-item" [ngClass]="{'active' : admin.isActive || corporateAccount.isActive}" *ngIf="!sharedUserData.isCorporateAdmin">
+    <li class="nav-item" [ngClass]="{'active' : admin.isActive || corporateAccount.isActive}" *ngIf="isAuthorized()">
       <a class="nav-link" (click)="accountsCollapsed = !accountsCollapsed" [attr.aria-expanded]="accountsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Accounts</span>
         <i class="menu-arrow"></i>
@@ -40,7 +54,7 @@
     <!-- Accounts -->
     
     <!-- Boat Settings -->
-    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : station.isActive || boat.isActive || pilot.isActive || fuelRequest.isActive}">
+    <li class="nav-item" *ngIf="isAuthorized()" [ngClass]="{'active' : station.isActive || boat.isActive || pilot.isActive || fuelRequest.isActive}">
       <a class="nav-link" (click)="boatsCollapsed = !boatsCollapsed" [attr.aria-expanded]="boatsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Boats Settings</span>
         <i class="menu-arrow"></i>
@@ -59,7 +73,7 @@
     <!-- Boat Settings -->
 
     <!-- Passengers Settings -->
-    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : passenger.isActive || complaint.isActive || studentRequests.isActive}">
+    <li class="nav-item" *ngIf="isAuthorized()" [ngClass]="{'active' : passenger.isActive || complaint.isActive || studentRequests.isActive}">
       <a class="nav-link" (click)="passengersCollapsed = !passengersCollapsed" [attr.aria-expanded]="passengersCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Passengers Settings</span>
         <i class="menu-arrow"></i>
@@ -76,7 +90,7 @@
     <!-- Passengers Settings -->    
 
     <!-- Packages Settings -->    
-    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : package.isActive || promocode.isActive}">
+    <li class="nav-item" *ngIf="isAuthorized()" [ngClass]="{'active' : package.isActive || promocode.isActive}">
       <a class="nav-link" (click)="packagesCollapsed = !packagesCollapsed" [attr.aria-expanded]="packagesCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Packages Settings</span>
         <i class="menu-arrow"></i>
@@ -92,7 +106,7 @@
     <!-- Packages Settings -->    
 
     <!-- Trips Settings -->    
-    <li class="nav-item" *ngIf="!sharedUserData.isCorporateAdmin" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive || tripRoute.isActive }">
+    <li class="nav-item" *ngIf="isAuthorized()" [ngClass]="{'active' : dailyTrip.isActive || privateTrip.isActive || tourCategory.isActive || tripRoute.isActive }">
       <a class="nav-link" (click)="tripsCollapsed = !tripsCollapsed" [attr.aria-expanded]="tripsCollapsed" aria-controls="ui-basic">
         <span class="menu-title">Trips Settings</span>
         <i class="menu-arrow"></i>

@@ -75,6 +75,7 @@ export enum AdminRoles{
     Admin = 'admin',
     CorporateAdmin = 'corporateAdmin',
     Analyst = 'analyst',
+    WalkInAdmin = 'walkInAdmin',
 }
 
 export enum StationZones{

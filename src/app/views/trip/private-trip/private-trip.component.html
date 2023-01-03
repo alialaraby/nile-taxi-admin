@@ -153,10 +153,10 @@
         <div class="modal-body m-3">
             <h3>Approve - {{ selectedRequest.passenger.fullName }} - trip request.</h3>
             <div class="form-group">
-                <label for="pilot">Choose Skipper</label>
-                <select class="form-control" (change)="selectPilot($event.target.value)">
-                    <option value="" selected>Skipper</option>
-                    <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
+                <label for="boat">Choose Boat</label>
+                <select class="form-control" (change)="selectBoat($event.target.value)">
+                    <option value="" selected>Boat</option>
+                    <option *ngFor="let boat of boats" [value]="boat._id">{{ boat.boatName }}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -166,7 +166,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="approveRequest()">Approve</button>
+            <button type="button" class="btn btn-primary" [disabled]="sendingRequest" (click)="approveRequest()">Approve</button>
             <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
         </div>
     </div>

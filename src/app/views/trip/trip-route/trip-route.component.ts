@@ -189,7 +189,7 @@ export class TripRouteComponent implements OnInit {
     this.getAll(pageIndex - 1);
   }
 
-  addFormField(con1 = '', con2: any, con3: any, con4: any, con5 = '') {
+  addFormField(con1 = '', con2: any = '', con3: any = '', con4: any = '', con5 = '') {
     const control1 = new FormControl(con1, Validators.required);
     const control2 = new FormControl(con2, Validators.required);
     const control3 = new FormControl(con3, Validators.required);
@@ -278,6 +278,22 @@ export class TripRouteComponent implements OnInit {
 
   formateTimePart(timePart: number){
     return timePart < 10 ? `0${timePart}` : timePart
+  }
+
+  deleteItem() {
+    this.dataService.delete(Constant.DELETE_TRIP_ROUTE, { itemId: this.selectedTripRoute._id })
+      .subscribe(
+        (res: any) => {
+          this._responseHandler.HandleSuccess(res, ResponseActionType.Deleted);
+          this.getAll();
+          this.modalService.dismissAll();
+        },
+        (error) => {
+          this.gettingData = false;
+          this._responseHandler.HandelError(error);
+          this.modalService.dismissAll();
+        }
+      );
   }
 
 }

@@ -26,6 +26,7 @@ export class SharedDataService {
                     JSON.parse(localStorage.getItem('isAdmin')),
                     JSON.parse(localStorage.getItem('isCorporateAdmin')),
                     JSON.parse(localStorage.getItem('isAnalystAdmin')),
+                    JSON.parse(localStorage.getItem('isWalkInAdmin')),
                 )
             );
             this.setauthenticated(true);

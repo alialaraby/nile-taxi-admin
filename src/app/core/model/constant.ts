@@ -72,5 +72,6 @@ export class Constant {
     public static GET_TRIP_ROUTES = 'get-trip-routes';
     public static ADD_TRIP_ROUTE = 'add-trip-route';
     public static UPDATE_TRIP_ROUTE = 'update-trip-route';
+    public static DELETE_TRIP_ROUTE = 'delete-trip-route';
 
 }

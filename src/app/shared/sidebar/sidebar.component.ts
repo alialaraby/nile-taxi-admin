@@ -29,6 +29,7 @@ export class SidebarComponent implements OnInit {
         this.sharedUserData.isAdmin = userData.isAdmin;
         this.sharedUserData.isCorporateAdmin = userData.isCorporateAdmin;
         this.sharedUserData.isAnalystAdmin = userData.isAnalystAdmin;
+        this.sharedUserData.isWalkInAdmin = userData.isWalkInAdmin;
       }
     );
   }
@@ -49,6 +50,10 @@ export class SidebarComponent implements OnInit {
         }
       });
     });
+  }
+
+  isAuthorized(){
+    return !this.sharedUserData.isCorporateAdmin && !this.sharedUserData.isWalkInAdmin;
   }
 
 }

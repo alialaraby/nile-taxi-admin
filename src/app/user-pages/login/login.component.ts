@@ -51,6 +51,8 @@ export class LoginComponent implements OnInit {
             this.SetLocalStorageData(admin);
             if(admin.isCorporateAdmin)
               this.router.navigate(['/corporate-account']);
+            else if(admin.isWalkInAdmin)
+              this.router.navigate(['/walk-in-user']);
             else
               this.router.navigate(['/admin']);
 
@@ -80,6 +82,7 @@ export class LoginComponent implements OnInit {
     localStorage.setItem("isAdmin", data.isAdmin.toString());
     localStorage.setItem("isCorporateAdmin", data.isCorporateAdmin.toString());
     localStorage.setItem("isAnalystAdmin", data.isAnalystAdmin.toString());
+    localStorage.setItem("isWalkInAdmin", data.isWalkInAdmin.toString());
   }
 
   setRole(role: AdminRoles, admin: Admin) {
@@ -98,6 +101,10 @@ export class LoginComponent implements OnInit {
 
       case AdminRoles.Analyst:
         admin.isAnalystAdmin = true;
+        break;
+
+      case AdminRoles.WalkInAdmin:
+        admin.isWalkInAdmin = true;
         break;
     }
     return admin;

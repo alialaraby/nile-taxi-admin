@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
+import { IBoat } from 'src/app/core/model/boat';
 import { Constant } from 'src/app/core/model/constant';
 import { RequestedTripStatus, ResponseActionType, TripStatus, TripTypes } from 'src/app/core/model/enums';
 import { IPilot } from 'src/app/core/model/pilot';
@@ -18,8 +19,10 @@ import { SharedDataService } from 'src/app/core/service/shared-data.service';
 })
 export class PrivateTripComponent implements OnInit {
 
-  pilots: IPilot[] = [];
-  selectedPilotId: string = '';
+  // pilots: IPilot[] = [];
+  boats: IBoat[] = [];
+  // selectedPilotId: string = '';
+  selectedBoatId: string = '';
   selectedPrice: string = '';
   requestedTrips: IRequestedTrip[] = [];
   selectedTripDetails: IRequestedTrip;
@@ -40,6 +43,8 @@ export class PrivateTripComponent implements OnInit {
   selectedTypes = [TripTypes.Private, TripTypes.Pooling];
   tripStatuses = Object.values(RequestedTripStatus);
   selectedStatuses = Object.values(RequestedTripStatus);
+
+  sendingRequest: boolean = false;
 
   constructor(
     private requestedTripService: RequestedTripService,
@@ -66,9 +71,9 @@ export class PrivateTripComponent implements OnInit {
   }
 
   getInitialData() {
-    this.requestedTripService.getAll(Constant.GET_PILOTS).subscribe(
+    this.requestedTripService.getAll(Constant.GET_BOATS).subscribe(
       (res: any) => {
-        this.pilots = res.items;
+        this.boats = res.items;
       }
     )
   }
@@ -93,12 +98,12 @@ export class PrivateTripComponent implements OnInit {
       );
   }
 
-  selectPilot(pilotId: string) {
-    this.selectedPilotId = pilotId;
+  selectBoat(boatId: string) {
+    this.selectedBoatId =boatId;
   }
 
   openApproveModal(modal: any, item: IRequestedTrip) {
-    this.selectedPilotId = '';
+    this.selectedBoatId = '';
     this.selectedPrice = '';
     this.selectedRequest = item;
     this.modalService.open(modal, { size: 'md' });
@@ -114,15 +119,18 @@ export class PrivateTripComponent implements OnInit {
   }
 
   rejectRequest() {
+    this.sendingRequest = true;
     this.requestedTripService.approveReject(Constant.REJECT_REQUESTED_TRIP, { requestedTripId: this.selectedRequest._id })
       .subscribe(
         (res: any) => {
+          this.sendingRequest = false;
           this._responseHandler.HandleSuccess(res, ResponseActionType.Done);
           this.getAll();
           this.modalService.dismissAll();
         },
         (error) => {
           this.gettingData = false;
+          this.sendingRequest = false;
           this._responseHandler.HandelError(error);
           this.modalService.dismissAll();
         }
@@ -130,15 +138,18 @@ export class PrivateTripComponent implements OnInit {
   }
 
   approveRequest() {
-    this.requestedTripService.approveRequestedTrip(Constant.APPROVE_REQUESTED_TRIP, this.selectedRequest._id, this.selectedPilotId, +this.selectedPrice)
+    this.sendingRequest = true;
+    this.requestedTripService.approveRequestedTrip(Constant.APPROVE_REQUESTED_TRIP, this.selectedRequest._id, this.selectedBoatId, +this.selectedPrice)
       .subscribe(
         (res: any) => {
+          this.sendingRequest = false;
           this._responseHandler.HandleSuccess(res, ResponseActionType.Done);
           this.getAll();
           this.modalService.dismissAll();
         },
         (error) => {
           this.gettingData = false;
+          this.sendingRequest = false;
           this._responseHandler.HandelError(error);
           this.modalService.dismissAll();
         }

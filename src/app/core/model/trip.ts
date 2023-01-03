@@ -1,3 +1,4 @@
+import { IBoat } from "./boat";
 import { TripStatus, TripTypes } from "./enums";
 import { IPilot } from "./pilot";
 import { IStation } from "./station";
@@ -11,7 +12,8 @@ export interface ITrip {
     pickupStation: IStation;
     terminalStation: IStation;
     endStation: IStation;
-    pilot: IPilot;
+    // pilot: IPilot;
+    boat: IBoat;
     price: string;
     subPrice: string;
     discount: string;

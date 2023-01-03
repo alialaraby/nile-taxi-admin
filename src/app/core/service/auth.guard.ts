@@ -30,6 +30,7 @@ export class AuthGuard implements CanActivate {
         this.sharedUserData.isAdmin = userData.isAdmin;
         this.sharedUserData.isCorporateAdmin = userData.isCorporateAdmin;
         this.sharedUserData.isAnalystAdmin = userData.isAnalystAdmin;
+        this.sharedUserData.isWalkInAdmin = userData.isWalkInAdmin;
       }
     );
   }

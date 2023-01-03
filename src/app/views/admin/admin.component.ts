@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
   pageSize: number = 10;
   totalCount: number = 0;
 
-  adminRoles = [AdminRoles.SuperAdmin, AdminRoles.Admin, AdminRoles.CorporateAdmin, AdminRoles.Analyst];
+  adminRoles = [AdminRoles.SuperAdmin, AdminRoles.Admin, AdminRoles.CorporateAdmin, AdminRoles.Analyst, AdminRoles.WalkInAdmin];
 
   constructor(
     private dataService: DataService,
@@ -42,6 +42,7 @@ export class AdminComponent implements OnInit {
         this.sharedUserData.isAdmin = userData.isAdmin;
         this.sharedUserData.isCorporateAdmin = userData.isCorporateAdmin;
         this.sharedUserData.isAnalystAdmin = userData.isAnalystAdmin;
+        this.sharedUserData.isWalkInAdmin = userData.isWalkInAdmin;
       }
     );
   }

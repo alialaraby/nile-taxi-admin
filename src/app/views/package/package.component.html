@@ -67,8 +67,8 @@
                                 <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm"
                                         (click)="openAddModal(addModal, item)">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                        (click)="openDeleteItem(deleteModal, item)">Delete</button>
+                                    <!-- <button type="button" class="btn btn-danger btn-sm"
+                                        (click)="openDeleteItem(deleteModal, item)">Delete</button> -->
                                     <button type="button" class="btn btn-sm"
                                         [ngClass]="item.isActive ? 'btn-danger' : 'btn-dark'"
                                         (click)="openActivateItem(activateModal, item, !item.isActive)">

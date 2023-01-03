@@ -11,6 +11,7 @@ export class Admin {
         _isAdmin?: boolean,
         _isCorporateAdmin?: boolean,
         _isAnalystAdmin?: boolean,
+        _isWalkInAdmin?: boolean,
     ) {
         this._id = _id;
         this.accessToken = _accessToken;
@@ -20,6 +21,7 @@ export class Admin {
         this.isAdmin = _isAdmin || false;
         this.isCorporateAdmin = _isCorporateAdmin || false;
         this.isAnalystAdmin = _isAnalystAdmin || false;
+        this.isWalkInAdmin = _isWalkInAdmin || false;
     }
 
     _id: string;
@@ -37,4 +39,5 @@ export class Admin {
     isAdmin: boolean;
     isCorporateAdmin: boolean;
     isAnalystAdmin: boolean;
+    isWalkInAdmin: boolean;
 }

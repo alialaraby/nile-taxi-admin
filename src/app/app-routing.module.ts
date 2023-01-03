@@ -19,6 +19,7 @@ import { TourCategoryComponent } from './views/trip/tour-category/tour-category.
 import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.component';
 import { AuthGuard } from './core/service/auth.guard';
 import { TripRouteComponent } from './views/trip/trip-route/trip-route.component';
+import { WalkInUserComponent } from './views/walk-in-user/walk-in-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user-pages/login', pathMatch: 'full' },
@@ -45,6 +46,7 @@ const routes: Routes = [
   
   { path: 'promocode', component: PromocodeComponent, canActivate: [AuthGuard] },
   { path: 'package', component: PackageComponent, canActivate: [AuthGuard] },
+  { path: 'walk-in-user', component: WalkInUserComponent, canActivate: [AuthGuard] },
   { path: 'user-pages', loadChildren: () => import('./user-pages/user-pages.module').then(m => m.UserPagesModule) },
   
   { path: 'error-pages', loadChildren: () => import('./error-pages/error-pages.module').then(m => m.ErrorPagesModule) },

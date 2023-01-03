@@ -1,3 +1,4 @@
+import { IBoat } from "./boat";
 import { IPilot } from "./pilot";
 
 export interface IFuelRequest {
@@ -5,6 +6,7 @@ export interface IFuelRequest {
     liters: number;
     fuelRequestDate: Date;
     pilot: IPilot;
+    boat: IBoat;
     isAccepted: boolean;
     isCompleted: boolean;
     createdAt: Date;

@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { NgbDateStruct, NgbModal, NgbTimepickerConfig, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, forkJoin } from 'rxjs';
 import { Admin } from 'src/app/core/model/admin';
+import { IBoat } from 'src/app/core/model/boat';
 import { Constant } from 'src/app/core/model/constant';
 import { ResponseActionType, TripTypes } from 'src/app/core/model/enums';
 import { IPilot } from 'src/app/core/model/pilot';
@@ -26,7 +27,8 @@ export class DailyTripComponent implements OnInit {
   tripRoutes: ITripRoute[] = [];
 
   categories: ITripCategory[] = [];
-  pilots: IPilot[] = [];
+  // pilots: IPilot[] = [];
+  boats: IBoat[] = [];
   stations: IStation[] = [];
   trips: ITrip[] = [];
   sharedUserData: Admin = new Admin();
@@ -95,11 +97,12 @@ export class DailyTripComponent implements OnInit {
 
   getInitialData() {
     let getCategories = this.tripService.getAll(Constant.GET_TOURS_CATEGORIES);
-    let getPilots = this.tripService.getAll(Constant.GET_PILOTS);
+    // let getPilots = this.tripService.getAll(Constant.GET_PILOTS);
+    let getBoats = this.tripService.getAll(Constant.GET_BOATS);
     let getStations = this.tripService.getAll(Constant.GET_STATIONS);
-    forkJoin([getPilots, getStations, getCategories]).subscribe(
+    forkJoin([getBoats, getStations, getCategories]).subscribe(
       (res: any) => {
-        this.pilots = res[0].items;
+        this.boats = res[0].items;
         this.stations = res[1].items;
         this.categories = res[2].items;
       }
@@ -208,7 +211,8 @@ export class DailyTripComponent implements OnInit {
     this.addEditForm = this.fb.group({
       code: [itemToEdit ? itemToEdit.code : '', Validators.required],
       type: [itemToEdit ? itemToEdit.type : '', Validators.required],
-      pilot: [itemToEdit ? itemToEdit.pilot._id : '', Validators.required],
+      // pilot: [itemToEdit ? itemToEdit.pilot._id : '', Validators.required],
+      boat: [itemToEdit ? itemToEdit.boat._id : '', Validators.required],
       price: [itemToEdit ? itemToEdit.price : '0'],
       // pickupDate: ['', Validators.required],
       // pickupTime: ['', Validators.required],
@@ -235,7 +239,7 @@ export class DailyTripComponent implements OnInit {
     formData.append('_id', this.tripToEditId ? this.tripToEditId : null);
     formData.append('code', form.get('code').value);
     formData.append('type', form.get('type').value);
-    formData.append('pilot', form.get('pilot').value);
+    formData.append('boatId', form.get('boat').value);
     formData.append('price', form.get('price').value);
     formData.append('description', form.get('description').value);
     formData.append('route', form.get('route').value);

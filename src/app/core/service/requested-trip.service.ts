@@ -20,8 +20,8 @@ export class RequestedTripService extends DataService {
             .pipe(catchError(this.handleError));
     }
 
-    public approveRequestedTrip(url: string, requestedTripId: string, pilotId: string, price: number): Observable<Object> {
-        return this._http.post(environment.baseUrl + url, {requestedTripId, pilotId, price})
+    public approveRequestedTrip(url: string, requestedTripId: string, boatId: string, price: number): Observable<Object> {
+        return this._http.post(environment.baseUrl + url, {requestedTripId, boatId, price})
             .pipe(catchError(this.handleError));
     }
 
