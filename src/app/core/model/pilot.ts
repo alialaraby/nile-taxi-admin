@@ -16,7 +16,14 @@ export interface IPilot {
     // country: string;
     // city: string;
     gender: Genders;
-    // dateOfBirth: string;
+    dateOfBirth: string;
     // isDeleted: boolean;
     inBreak: boolean;
+
+    codeName: string;
+    username: string;
+    licenseType: string;
+    licenseNumber: string;
+    licenseIssuingDate: string;
+    licenseExpirationDate: string;
 }

@@ -36,7 +36,7 @@
                                     Model
                                 </th>
                                 <th>
-                                    modelYear
+                                    model Year
                                 </th>
                                 <th>
                                     Serial
@@ -54,28 +54,28 @@
                                     license
                                 </th>
                                 <th>
-                                    licenseRenewalDate
+                                    license Renewal Date
                                 </th>
                                 <th>
-                                    engineBrand
+                                    engine Brand
                                 </th>
                                 <th>
-                                    engineModel
+                                    engine Model
                                 </th>
                                 <th>
-                                    engineModelYear
+                                    engine Model Year
                                 </th>
                                 <th>
-                                    engineSerial
+                                    engine Serial
                                 </th>
                                 <th>
-                                    engineHours
+                                    engine Hours
                                 </th>
                                 <th>
-                                    topSpeed
+                                    top Speed
                                 </th>
                                 <th>
-                                    averageSpeed
+                                    average Speed
                                 </th>
                                 <th>
                                     Capacity
@@ -84,35 +84,29 @@
                                     Skipper
                                 </th>
                                 <th>
-                                    fuelCapacity
+                                    fuel Capacity
                                 </th>
                                 <th>
-                                    fuelType
+                                    fuel Type
                                 </th>
                                 <th>
-                                    expectedFuelConsumption
+                                    expected Fuel Consumption
                                 </th>
                                 <th>
                                     Maint. At
                                 </th>
                                 <th>
-                                    Maint. (km)s
+                                    Maint. (h)s
                                 </th>
                                 <th>
-                                    Travelled (km)
+                                    Traveled (h)s
                                 </th>
                                 <th>
-                                    Status
+                                    Maint. Status
                                 </th>
                                 <th>
                                     Needs Maint.
                                 </th>
-                                <!-- <th>
-                                    Active
-                                </th> -->
-                                <!-- <th>
-                                    Created
-                                </th> -->
                                 <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
                                 </th>
@@ -198,10 +192,10 @@
                                     </ng-template>
                                 </td>
                                 <td>
-                                    {{ item.kilosNeededForMaintenance }}
+                                    {{ item.hoursNeededForMaintenance }}
                                 </td>
                                 <td>
-                                    {{ item.kilosTravelled | number }}
+                                    {{ item.hoursTraveled | number }}
                                 </td>
                                 <td>
                                     <span [ngSwitch]="item.status">
@@ -283,10 +277,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="kilosNeededForMaintenance">kilos Needed For Maintenance</label>
-                    <input type="number" class="form-control form-control-lg" id="kilosNeededForMaintenance"
-                        autocomplete="false" formControlName="kilosNeededForMaintenance"
-                        placeholder="Enter maintenance kilos.">
+                    <label for="hoursNeededForMaintenance">hours Needed For Maintenance</label>
+                    <input type="number" class="form-control form-control-lg" id="hoursNeededForMaintenance"
+                        autocomplete="false" formControlName="hoursNeededForMaintenance"
+                        placeholder="Enter maintenance hours.">
                 </div>
 
                 <div class="form-group">

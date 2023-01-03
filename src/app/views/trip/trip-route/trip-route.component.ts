@@ -127,6 +127,7 @@ export class TripRouteComponent implements OnInit {
       ID: [itemToEdit ? itemToEdit.ID : '', Validators.required],
       image: [itemToEdit ? itemToEdit.image : ''],
       description: [itemToEdit ? itemToEdit.description : ''],
+      tourRoute: [itemToEdit ? itemToEdit?.tourRoute : false],
       stops: new FormArray([], Validators.required),
       stopsArrivalTimes: new FormArray([], Validators.required),
       stopsDepartureTimes: new FormArray([], Validators.required),
@@ -147,6 +148,7 @@ export class TripRouteComponent implements OnInit {
     formData.append('name', form.get('name').value);
     formData.append('ID', form.get('ID').value);
     formData.append('description', form.get('description').value);
+    formData.append('tourRoute', form.get('tourRoute').value);
 
     if(this.fileToUpload){
       formData.append('routeImage', this.fileToUpload[0], this.fileToUpload[0].name);

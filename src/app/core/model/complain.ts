@@ -7,4 +7,5 @@ export interface IComplain {
     isDeleted: boolean;
     isResolved: boolean;
     createdAt: Date;
+    updatedAt: Date;
 }

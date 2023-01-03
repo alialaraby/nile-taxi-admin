@@ -1,0 +1,70 @@
+<div class="page-header">
+    <h3 class="page-title">
+        Price Matrix
+    </h3>
+    <nav aria-label="breadcrumb">
+        <!-- <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin"
+            (click)="openPriceMatrix(priceMatrixModal)">Price Matrix</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin"
+            (click)="openAddModal(addModal)">Add</button> -->
+    </nav>
+</div>
+
+<ng-container *ngIf="gettingData; else elseFoundDataTemplate">
+    <loading-spinner></loading-spinner>
+</ng-container>
+<ng-template #elseFoundDataTemplate>
+    <empty-list *ngIf="priceMatrix.length <= 0"></empty-list>
+    <div class="col-lg-12 grid-margin stretch-card" *ngIf="priceMatrix.length > 0">
+        <div class="card">
+            <div class="card-body">
+                <p class="text-danger font-weight-bold">Enter the updated price and just click outside the field</p>
+
+                <div class="table-responsive">
+                    <table class="table table-striped matrix-table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>
+
+                                </th>
+                                <th>
+                                    Zone 1
+                                </th>
+                                <th>
+                                    Zone 2
+                                </th>
+                                <th>
+                                    Zone 3
+                                </th>
+                                <th>
+                                    Zone 4
+                                </th>
+                                <th>
+                                    Zone 5 A
+                                </th>
+                                <th>
+                                    Zone 5 B
+                                </th>
+                                <th>
+                                    Zone 6
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of priceMatrix; let i = index;">
+                                <th scope="row" class="px-0 text-center text-capitalize" style="width: 50px;">
+                                    {{ item.name }}
+                                </th>
+                                <td *ngFor="let price of item.toZonesPrices; let j = index;">
+                                    <input type="number" class="form-control form-control-lg"
+                                        (blur)="changePrice(i, j, $event.target.value)" #p{{i}}{{j}} id="{{i}}{{j}}"
+                                        value="{{price}}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

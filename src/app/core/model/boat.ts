@@ -8,8 +8,8 @@ export interface IBoat {
     model: string;
     capacity: number; // no. of seats in the boat
     lastMaintenanceDate: Date;
-    kilosNeededForMaintenance: number;
-    kilosTravelled: number;
+    hoursNeededForMaintenance: number;
+    hoursTraveled: number;
     status: BoatStatus;
     assignedPilotId: IPilot;
     fuelCapacity: number;

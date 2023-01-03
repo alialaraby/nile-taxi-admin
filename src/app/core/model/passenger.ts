@@ -20,6 +20,7 @@ export interface IPassenger {
     // password: string;
     passengerImage: string;
     corporateId?: ICorporateAccount;
+    lastTripDate: string;
     // lastOTPTime: Date;
     // isDeleted: boolean;
     // isVerified: boolean;

@@ -8,9 +8,13 @@ export class PilotWithBoat {
     email: string;
     phone: string;
     gender: Genders;
-    // boat: IBoat;
+    dateOfBirth: string;
+    inBreak: boolean;
 
-    // boatName: string;
-    // boatModel: string;
-    // boatCapacity: number; // no. of seats in the boat
+    codeName: string;
+    username: string;
+    licenseType: string;
+    licenseNumber: string;
+    licenseIssuingDate: string;
+    licenseExpirationDate: string;
 }

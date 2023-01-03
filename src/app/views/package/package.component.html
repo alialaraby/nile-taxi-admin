@@ -3,7 +3,7 @@
         Packages
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openPriceMatrix(priceMatrixModal)">Price Matrix</button>
+        <!-- <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openPriceMatrix(priceMatrixModal)">Price Matrix</button> -->
         <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
@@ -25,9 +25,9 @@
                                 <th>
                                     Package
                                 </th>
-                                <th>
+                                <!-- <th>
                                     # Rides
-                                </th>
+                                </th> -->
                                 <th>
                                     Price (EGP)
                                 </th>
@@ -47,9 +47,9 @@
                                 <td>
                                     {{ item.name }}
                                 </td>
-                                <td>
+                                <!-- <td>
                                     {{ item.noOfRides }}
-                                </td>
+                                </td> -->
                                 <td>
                                     {{ item.price }}
                                 </td>
@@ -103,11 +103,11 @@
                     <input type="text" class="form-control form-control-lg" id="name" autocomplete="false"
                         formControlName="name" placeholder="Enter package name.">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="noOfRides">Number of rides</label>
                     <input type="number" class="form-control form-control-lg" id="noOfRides" autocomplete="false"
                         formControlName="noOfRides" placeholder="Enter number of rides.">
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="price">Price (EGP)</label>
                     <input type="number" class="form-control form-control-lg" id="price" autocomplete="false"

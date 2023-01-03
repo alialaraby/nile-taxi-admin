@@ -38,6 +38,7 @@ import { StudentAccountComponent } from './views/passenger/student-account/stude
 import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.component';
 import { TripRouteComponent } from './views/trip/trip-route/trip-route.component';
 import { WalkInUserComponent } from './views/walk-in-user/walk-in-user.component';
+import { PriceMatrixComponent } from './views/price-matrix/price-matrix.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { WalkInUserComponent } from './views/walk-in-user/walk-in-user.component
     EmergencyComponent,
     TripRouteComponent,
     WalkInUserComponent,
+    PriceMatrixComponent,
   ],
   imports: [
     BrowserModule,

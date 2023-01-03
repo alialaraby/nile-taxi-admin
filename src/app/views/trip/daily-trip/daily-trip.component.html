@@ -161,7 +161,7 @@
                 </div>
                 <div class="form-group">
                     <label for="code">Type</label>
-                    <select class="form-control" formControlName="type">
+                    <select class="form-control" formControlName="type" (change)="chooseType($event.target.value)">
                         <option value="" selected>Trip Type</option>
                         <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
                     </select>
@@ -196,7 +196,7 @@
                     <label for="route">Route</label>
                     <select class="form-control" formControlName="route">
                         <option value="" selected>Trip Route</option>
-                        <option *ngFor="let route of tripRoutes" [value]="route._id">{{ route.name }}</option>
+                        <option *ngFor="let route of tripRoutesToView" [value]="route._id">{{ route.name }}</option>
                     </select>
                 </div>
 
@@ -277,7 +277,7 @@
                 </div> -->
                 <!-- pickup/terminal dates -->
 
-                <div class="form-check form-check-flat form-check-warning">
+                <div class="form-check form-check-flat form-check-warning" *ngIf="addEditForm && addEditForm.controls['type'].value != 'tour'">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" formControlName="isRepeatedDaily">
                       Repeat daily

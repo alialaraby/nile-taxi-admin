@@ -8,6 +8,7 @@ export interface ITripRoute {
     description: string;
     stops: IRouteStop[];
     
+    tourRoute: boolean;
     isDeleted: boolean;
     isActive: boolean;
 }

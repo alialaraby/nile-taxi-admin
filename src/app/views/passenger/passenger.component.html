@@ -55,6 +55,9 @@
                                     Type
                                 </th>
                                 <th>
+                                    Last Trip Date
+                                </th>
+                                <th>
                                     Creation Date
                                 </th>
                             </tr>
@@ -82,6 +85,9 @@
                                 </td>
                                 <td class="text-capitalize">
                                     {{ item.type }}
+                                </td>
+                                <td>
+                                    {{ item.lastTripDate | date:'mediumDate' }}
                                 </td>
                                 <td>
                                     {{ item.createdAt | date:'mediumDate' }}

@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
 import { IBoat } from 'src/app/core/model/boat';
 import { Constant } from 'src/app/core/model/constant';
@@ -32,6 +32,10 @@ export class PilotComponent implements OnInit {
   pageIndex: number = 1;
   pageSize: number = 10;
   totalCount: number = 0;
+
+  dateOfBirthDateModel: NgbDateStruct;
+  licenseIssuingDateModel: NgbDateStruct;
+  licenseExpirationDateModel: NgbDateStruct;
 
   constructor(
     private dataService: DataService,
@@ -73,16 +77,28 @@ export class PilotComponent implements OnInit {
   }
 
   buildForm(itemToEdit?: IPilot) {
+    if(itemToEdit) {
+      let dateOfBirth = new Date(itemToEdit.dateOfBirth);
+      let licenseIssuingDate = new Date(itemToEdit.licenseIssuingDate);
+      let licenseExpirationDate = new Date(itemToEdit.licenseExpirationDate);
+      this.dateOfBirthDateModel = { year: dateOfBirth.getFullYear(), month: dateOfBirth.getMonth() + 1, day: dateOfBirth.getDate() };
+      this.licenseIssuingDateModel = { year: licenseIssuingDate.getFullYear(), month: licenseIssuingDate.getMonth() + 1, day: licenseIssuingDate.getDate() };
+      this.licenseExpirationDateModel = { year: licenseExpirationDate.getFullYear(), month: licenseExpirationDate.getMonth() + 1, day: licenseExpirationDate.getDate() };
+    } 
+       
     this.addEditForm = this.fb.group({
       fullName: [itemToEdit ? itemToEdit.fullName : '', Validators.required],
       phone: [itemToEdit ? itemToEdit.phone : '', Validators.required],
       email: [itemToEdit ? itemToEdit.email : '', Validators.required],
       gender: [itemToEdit ? itemToEdit.gender : '', Validators.required],
-      // boat: [itemToEdit ? itemToEdit.boat._id : ''],
+      dateOfBirth: ['', Validators.required],
 
-      // boatName: [itemToEdit ? itemToEdit.boat.boatName : '', Validators.required],
-      // boatModel: [itemToEdit ? itemToEdit.boat.model : '', Validators.required],
-      // boatCapacity: [itemToEdit ? itemToEdit.boat.capacity : '', Validators.required],
+      codeName: [itemToEdit ? itemToEdit.codeName : '', Validators.required],
+      username: [itemToEdit ? itemToEdit.username : '', Validators.required],
+      licenseType: [itemToEdit ? itemToEdit.licenseType : '', Validators.required],
+      licenseNumber: [itemToEdit ? itemToEdit.licenseNumber : '', Validators.required],
+      licenseIssuingDate: ['', Validators.required],
+      licenseExpirationDate: ['', Validators.required],
     });
   }
 
@@ -152,12 +168,14 @@ export class PilotComponent implements OnInit {
     model.email = form.get('email').value;
     model.phone = form.get('phone').value;
     model.gender = form.get('gender').value;
-    // model.boat = form.get('boat').value;
-     
-    // if(this.boatToEditId) model.boatId = this.boatToEditId;
-    // model.boatName = form.get('boatName').value;
-    // model.boatModel = form.get('boatModel').value;
-    // model.boatCapacity = form.get('boatCapacity').value;
+
+    model.dateOfBirth = form.get('dateOfBirth').value;
+    model.codeName = form.get('codeName').value;
+    model.username = form.get('username').value;
+    model.licenseType = form.get('licenseType').value;
+    model.licenseNumber = form.get('licenseNumber').value;
+    model.licenseIssuingDate = form.get('licenseIssuingDate').value;
+    model.licenseExpirationDate = form.get('licenseExpirationDate').value;
     
     return model;
   }

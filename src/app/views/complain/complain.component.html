@@ -30,7 +30,10 @@
                                     Status
                                 </th>
                                 <th>
-                                    Date
+                                    Submitted At 
+                                </th>
+                                <th>
+                                    Solved At 
                                 </th>
                                 <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
@@ -57,7 +60,15 @@
                                     </ng-template>
                                 </td>
                                 <td>
-                                    {{ item.createdAt | date:'MMM d, y, h:mm a' }}
+                                    <!-- {{ item.createdAt | date:'MMM d, y, h:mm a' }} -->
+                                    {{ item.createdAt | date:'mediumDate' }}
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.isResolved; else elseNotResolvedDateTemplate">
+                                        {{ item.updatedAt | date:'mediumDate' }}
+                                    </ng-container>
+                                    <ng-template #elseNotResolvedDateTemplate>
+                                    </ng-template>
                                 </td>
                                 <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm"

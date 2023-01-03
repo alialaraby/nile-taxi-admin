@@ -27,6 +27,15 @@
                                     Full Name
                                 </th>
                                 <th>
+                                    Code Name
+                                </th>
+                                <th>
+                                    Username
+                                </th>
+                                <th>
+                                    Birth Date
+                                </th>
+                                <th>
                                     Email
                                 </th>
                                 <th>
@@ -36,7 +45,19 @@
                                     Boat
                                 </th>
                                 <th>
-                                    Creation Date
+                                    License Type
+                                </th>
+                                <th>
+                                    License #
+                                </th>
+                                <th>
+                                    License Issuing Date
+                                </th>
+                                <th>
+                                    License Expiration
+                                </th>
+                                <th>
+                                    Created At
                                 </th>
                                 <th *ngIf="!sharedUserData.isAnalystAdmin">
                                     Actions
@@ -59,6 +80,15 @@
                                     {{ item.fullName }}
                                 </td>
                                 <td>
+                                    {{ item.codeName }}
+                                </td>
+                                <td>
+                                    {{ item.username }}
+                                </td>
+                                <td>
+                                    {{ item.dateOfBirth | date:'mediumDate' }}
+                                </td>
+                                <td>
                                     {{ item.email }}
                                 </td>
                                 <td>
@@ -69,12 +99,24 @@
                                         (click)="openBoatDetails(boatModal, item.boat)">Details</button>
                                 </td>
                                 <td>
+                                    {{ item.licenseType }}
+                                </td>
+                                <td>
+                                    {{ item.licenseNumber }}
+                                </td>
+                                <td>
+                                    {{ item.licenseIssuingDate | date:'mediumDate' }}
+                                </td>
+                                <td>
+                                    {{ item.licenseExpirationDate | date:'mediumDate' }}
+                                </td>
+                                <td>
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td>
-                                <td *ngIf="!sharedUserData.isAnalystAdmin">
-                                    <button type="button" class="btn btn-warning btn-sm"
+                                <td *ngIf="!sharedUserData.isAnalystAdmin" style="display: inline-flex !important;">
+                                    <button type="button" class="btn btn-warning btn-sm btn-p5 mt-2"
                                         (click)="openAddModal(addModal, item)">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-sm"
+                                    <button type="button" class="btn btn-danger btn-sm btn-p5 mt-2"
                                         (click)="openDeleteItem(deleteModal, item)">Delete</button>
                                 </td>
                             </tr>
@@ -120,12 +162,12 @@
             </div>
             <div class="row">
                 <div class="col-sm-3">
-                    <h4 class="card-title font-weight-bold">(km)s For Maint.</h4>
-                    <p class="card-description text-muted">{{selectedBoat.kilosNeededForMaintenance}}</p>
+                    <h4 class="card-title font-weight-bold">(h)s For Maint.</h4>
+                    <p class="card-description text-muted">{{selectedBoat.hoursNeededForMaintenance}}</p>
                 </div>
                 <div class="col-sm-3">
-                    <h4 class="card-title font-weight-bold">Kilos Travelled</h4>
-                    <p class="card-description text-muted">{{selectedBoat.kilosTravelled | number}}</p>
+                    <h4 class="card-title font-weight-bold">Hours Traveled</h4>
+                    <p class="card-description text-muted">{{selectedBoat.hoursTraveled | number}}</p>
                 </div>
                 <div class="col-sm-3">
                     <h4 class="card-title font-weight-bold">Last Maintained At</h4>
@@ -193,6 +235,16 @@
                             formControlName="fullName" placeholder="Enter full name.">
                     </div>
                     <div class="form-group col-md-12">
+                        <label for="codeName">Code name</label>
+                        <input type="text" class="form-control form-control-lg" id="codeName" autocomplete="false"
+                            formControlName="codeName" placeholder="Enter Code name.">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control form-control-lg" id="username" autocomplete="false"
+                            formControlName="username" placeholder="Enter username.">
+                    </div>
+                    <div class="form-group col-md-12">
                         <label for="phone">Phone</label>
                         <input type="tel" class="form-control form-control-lg" id="phone" autocomplete="false"
                             formControlName="phone" placeholder="Enter phone.">
@@ -202,7 +254,7 @@
                         <input type="email" class="form-control form-control-lg" id="email" autocomplete="false"
                             formControlName="email" placeholder="Enter email.">
                     </div>
-                    <div class="form-group col-md-12 mb-0">
+                    <div class="form-group col-md-12">
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Gender</label>
                             <div class="col-sm-4">
@@ -227,28 +279,56 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- <p class="card-description">
-                    Boat Details
-                </p>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="boatName">Boat name</label>
-                        <input type="text" class="form-control form-control-lg" id="boatName" autocomplete="false"
-                            formControlName="boatName" placeholder="Enter boat name.">
+                    <div class="form-group col-md-12 ">
+                        <label for="dateOfBirth">Date of birth</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" formControlName="dateOfBirth"
+                                [(ngModel)]="dateOfBirthDateModel" ngbDatepicker #d="ngbDatepicker">
+                            <button class="btn btn-outline-warning btn-icon-text btn-sm" (click)="d.toggle()"
+                                type="button">
+                                <i class="mdi mdi-calendar"></i>
+                            </button>
+                        </div>
                     </div>
+
                     <div class="form-group col-md-12">
-                        <label for="boatModel">Boat model</label>
-                        <input type="text" class="form-control form-control-lg" id="boatModel" autocomplete="false"
-                            formControlName="boatModel" placeholder="Enter boat model.">
+                        <label for="licenseType">License Type</label>
+                        <input type="text" class="form-control form-control-lg" id="licenseType" autocomplete="false"
+                            formControlName="licenseType" placeholder="Enter license type.">
                     </div>
+
                     <div class="form-group col-md-12">
-                        <label for="boatCapacity">Boat capacity</label>
-                        <input type="number" class="form-control form-control-lg" id="boatCapacity" autocomplete="false"
-                            formControlName="boatCapacity" placeholder="Enter boat capacity.">
+                        <label for="licenseNumber">License Number</label>
+                        <input type="text" class="form-control form-control-lg" id="licenseNumber" autocomplete="false"
+                            formControlName="licenseNumber" placeholder="Enter license number.">
                     </div>
-                </div> -->
+
+                    <div class="form-group col-md-12 ">
+                        <label for="licenseIssuingDate">License Issuing Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" formControlName="licenseIssuingDate"
+                                [(ngModel)]="licenseIssuingDateModel" ngbDatepicker #d2="ngbDatepicker">
+                            <button class="btn btn-outline-warning btn-icon-text btn-sm" (click)="d2.toggle()"
+                                type="button">
+                                <i class="mdi mdi-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12 ">
+                        <label for="licenseExpirationDate">license Expiration Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" formControlName="licenseExpirationDate"
+                                [(ngModel)]="licenseExpirationDateModel" ngbDatepicker #d3="ngbDatepicker">
+                            <button class="btn btn-outline-warning btn-icon-text btn-sm" (click)="d3.toggle()"
+                                type="button">
+                                <i class="mdi mdi-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>

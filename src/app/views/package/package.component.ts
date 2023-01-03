@@ -106,7 +106,7 @@ export class PackageComponent implements OnInit {
   buildForm(itemToEdit?: IPackage) {
     this.addEditForm = this.fb.group({
       name: [itemToEdit ? itemToEdit.name : '', Validators.required],
-      noOfRides: [itemToEdit ? itemToEdit.noOfRides : '', Validators.required],
+      // noOfRides: [itemToEdit ? itemToEdit.noOfRides : '', Validators.required],
       price: [itemToEdit ? itemToEdit.price : '', Validators.required],
       expiresAfter: [itemToEdit ? itemToEdit.expiresAfter : '', Validators.required],
     });
@@ -152,7 +152,7 @@ export class PackageComponent implements OnInit {
     let model = {
       _id: this.packageToEditId ? this.packageToEditId : null,
       name: form.get('name').value,
-      noOfRides: form.get('noOfRides').value,
+      // noOfRides: form.get('noOfRides').value,
       price: form.get('price').value,
       expiresAfter: form.get('expiresAfter').value,
     };

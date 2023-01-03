@@ -25,6 +25,7 @@ import { environment } from 'src/environments/environment.prod';
 export class DailyTripComponent implements OnInit {
 
   tripRoutes: ITripRoute[] = [];
+  tripRoutesToView: ITripRoute[] = [];
 
   categories: ITripCategory[] = [];
   // pilots: IPilot[] = [];
@@ -91,6 +92,7 @@ export class DailyTripComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.tripRoutes = res.items;
+          this.tripRoutesToView = res.items;
         }
       );
   }
@@ -244,7 +246,7 @@ export class DailyTripComponent implements OnInit {
     formData.append('description', form.get('description').value);
     formData.append('route', form.get('route').value);
 
-    let selectedRoute = this.tripRoutes.find(x => x._id == form.get('route').value);
+    let selectedRoute = this.tripRoutesToView.find(x => x._id == form.get('route').value);
     let nowDate = new Date();
 
     //unfortunately it's done this way due to many changes, so just to save time, this was the easiest way !! 
@@ -340,6 +342,15 @@ export class DailyTripComponent implements OnInit {
       values.push(element);
     });
     return values;
+  }
+
+  chooseType(value){
+    if(value == TripTypes.Daily)
+      this.tripRoutesToView = this.tripRoutes.filter(x => !x.tourRoute);
+    else if(value == TripTypes.Tour)
+    this.tripRoutesToView = this.tripRoutes.filter(x => x.tourRoute);
+    else 
+    this.tripRoutesToView = this.tripRoutes;
   }
 
 }

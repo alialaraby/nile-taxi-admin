@@ -1,7 +1,7 @@
 export interface IPackage {
     _id?: string;
     name: string;
-    noOfRides: number;
+    // noOfRides: number;
     price: number;
     expiresAfter: number; // in months
     isDeleted: boolean;
