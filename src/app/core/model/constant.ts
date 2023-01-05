@@ -26,6 +26,8 @@ export class Constant {
     public static DELETE_STATION = 'delete-station';
     
     public static GET_PASSENGERS = 'get-passengers';
+    public static ADMIN_GET_PASSENGER_TRIPS = 'admin-get-passenger-trips';
+    public static ADMIN_GET_PASSENGER_PAYMENTS = 'admin-get-passenger-payments';
     public static GET_STUDENT_REQUESTS = 'get-student-requests';
     public static RESPOND_STUDENT_REQUEST = 'admin-respond-student-account';
 
@@ -73,5 +75,9 @@ export class Constant {
     public static ADD_TRIP_ROUTE = 'add-trip-route';
     public static UPDATE_TRIP_ROUTE = 'update-trip-route';
     public static DELETE_TRIP_ROUTE = 'delete-trip-route';
+
+    public static ADD_WALK_IN_USER_PAYMENT = 'walk-in-user-payment';
+    public static GET_WALK_IN_USER_TRIPS = 'get-walk-in-user-trip';
+    public static GET_TRIPS_FOR_WALK_IN_USER = 'list-available-trips-for-walk-in-user';
 
 }

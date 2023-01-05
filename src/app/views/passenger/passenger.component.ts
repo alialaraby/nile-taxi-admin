@@ -1,9 +1,12 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
 import { UserType } from 'src/app/core/model/enums';
 import { IPassenger } from 'src/app/core/model/passenger';
+import { IPassengerTrip } from 'src/app/core/model/passenger-trip';
+import { IPaymentTransaction } from 'src/app/core/model/payment-transaction';
 import { DataService } from 'src/app/core/service/data.service';
 import { PassengerService } from 'src/app/core/service/passenger.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
@@ -17,6 +20,9 @@ import { SharedDataService } from 'src/app/core/service/shared-data.service';
 export class PassengerComponent implements OnInit {
 
   passengers: IPassenger[] = [];
+  selectedPassenger: IPassenger;
+  selectedPassengerTrips: IPassengerTrip[];
+  selectedPassengerPayments: IPaymentTransaction[];
   sharedUserData: Admin = new Admin();
   gettingData: boolean = true;
 
@@ -33,7 +39,8 @@ export class PassengerComponent implements OnInit {
     private dataService: DataService,
     private passengerService: PassengerService,
     private sharedData: SharedDataService,
-    private _responseHandler: ResponseHandlerService
+    private _responseHandler: ResponseHandlerService,
+    private modalService: NgbModal,
   ) {
     this.sharedData.userData$.subscribe(
       (userData) => {
@@ -78,6 +85,32 @@ export class PassengerComponent implements OnInit {
   resetFilters() {
     this.defaultType = true;
     this.getAll(this.pageIndex - 1, this.pageSize);
+  }
+
+  openTrips(modal: any, passenger: IPassenger) {
+    this.passengerService.getPassengerTrips(Constant.ADMIN_GET_PASSENGER_TRIPS, passenger._id, passenger.type)
+      .subscribe(
+        (res: any) => {
+          this.selectedPassengerTrips = res.items;
+          this.modalService.open(modal, { size: 'md' });
+        },
+        (error) => {
+          this._responseHandler.HandelError(error);
+        }
+      );
+  }
+
+  openPayments(modal: any, passenger: IPassenger) {
+    this.passengerService.getPassengerPayments(Constant.ADMIN_GET_PASSENGER_PAYMENTS, passenger._id)
+      .subscribe(
+        (res: any) => {
+          this.selectedPassengerPayments = res.items;
+          this.modalService.open(modal, { size: 'md' });
+        },
+        (error) => {
+          this._responseHandler.HandelError(error);
+        }
+      );
   }
 
 }

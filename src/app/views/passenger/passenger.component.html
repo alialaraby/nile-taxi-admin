@@ -60,6 +60,9 @@
                                 <th>
                                     Creation Date
                                 </th>
+                                <th *ngIf="!sharedUserData.isAnalystAdmin">
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,6 +95,12 @@
                                 <td>
                                     {{ item.createdAt | date:'mediumDate' }}
                                 </td>
+                                <td *ngIf="!sharedUserData.isAnalystAdmin" style="display: inline-flex !important;">
+                                    <button type="button" class="btn btn-warning btn-sm btn-p5 mt-2"
+                                        (click)="openTrips(tripsModal, item)">Trips</button>
+                                    <button type="button" class="btn btn-info btn-sm btn-p5 mt-2"
+                                        (click)="openPayments(paymentsModal, item)">Transactions</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -99,6 +108,144 @@
             </div>
         </div>
     </div>
-    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
+    <ngb-pagination class="d-flex justify-content-center pagination-warning" (pageChange)="pageChange($event)"
+        [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize" [page]="pageIndex"
+        aria-label="Default pagination"></ngb-pagination>
 
+</ng-template>
+
+<ng-template #tripsModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content p-3">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Passenger Trips</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <div class="row">
+                <ng-container *ngIf="selectedPassengerTrips.length > 0; else elseNoTripsTemplate">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Trip Code
+                                    </th>
+                                    <th>
+                                        Boat
+                                    </th>
+                                    <th>
+                                        Trip Date
+                                    </th>
+                                    <th>
+                                        # Seats
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of selectedPassengerTrips">
+                                    <td>
+                                        {{ item.trip.code }}
+                                    </td>
+                                    <td>
+                                        {{ item.trip.boat.boatName }}
+                                    </td>
+                                    <td>
+                                        {{ item.createdAt | date:'mediumDate' }}
+                                    </td>
+                                    <td>
+                                        {{ item.numberOfSeats }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+                <ng-template #elseNoTripsTemplate>
+                    <p class="text-danger font-weight-bold">Passenger has no trip yet.</p>
+                </ng-template>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #paymentsModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content p-3">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Passenger Transactions</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            <div class="row">
+                <ng-container *ngIf="selectedPassengerPayments.length > 0; else elseNoPaymentsTemplate">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Transaction Type
+                                    </th>
+                                    <th>
+                                        Package
+                                    </th>
+                                    <th>
+                                        Trip
+                                    </th>
+                                    <th>
+                                        Payment Method
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Date
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of selectedPassengerPayments.stops">
+                                    <td>
+                                        {{ item.transactionType }}
+                                    </td>
+                                    <td>
+                                        {{ item?.package?.name }}
+                                    </td>
+                                    <td>
+                                        {{ item?.trip?.code }}
+                                    </td>
+                                    <td>
+                                        {{ item.paymentMethod }}
+                                    </td>
+                                    <td>
+                                        {{ item.paymentStatus }}
+                                    </td>
+                                    <td>
+                                        {{ item.paymentStatus }}
+                                    </td>
+                                    <td>
+                                        {{ item.createdAt | date:'mediumDate' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+                <ng-template #elseNoPaymentsTemplate>
+                    <p class="text-danger font-weight-bold">Passenger has no transactions yet.</p>
+                </ng-template>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+
+    </div>
 </ng-template>

@@ -87,3 +87,16 @@ export enum StationZones{
     zone_5B = 'zone 5B',
     zone_6 = 'zone 6',
 }
+
+export enum PassengerStatus{
+    OnBoarded = 'onBoarded',
+    DroppedOff = 'droppedOff',
+    Waiting = 'waiting',
+    Cancelled = 'cancelled',
+}
+
+export enum PaymentTransactionTypes{
+    Package = 'package',
+    Trip = 'trip',
+    WalkInUser = 'walkInUser',
+}

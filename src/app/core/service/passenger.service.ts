@@ -21,6 +21,16 @@ export class PassengerService extends DataService {
             .pipe(catchError(this.handleError));
     }
 
+    public getPassengerTrips(url: string, passengerId: string, passengerType: string): Observable<Object> {
+        return this._http.post(environment.baseUrl + url, {passengerId, passengerType})
+            .pipe(catchError(this.handleError));
+    }
+
+    public getPassengerPayments(url: string, passengerId: string): Observable<Object> {
+        return this._http.post(environment.baseUrl + url, {passengerId})
+            .pipe(catchError(this.handleError));
+    }
+
     respondStudentRequest(data: any) {
         return this._http.post(environment.baseUrl + Constant.RESPOND_STUDENT_REQUEST, data);
     }
