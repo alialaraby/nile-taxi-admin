@@ -224,7 +224,7 @@ export class DailyTripComponent implements OnInit {
       description: [itemToEdit ? itemToEdit.description : ''],
       tourImage: [itemToEdit ? itemToEdit.tourImage : ''],
       tripCategory: [itemToEdit ? itemToEdit?.category?._id : ''],
-      isRepeatedDaily: [itemToEdit ? itemToEdit?.isRepeatedDaily : false],
+      isRepeatedDaily: [itemToEdit ? itemToEdit?.isRepeatedDaily : true],
       route: [itemToEdit ? itemToEdit?.route?._id : '', Validators.required],
     });
 
