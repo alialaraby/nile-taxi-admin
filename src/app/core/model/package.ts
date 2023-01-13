@@ -1,3 +1,5 @@
+import { PackageType } from "./enums";
+
 export interface IPackage {
     _id?: string;
     name: string;
@@ -8,4 +10,6 @@ export interface IPackage {
     doesntExpire: boolean;
     isActive: boolean;
     createdAt: Date;
+    type: PackageType;
+
 }

@@ -109,6 +109,7 @@ export class PackageComponent implements OnInit {
       // noOfRides: [itemToEdit ? itemToEdit.noOfRides : '', Validators.required],
       price: [itemToEdit ? itemToEdit.price : '', Validators.required],
       expiresAfter: [itemToEdit ? itemToEdit.expiresAfter : '', Validators.required],
+      type: [itemToEdit ? itemToEdit.type : '', Validators.required],
     });
   }
 
@@ -155,6 +156,7 @@ export class PackageComponent implements OnInit {
       // noOfRides: form.get('noOfRides').value,
       price: form.get('price').value,
       expiresAfter: form.get('expiresAfter').value,
+      type: form.get('type').value,
     };
 
     return model;

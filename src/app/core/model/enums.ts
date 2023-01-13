@@ -101,3 +101,9 @@ export enum PaymentTransactionTypes{
     Trip = 'trip',
     WalkInUser = 'walkInUser',
 }
+
+export enum PackageType{
+    General = 'general',
+    Family = 'family',
+    Student = 'student',
+}

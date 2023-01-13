@@ -25,14 +25,17 @@
                                 <th>
                                     Package
                                 </th>
+                                <th>
+                                    Type
+                                </th>
                                 <!-- <th>
                                     # Rides
                                 </th> -->
                                 <th>
-                                    Price (EGP)
+                                    Price
                                 </th>
                                 <th>
-                                    Expires (Monthes)
+                                    Expires in (Months)
                                 </th>
                                 <th>
                                     Status
@@ -46,6 +49,9 @@
                             <tr *ngFor="let item of packages">
                                 <td>
                                     {{ item.name }}
+                                </td>
+                                <td>
+                                    {{ item.type }}
                                 </td>
                                 <!-- <td>
                                     {{ item.noOfRides }}
@@ -103,6 +109,16 @@
                     <input type="text" class="form-control form-control-lg" id="name" autocomplete="false"
                         formControlName="name" placeholder="Enter package name.">
                 </div>
+                
+                <div class="form-group">
+                    <label for="code">Type</label>
+                    <select class="form-control" formControlName="type">
+                        <option value="general" selected>General</option>
+                        <option value="family">Family</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+
                 <!-- <div class="form-group">
                     <label for="noOfRides">Number of rides</label>
                     <input type="number" class="form-control form-control-lg" id="noOfRides" autocomplete="false"
