@@ -80,4 +80,6 @@ export class Constant {
     public static GET_WALK_IN_USER_TRIPS = 'get-walk-in-user-trip';
     public static GET_TRIPS_FOR_WALK_IN_USER = 'list-available-trips-for-walk-in-user';
 
+    public static REGISTER_STUDENT = 'student-registration';
+
 }

@@ -48,22 +48,26 @@ export class ResponseHandlerService {
             actionType = 'Sent'
         } else if (action === ResponseActionType.Done) {
             actionType = 'Done'
+        } else if (action === ResponseActionType.Submitted) {
+            actionType = 'Submitted'
         } else {
             actionType = 'Deleted'
         }
 
         if (response == null) {
-            this.toastr.success('Item ' + actionType, actionType, { timeOut: 4000 });
+            this.toastr.success('Item ' + actionType, actionType, { timeOut: 6000 });
+        } else if(action === ResponseActionType.Submitted){
+            this.toastr.success('Registration in review, you can login with your phone.', actionType, { timeOut: 10000 });
         } else {
-            this.toastr.success('Item ' + actionType, actionType, { timeOut: 4000 });
+            this.toastr.success('Item ' + actionType, actionType, { timeOut: 6000 });
         }
     }
 
     public HandleCancel() {
-        this.toastr.warning('Action is cancelled', 'Cancel', { timeOut: 4000 });
+        this.toastr.warning('Action is cancelled', 'Cancel', { timeOut: 6000 });
     }
 
     public HandleEmptyContent() {
-        this.toastr.success('No Content Found', 'No Content', { timeOut: 4000 });
+        this.toastr.success('No Content Found', 'No Content', { timeOut: 6000 });
     }
 }

@@ -4,6 +4,7 @@ export enum ResponseActionType{
     Deleted = 3,
     Sent = 4,
     Done = 5,
+    Submitted = 6,
 }
 
 export enum Genders{
