@@ -39,6 +39,14 @@ import { EmergencyComponent } from './views/boats-pilots/emergency/emergency.com
 import { TripRouteComponent } from './views/trip/trip-route/trip-route.component';
 import { WalkInUserComponent } from './views/walk-in-user/walk-in-user.component';
 import { PriceMatrixComponent } from './views/price-matrix/price-matrix.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = {
+	url: 'http://localhost:400', // socket server url;
+	options: {
+		// transports: ['websocket']
+	}
+}
 
 @NgModule({
   declarations: [
@@ -81,7 +89,8 @@ import { PriceMatrixComponent } from './views/price-matrix/price-matrix.componen
     ChartsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    NgSelectModule
+    NgSelectModule,
+    SocketIoModule.forRoot(config), 
   ],
   providers: [
     ThemeService,

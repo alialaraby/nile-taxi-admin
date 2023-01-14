@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbDropdownConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
 import { ResponseActionType } from 'src/app/core/model/enums';
@@ -9,6 +10,7 @@ import { AuthService } from 'src/app/core/service/auth.service';
 import { DataService } from 'src/app/core/service/data.service';
 import { ResponseHandlerService } from 'src/app/core/service/response-handler.service';
 import { SharedDataService } from 'src/app/core/service/shared-data.service';
+import { SocketService } from 'src/app/core/service/socket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,13 +18,18 @@ import { SharedDataService } from 'src/app/core/service/shared-data.service';
   styleUrls: ['./navbar.component.scss'],
   providers: [NgbDropdownConfig]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   public iconOnlyToggled = false;
   public sidebarToggled = false;
   sharedUserData: Admin = new Admin();
 
   oldPasswordControl = new FormControl('', Validators.required);
   newPasswordControl = new FormControl('', Validators.required);
+
+  socketSubscription: Subscription;
+  notifications = [
+    // { title: 'Event today', user: 'user 1', message: 'Just a reminder that you have an event today' }
+  ];
 
   constructor(
     config: NgbDropdownConfig,
@@ -32,6 +39,7 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private _responseHandler: ResponseHandlerService,
+    private socketService: SocketService
   ) {
     config.placement = 'bottom-right';
     this.sharedData.userData$.subscribe(
@@ -50,6 +58,17 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.socketSubscription = this.socketService.listenToServer('complain').subscribe(
+      (res: any) => {
+        let data = JSON.parse(res);
+
+        this.notifications.push({
+          title: data.title || '', 
+          user: data.user || '',
+          message: data.message || '',
+        })
+      }
+    )
   }
 
   // toggle sidebar in small devices
@@ -106,6 +125,16 @@ export class NavbarComponent implements OnInit {
           this.modalService.dismissAll();
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.socketSubscription.unsubscribe();
+  }
+
+  clearNotification(){
+    this.notifications = [];
   }
 
 }
