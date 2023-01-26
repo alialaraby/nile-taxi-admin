@@ -8,7 +8,7 @@ export interface ITripRoute {
     description: string;
     stops: IRouteStop[];
     
-    tourRoute: boolean;
+    // tourRoute: boolean;
     isDeleted: boolean;
     isActive: boolean;
 }
@@ -17,8 +17,11 @@ export interface IRouteStop {
     stopId: string;
     stop: IStation;
     order: number;
-    arrivalTime: string;
-    departureTime: string;
+    waitingTime: number; // time a boat waits in the current stop (to drop off and pick up passengers) in minutes
+    timeTilNextStop: number; // in minutes
     stopHeading: IStation;
-    timeBetweenStations: string;
+
+    // arrivalTime: string;
+    // departureTime: string;
+    // timeBetweenStations: string;
 }

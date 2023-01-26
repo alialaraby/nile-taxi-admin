@@ -111,35 +111,34 @@
                     </div>
                 </div>
 
-                <div class="form-check form-check-flat form-check-warning">
+                <!-- <div class="form-check form-check-flat form-check-warning">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" formControlName="tourRoute">
-                      Tour Route
-                      <i class="input-helper"></i>
+                        <input type="checkbox" class="form-check-input" formControlName="tourRoute">
+                        Tour Route
+                        <i class="input-helper"></i>
                     </label>
-                  </div>
+                </div> -->
 
                 <div class="form-group">
                     <h2 class="divider-h2"><span>Stops</span></h2>
                 </div>
 
                 <div class="row ml-3" style="width: 105%;">
-                    <div class="form-group col-2 px-0">
+                    <div class="form-group col-3 px-0">
                         <ng-container formArrayName="stops">
                             <div class="row m-0 w-100" *ngFor="let item of stops.controls; index as i">
                                 <label for="stops" class="d-block w-100">Stop - {{ i + 1 }} <span
                                         class="text-danger">*</span></label>
                                 <div class="row w-100 m-0 mb-2">
                                     <select class="form-control col-10" [formControlName]="i">
-                                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name
-                                            }}
-                                        </option>
+                                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
                                     </select>
                                 </div>
                             </div>
                         </ng-container>
                     </div>
-                    <div class="form-group col-3 px-0 stops-time-picker">
+                    
+                    <!-- <div class="form-group col-3 px-0 stops-time-picker">
                         <ng-container formArrayName="stopsArrivalTimes">
                             <div class="row" *ngFor="let item of stopsArrivalTimes.controls; index as i">
                                 <div class="col-12">
@@ -147,13 +146,8 @@
                                             class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <ngb-timepicker meridian="true" [formControlName]="i"></ngb-timepicker>
-                                        <!-- <input type="text" class="form-control form-control-lg" autocomplete="false"
-                                            [formControlName]="i" placeholder="Enter Arrival Time."> -->
                                     </div>
                                 </div>
-                                <!-- <div class="col-2">
-                                    <i class="mdi mdi-close text-danger d-inline-block" style="cursor: pointer; margin-top: 30px;" (click)="removeFormField(i)"></i>
-                                </div> -->
                             </div>
                         </ng-container>
                     </div>
@@ -169,23 +163,53 @@
                                 </div>
                             </div>
                         </ng-container>
-                    </div>
-                    <div class="form-group col-2 px-0">
-                        <ng-container formArrayName="stopsHeadings">
-                            <div class="row m-0 w-100" *ngFor="let item of stopsHeadings.controls; index as i">
-                                <label for="stops" class="d-block w-100">Stop - {{ i + 1 }} - Heading <span
-                                        class="text-danger">*</span></label>
-                                <div class="row w-100 m-0 mb-2">
-                                    <select class="form-control col-10" [formControlName]="i">
-                                        <option *ngFor="let station of stations" [value]="station._id">{{ station.name
-                                            }}
-                                        </option>
-                                    </select>
+                    </div> -->
+                    
+                    <div class="form-group col-2 px-0 stops-time-picker">
+                        <ng-container formArrayName="stopsWaitingTimes">
+                            <div class="row mt-1" *ngFor="let item of stopsWaitingTimes.controls; index as i">
+                                <div class="col-12">
+                                    <label for="stopsWaitingTimes">Waiting Time (in minutes) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control form-control-lg" [formControlName]="i" placeholder="time in minutes.">
+                                    </div>
                                 </div>
                             </div>
                         </ng-container>
                     </div>
-                    <div class="form-group col-2 px-0">
+                    <div class="form-group col-2 px-0 stops-time-picker">
+                        <ng-container formArrayName="stopsTimesTilNextStop">
+                            <div class="row mt-1" *ngFor="let item of stopsTimesTilNextStop.controls; index as i">
+                                <div class="col-12">
+                                    <label for="stopsTimesTilNextStop">Time till next stop (in minutes) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control form-control-lg" [formControlName]="i" placeholder="time in minutes.">
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="form-group col-3 px-0">
+                        <ng-container formArrayName="stopsHeadings">
+                            <div class="row mt-1" *ngFor="let item of stopsHeadings.controls; index as i">
+                                <div class="col-9 px-0">
+                                    <label>Stop - {{ i + 1 }} - Heading <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <select class="form-control col-10" [formControlName]="i">
+                                            <option *ngFor="let station of stations" [value]="station._id">{{ station.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <i class="mdi mdi-close text-danger d-inline-block"
+                                        style="cursor: pointer; margin-top: 30px;" (click)="removeFormField(i)"></i>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    
+                    <!-- <div class="form-group col-2 px-0">
                         <ng-container formArrayName="timesBetweenStations">
                             <div class="row" *ngFor="let item of timesBetweenStations.controls; index as i">
                                 <div class="col-9 px-0">
@@ -201,7 +225,8 @@
                                 </div>
                             </div>
                         </ng-container>
-                    </div>
+                    </div> -->
+
                 </div>
 
                 <div class="form-group text-center">
@@ -210,7 +235,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success"
-                        [disabled]="addEditForm.invalid || stops.invalid || stopsArrivalTimes.invalid">Submit</button>
+                        [disabled]="addEditForm.invalid || stops.invalid || stopsTimesTilNextStop.invalid || stopsWaitingTimes.invalid">Submit</button>
                     <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
                 </div>
             </form>
@@ -261,16 +286,13 @@
                                     Order
                                 </th>
                                 <th>
-                                    Arrival Time
+                                    Waiting Time
                                 </th>
                                 <th>
-                                    Departure Time
+                                    Time till next stop
                                 </th>
                                 <th>
                                     Stop Heading
-                                </th>
-                                <th>
-                                    Time Between Stations
                                 </th>
                             </tr>
                         </thead>
@@ -283,17 +305,19 @@
                                     {{ item.order }}
                                 </td>
                                 <td>
-                                    {{ formateTime(item.arrivalTime) }}
+                                    <!-- {{ formateTime(item.arrivalTime) }} -->
+                                    {{ item.waitingTime }} <span class="text-success font-weight-bold">(minutes)</span>
                                 </td>
                                 <td>
-                                    {{ formateTime(item.departureTime) }}
+                                    <!-- {{ formateTime(item.departureTime) }} -->
+                                    {{ item.timeTilNextStop }} <span class="text-success font-weight-bold">(minutes)</span>
                                 </td>
                                 <td>
                                     {{ item.stopHeading.name }}
                                 </td>
-                                <td>
+                                <!-- <td>
                                     {{ item.timeBetweenStations }}
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>

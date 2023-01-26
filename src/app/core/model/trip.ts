@@ -7,6 +7,9 @@ import { ITripRoute } from "./trip-route";
 
 export interface ITrip {
     _id?: string;
+    parentTripId?: string;
+    parentTrip: any;
+    days: number[];
     code: string;
     type: TripTypes;
     pickupStation: IStation;

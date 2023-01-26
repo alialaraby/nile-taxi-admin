@@ -4,7 +4,8 @@
         Daily Trips & Tours
     </h3>
     <nav aria-label="breadcrumb">
-        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin" (click)="openAddModal(addModal)">Add</button>
+        <button type="button" class="btn btn-warning btn-fw" *ngIf="!sharedUserData.isAnalystAdmin"
+            (click)="openAddModal(addModal)">Add</button>
     </nav>
 </div>
 
@@ -71,6 +72,9 @@
                                     Status
                                 </th>
                                 <th>
+                                    Days
+                                </th>
+                                <th>
                                     Creation Date
                                 </th>
                                 <th *ngIf="!sharedUserData.isAnalystAdmin">
@@ -81,7 +85,7 @@
                         <tbody>
                             <tr *ngFor="let item of trips">
                                 <td>
-                                    {{ item.code }}
+                                    {{ formatTripCode(item.code) }}
                                 </td>
                                 <td>
                                     {{ item.type }} <span *ngIf="item.type == 'tour'"> - {{ item.category.name }}</span>
@@ -101,6 +105,9 @@
                                 </td>
                                 <td>
                                     {{ item.status }}
+                                </td>
+                                <td>
+                                    - <span *ngFor="let item of item.parentTrip.days">{{ formatTripDay(item) }} - </span>
                                 </td>
                                 <td>
                                     {{ item.createdAt | date:'mediumDate' }}
@@ -161,7 +168,8 @@
                 </div>
                 <div class="form-group">
                     <label for="code">Type</label>
-                    <select class="form-control" formControlName="type" (change)="chooseType($event.target.value)">
+                    <!-- <select class="form-control" formControlName="type" (change)="chooseType($event.target.value)"> -->
+                    <select class="form-control" formControlName="type">
                         <option value="" selected>Trip Type</option>
                         <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
                     </select>
@@ -237,8 +245,8 @@
                 </div>
 
                 <!-- pickup/terminal dates -->
-                <!-- <div class="row">
-                    <div class="form-group col-md-8">
+                <div class="row">
+                    <!-- <div class="form-group col-md-8">
                         <label for="pickupDate">Pickup date</label>
                         <div class="input-group">
                             <input class="form-control" placeholder="yyyy-mm-dd" formControlName="pickupDate"
@@ -248,15 +256,15 @@
                                 <i class="mdi mdi-calendar"></i>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group col-md-4">
-                        <label for="pickupTime">Pickup time</label>
+                        <label for="pickupTime">Start time</label>
                         <div class="input-group">
                             <ngb-timepicker [(ngModel)]="pickupTime" formControlName="pickupTime"></ngb-timepicker>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="form-group col-md-8">
                         <label for="terminalDate">Terminal date</label>
                         <div class="input-group">
@@ -277,17 +285,30 @@
                 </div> -->
                 <!-- pickup/terminal dates -->
 
-                <div class="form-check form-check-flat form-check-warning" *ngIf="addEditForm && addEditForm.controls['type'].value != 'tour'">
+                <!-- <div class="form-check form-check-flat form-check-warning" *ngIf="addEditForm && addEditForm.controls['type'].value != 'tour'">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" formControlName="isRepeatedDaily">
                       Repeat daily
                       <i class="input-helper"></i>
                     </label>
-                  </div>
+                  </div> -->
+                  
+                <div class="row">
+                    <label class="col-12">Days</label>
+                    <div class="col-2" *ngFor="let item of days">
+                        <div class="form-check form-check-flat form-check-warning">
+                            <label class="form-check-label" style="cursor: pointer;">
+                                <input type="checkbox" class="form-check-input" [checked]="item.selected" (change)="selectDay(item, $event.target.checked)">
+                                {{ item.name }}
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="modal-footer">
                     <!-- <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid || stations2.invalid">Submit</button> -->
-                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>
+                    <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid || selectedDays.length <= 0">Submit</button>
                     <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
                 </div>
             </form>
@@ -306,9 +327,10 @@
         </div>
         <div class="modal-body m-3">
             <div class="row">
-                <div class="col-md-12 text-center mb-4" *ngIf="selectedTripDetails.tourImage && selectedTripDetails.tourImage.length > 0">
-                    <img *ngFor="let image of selectedTripDetails.tourImage" [src]="image" alt="user image" class="item_image w-25 rounded"
-                        onError="this.src='./assets/images/login-logo.png'">
+                <div class="col-md-12 text-center mb-4"
+                    *ngIf="selectedTripDetails.tourImage && selectedTripDetails.tourImage.length > 0">
+                    <img *ngFor="let image of selectedTripDetails.tourImage" [src]="image" alt="user image"
+                        class="item_image w-25 rounded" onError="this.src='./assets/images/login-logo.png'">
                 </div>
                 <div class="col-md-12" *ngIf="selectedTripDetails.description">
                     <h4 class="card-title font-weight-bold">Description</h4>

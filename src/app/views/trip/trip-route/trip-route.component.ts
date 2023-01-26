@@ -28,10 +28,14 @@ export class TripRouteComponent implements OnInit {
   addEditForm: FormGroup;
   stations: IStation[] = [];
   stops: FormArray = new FormArray([], Validators.required);
-  stopsArrivalTimes: FormArray = new FormArray([], Validators.required);
-  stopsDepartureTimes: FormArray = new FormArray([], Validators.required);
   stopsHeadings: FormArray = new FormArray([], Validators.required);
-  timesBetweenStations: FormArray = new FormArray([], Validators.required);
+  
+  stopsWaitingTimes: FormArray = new FormArray([], Validators.required);
+  stopsTimesTilNextStop: FormArray = new FormArray([], Validators.required);
+  
+  // stopsArrivalTimes: FormArray = new FormArray([], Validators.required);
+  // stopsDepartureTimes: FormArray = new FormArray([], Validators.required);
+  // timesBetweenStations: FormArray = new FormArray([], Validators.required);
 
   pageIndex: number = 1;
   pageSize: number = 10;
@@ -98,10 +102,13 @@ export class TripRouteComponent implements OnInit {
       for (let i = 0; i < itemToEdit.stops.length; i++) {
         this.addFormField(
           itemToEdit.stops[i].stop._id, 
-          {hour: +itemToEdit.stops[i].arrivalTime.split(':')[0], minute: +itemToEdit.stops[i].arrivalTime.split(':')[1], second: 0},
-          {hour: +itemToEdit.stops[i].departureTime.split(':')[0], minute: +itemToEdit.stops[i].departureTime.split(':')[1], second: 0},
+          itemToEdit.stops[i].waitingTime, 
+          itemToEdit.stops[i].timeTilNextStop, 
           itemToEdit.stops[i].stopHeading._id, 
-          itemToEdit.stops[i].timeBetweenStations
+
+          // {hour: +itemToEdit.stops[i].arrivalTime.split(':')[0], minute: +itemToEdit.stops[i].arrivalTime.split(':')[1], second: 0},
+          // {hour: +itemToEdit.stops[i].departureTime.split(':')[0], minute: +itemToEdit.stops[i].departureTime.split(':')[1], second: 0},
+          // itemToEdit.stops[i].timeBetweenStations
         )
       }
     } else {
@@ -127,19 +134,26 @@ export class TripRouteComponent implements OnInit {
       ID: [itemToEdit ? itemToEdit.ID : '', Validators.required],
       image: [itemToEdit ? itemToEdit.image : ''],
       description: [itemToEdit ? itemToEdit.description : ''],
-      tourRoute: [itemToEdit ? itemToEdit?.tourRoute : false],
+      // tourRoute: [itemToEdit ? itemToEdit?.tourRoute : false],
       stops: new FormArray([], Validators.required),
-      stopsArrivalTimes: new FormArray([], Validators.required),
-      stopsDepartureTimes: new FormArray([], Validators.required),
       stopsHeadings: new FormArray([], Validators.required),
-      timesBetweenStations: new FormArray([], Validators.required),
+      stopsWaitingTimes: new FormArray([], Validators.required),
+      stopsTimesTilNextStop: new FormArray([], Validators.required),
+
+      // stopsArrivalTimes: new FormArray([], Validators.required),
+      // stopsDepartureTimes: new FormArray([], Validators.required),
+      // timesBetweenStations: new FormArray([], Validators.required),
     });
 
     this.stops = this.addEditForm.get('stops') as FormArray;
-    this.stopsArrivalTimes = this.addEditForm.get('stopsArrivalTimes') as FormArray;
-    this.stopsDepartureTimes = this.addEditForm.get('stopsDepartureTimes') as FormArray;
     this.stopsHeadings = this.addEditForm.get('stopsHeadings') as FormArray;
-    this.timesBetweenStations = this.addEditForm.get('timesBetweenStations') as FormArray;
+    
+    this.stopsWaitingTimes = this.addEditForm.get('stopsWaitingTimes') as FormArray;
+    this.stopsTimesTilNextStop = this.addEditForm.get('stopsTimesTilNextStop') as FormArray;
+    
+    // this.stopsArrivalTimes = this.addEditForm.get('stopsArrivalTimes') as FormArray;
+    // this.stopsDepartureTimes = this.addEditForm.get('stopsDepartureTimes') as FormArray;
+    // this.timesBetweenStations = this.addEditForm.get('timesBetweenStations') as FormArray;
   }
 
   getModelFromForm(form: FormGroup) {
@@ -148,16 +162,20 @@ export class TripRouteComponent implements OnInit {
     formData.append('name', form.get('name').value);
     formData.append('ID', form.get('ID').value);
     formData.append('description', form.get('description').value);
-    formData.append('tourRoute', form.get('tourRoute').value);
+    // formData.append('tourRoute', form.get('tourRoute').value);
 
     if(this.fileToUpload){
       formData.append('routeImage', this.fileToUpload[0], this.fileToUpload[0].name);
     }
     let stops = this.extractData(form.get('stops').value);
-    let stopsArrivalTimes = this.extractData(form.get('stopsArrivalTimes').value) as any;
-    let stopsDepartureTimes = this.extractData(form.get('stopsDepartureTimes').value) as any;
     let stopsHeadings = this.extractData(form.get('stopsHeadings').value);
-    let timesBetweenStations = this.extractData(form.get('timesBetweenStations').value);
+    let stopsWaitingTimes = this.extractData(form.get('stopsWaitingTimes').value) as any;
+    let stopsTimesTilNextStop = this.extractData(form.get('stopsTimesTilNextStop').value) as any;
+
+
+    // let stopsArrivalTimes = this.extractData(form.get('stopsArrivalTimes').value) as any;
+    // let stopsDepartureTimes = this.extractData(form.get('stopsDepartureTimes').value) as any;
+    // let timesBetweenStations = this.extractData(form.get('timesBetweenStations').value);
 
     let stopsData = [];
     // let nowDate = new Date();
@@ -166,12 +184,15 @@ export class TripRouteComponent implements OnInit {
       stopsData.push({
         stop: stops[i],
         order: i+1,
-        arrivalTime: stopsArrivalTimes[i],
-        departureTime: stopsDepartureTimes[i],
+        stopHeading: stopsHeadings[i],
+        waitingTime: stopsWaitingTimes[i],
+        timeTilNextStop: stopsTimesTilNextStop[i],
+
+        // arrivalTime: stopsArrivalTimes[i],
+        // departureTime: stopsDepartureTimes[i],
         // arrivalTime: {year: nowDate.getFullYear(), month: nowDate.getMonth(), day: nowDate.getDate(), hour: stopsArrivalTimes[i].hour, minute: stopsArrivalTimes[i].minute},
         // departureTime: {year: nowDate.getFullYear(), month: nowDate.getMonth(), day: nowDate.getDate(), hour: stopsDepartureTimes[i].hour, minute: stopsDepartureTimes[i].minute},
-        stopHeading: stopsHeadings[i],
-        timeBetweenStations: timesBetweenStations[i],
+        // timeBetweenStations: timesBetweenStations[i],
       })
     }
     formData.append('stops', JSON.stringify(stopsData));
@@ -196,20 +217,27 @@ export class TripRouteComponent implements OnInit {
     const control2 = new FormControl(con2, Validators.required);
     const control3 = new FormControl(con3, Validators.required);
     const control4 = new FormControl(con4, Validators.required);
-    const control5 = new FormControl(con5, Validators.required);
+    // const control5 = new FormControl(con5, Validators.required);
     this.stops.push(control1);
-    this.stopsArrivalTimes.push(control2);
-    this.stopsDepartureTimes.push(control3);
+    this.stopsWaitingTimes.push(control2);
+    this.stopsTimesTilNextStop.push(control3);
     this.stopsHeadings.push(control4);
-    this.timesBetweenStations.push(control5);
+
+
+    // this.stopsArrivalTimes.push(control2);
+    // this.stopsDepartureTimes.push(control3);
+    // this.timesBetweenStations.push(control5);
   }
 
   removeFormField(index: number) {
     this.stops.removeAt(index);
-    this.stopsArrivalTimes.removeAt(index);
-    this.stopsDepartureTimes.removeAt(index);
+    this.stopsWaitingTimes.removeAt(index);
+    this.stopsTimesTilNextStop.removeAt(index);
     this.stopsHeadings.removeAt(index);
-    this.timesBetweenStations.removeAt(index);
+    
+    // this.stopsArrivalTimes.removeAt(index);
+    // this.stopsDepartureTimes.removeAt(index);
+    // this.timesBetweenStations.removeAt(index);
   }
 
   OnChangeFile(files: File[]) {
@@ -231,10 +259,13 @@ export class TripRouteComponent implements OnInit {
               this.fileToUpload = null;
               this.shortImageName = 'Enter Image';
               this.stops = new FormArray([], Validators.required);
-              this.stopsArrivalTimes = new FormArray([], Validators.required);
-              this.stopsDepartureTimes = new FormArray([], Validators.required);
+              this.stopsWaitingTimes = new FormArray([], Validators.required);
+              this.stopsTimesTilNextStop = new FormArray([], Validators.required);
               this.stopsHeadings = new FormArray([], Validators.required);
-              this.timesBetweenStations = new FormArray([], Validators.required);
+
+              // this.stopsArrivalTimes = new FormArray([], Validators.required);
+              // this.stopsDepartureTimes = new FormArray([], Validators.required);
+              // this.timesBetweenStations = new FormArray([], Validators.required);
             },
             (error) => {
               this.gettingData = false;
@@ -252,10 +283,13 @@ export class TripRouteComponent implements OnInit {
               this.fileToUpload = null;
               this.shortImageName = 'Enter Image';
               this.stops = new FormArray([], Validators.required);
-              this.stopsArrivalTimes = new FormArray([], Validators.required);
-              this.stopsDepartureTimes = new FormArray([], Validators.required);
+              this.stopsWaitingTimes = new FormArray([], Validators.required);
+              this.stopsTimesTilNextStop = new FormArray([], Validators.required);
               this.stopsHeadings = new FormArray([], Validators.required);
-              this.timesBetweenStations = new FormArray([], Validators.required);
+              
+              // this.stopsArrivalTimes = new FormArray([], Validators.required);
+              // this.stopsDepartureTimes = new FormArray([], Validators.required);
+              // this.timesBetweenStations = new FormArray([], Validators.required);
             },
             (error) => {
               this.gettingData = false;
