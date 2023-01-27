@@ -97,7 +97,7 @@ export class PassengerComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.selectedPassengerTrips = res.items;
-          this.modalService.open(modal, { size: 'md' });
+          this.modalService.open(modal, { size: 'lg' });
         },
         (error) => {
           this._responseHandler.HandelError(error);
@@ -110,7 +110,7 @@ export class PassengerComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.selectedPassengerPayments = res.items;
-          this.modalService.open(modal, { size: 'md' });
+          this.modalService.open(modal, { size: 'lg' });
         },
         (error) => {
           this._responseHandler.HandelError(error);
