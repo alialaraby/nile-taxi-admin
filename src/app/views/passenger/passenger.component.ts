@@ -1,9 +1,10 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Admin } from 'src/app/core/model/admin';
 import { Constant } from 'src/app/core/model/constant';
-import { UserType } from 'src/app/core/model/enums';
+import { ResponseActionType, UserType } from 'src/app/core/model/enums';
 import { IPassenger } from 'src/app/core/model/passenger';
 import { IPassengerTrip } from 'src/app/core/model/passenger-trip';
 import { IPaymentTransaction } from 'src/app/core/model/payment-transaction';
@@ -23,6 +24,8 @@ export class PassengerComponent implements OnInit {
   selectedPassenger: IPassenger;
   selectedPassengerTrips: IPassengerTrip[];
   selectedPassengerPayments: IPaymentTransaction[];
+  selectedPassengerToAddBalance: IPassenger;
+
   sharedUserData: Admin = new Admin();
   gettingData: boolean = true;
 
@@ -34,6 +37,8 @@ export class PassengerComponent implements OnInit {
   pageIndex: number = 1;
   pageSize: number = 10;
   totalCount: number = 0;
+
+  balanceControl = new FormControl('', Validators.required);
 
   constructor(
     private dataService: DataService,
@@ -106,6 +111,27 @@ export class PassengerComponent implements OnInit {
         (res: any) => {
           this.selectedPassengerPayments = res.items;
           this.modalService.open(modal, { size: 'md' });
+        },
+        (error) => {
+          this._responseHandler.HandelError(error);
+        }
+      );
+  }
+
+  openAddBalance(modal: any, passenger: IPassenger) {
+    this.balanceControl = new FormControl('', Validators.required);
+  
+    this.selectedPassengerToAddBalance = passenger;
+    this.modalService.open(modal, { size: 'md' });
+  }
+
+  addBalance(){
+    this.passengerService.add(Constant.ADMIN_ADD_PASSENGER_BALANCE, { passengerId: this.selectedPassengerToAddBalance._id, balance: this.balanceControl.value })
+      .subscribe(
+        (res: any) => {
+          this._responseHandler.HandleSuccess(res, ResponseActionType.Added);
+          this.getAll();
+          this.modalService.dismissAll();
         },
         (error) => {
           this._responseHandler.HandelError(error);

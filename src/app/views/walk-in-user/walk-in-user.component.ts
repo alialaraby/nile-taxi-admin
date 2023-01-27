@@ -157,4 +157,12 @@ export class WalkInUserComponent implements OnInit {
     return model;
   }
 
+  getTripCode(trip: any){
+    return trip ? trip.code : '';
+  }
+
+  getTripBoat(trip: any){
+    return (trip && trip.boat) ? trip.boat.boatName : '';
+  }
+
 }

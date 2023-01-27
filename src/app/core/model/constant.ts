@@ -81,5 +81,6 @@ export class Constant {
     public static GET_TRIPS_FOR_WALK_IN_USER = 'list-available-trips-for-walk-in-user';
 
     public static REGISTER_STUDENT = 'student-registration';
+    public static ADMIN_ADD_PASSENGER_BALANCE = 'admin-add-passenger-balance';
 
 }

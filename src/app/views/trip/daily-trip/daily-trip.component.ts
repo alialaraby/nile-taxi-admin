@@ -49,7 +49,7 @@ export class DailyTripComponent implements OnInit {
   totalCount: number = 0;
 
   pickupDateModel: NgbDateStruct;
-  pickupTime: NgbTimeStruct = { hour: 1, minute: 0, second: 0 };
+  pickupTime: NgbTimeStruct = { hour: 13, minute: 0, second: 0 };
 
   terminalDateModel: NgbDateStruct;
   terminalTime: NgbTimeStruct = { hour: 1, minute: 0, second: 0 };
@@ -233,7 +233,7 @@ export class DailyTripComponent implements OnInit {
       { name: 'Friday', value: Days.Friday, selected: false}, 
     ];
     this.selectedDays = [];
-    this.pickupTime = { hour: 1, minute: 0, second: 0 };
+    this.pickupTime = { hour: 13, minute: 0, second: 0 };
 
 
     if (itemToEdit) {

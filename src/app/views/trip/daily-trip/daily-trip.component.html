@@ -106,7 +106,10 @@
                                 <td>
                                     {{ item.status }}
                                 </td>
-                                <td>
+                                <td style="width: 225px;">
+                                    <!-- <div class="row">
+                                        <div class="col-3" *ngFor="let item of item.parentTrip.days">{{ formatTripDay(item) }}</div>
+                                    </div> -->
                                     - <span *ngFor="let item of item.parentTrip.days">{{ formatTripDay(item) }} - </span>
                                 </td>
                                 <td>
@@ -260,7 +263,7 @@
                     <div class="form-group col-md-4">
                         <label for="pickupTime">Start time</label>
                         <div class="input-group">
-                            <ngb-timepicker [(ngModel)]="pickupTime" formControlName="pickupTime"></ngb-timepicker>
+                            <ngb-timepicker [(ngModel)]="pickupTime" meridian="true" formControlName="pickupTime"></ngb-timepicker>
                         </div>
                     </div>
                 </div>
@@ -279,7 +282,7 @@
                     <div class="form-group col-md-4">
                         <label for="terminalTime">Terminal time</label>
                         <div class="input-group">
-                            <ngb-timepicker [(ngModel)]="terminalTime" formControlName="terminalTime"></ngb-timepicker>
+                            <ngb-timepicker [(ngModel)]="terminalTime"  formControlName="terminalTime"></ngb-timepicker>
                         </div>
                     </div>
                 </div> -->

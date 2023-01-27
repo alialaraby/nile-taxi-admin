@@ -53,10 +53,10 @@
                                     {{ item.walkInUserData.phone }}
                                 </td>
                                 <td>
-                                    {{ item.trip.code }}
+                                    {{ getTripCode(item.trip) }}
                                 </td>
                                 <td>
-                                    {{ item.trip.boat.boatName }}
+                                    {{ getTripBoat(item.trip) }}
                                 </td>
                                 <td>
                                     {{ item.numberOfSeats }}

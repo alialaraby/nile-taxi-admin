@@ -22,6 +22,13 @@
       </a>
     </li>
 
+    <li class="nav-item" *ngIf="sharedUserData.isWalkInAdmin" [ngClass]="{ 'active': passenger.isActive }">
+      <a class="nav-link" routerLink="/passenger" routerLinkActive #passenger="routerLinkActive">
+        <span class="menu-title">Passengers</span>
+        <i class="mdi mdi-account menu-icon"></i>
+      </a>
+    </li>
+
     <!-- Accounts -->
     <li class="nav-item" [ngClass]="{'active' : admin.isActive || corporateAccount.isActive}" *ngIf="isAuthorized()">
       <a class="nav-link" (click)="accountsCollapsed = !accountsCollapsed" [attr.aria-expanded]="accountsCollapsed" aria-controls="ui-basic">

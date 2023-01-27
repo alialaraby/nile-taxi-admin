@@ -97,6 +97,8 @@
                                 </td>
                                 <td *ngIf="!sharedUserData.isAnalystAdmin" style="display: inline-flex !important;">
                                     <button type="button" class="btn btn-warning btn-sm btn-p5 mt-2"
+                                        (click)="openAddBalance(addModal, item)">Wallet</button>
+                                    <button type="button" class="btn btn-warning btn-sm btn-p5 mt-2"
                                         (click)="openTrips(tripsModal, item)">Trips</button>
                                     <button type="button" class="btn btn-info btn-sm btn-p5 mt-2"
                                         (click)="openPayments(paymentsModal, item)">Transactions</button>
@@ -245,6 +247,38 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #addModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Wallet</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+
+            <p class="font-weight-bold text-center mb-0 text-gray">
+                {{ selectedPassengerToAddBalance.fullName }} - {{ selectedPassengerToAddBalance.phone }} 
+            </p>
+            <p class="font-weight-bold text-center">
+                {{ selectedPassengerToAddBalance.walletValue }} EGP
+            </p>
+
+            <div class="form-group">
+                <label for="balanceControl">Add To Wallet</label>
+                <input type="number" class="form-control form-control-lg" id="balanceControl" autocomplete="false" 
+                    [formControl]="balanceControl" placeholder="Enter balance amount.">
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="addBalance()" [disabled]="balanceControl.invalid">Add</button>
+                <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
+            </div>
         </div>
 
     </div>
