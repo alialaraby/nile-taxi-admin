@@ -49,4 +49,8 @@ export interface ITrip {
     terminalDateDay?: string;
     terminalDateHour?: string;
     terminalDateMinute?: string;
+
+    pickupHour?: string;
+    pickupMinute?: string;
+
 }

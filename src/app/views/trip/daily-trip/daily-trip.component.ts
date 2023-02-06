@@ -102,7 +102,7 @@ export class DailyTripComponent implements OnInit {
 
     this.tripService.getAll(Constant.GET_TRIP_ROUTES)
       .subscribe(
-        (res: any) => {
+        (res: any) => {      
           this.tripRoutes = res.items;
           this.tripRoutesToView = res.items;
         }
@@ -115,7 +115,6 @@ export class DailyTripComponent implements OnInit {
     }else{
       this.selectedDays.splice(this.selectedDays.findIndex(x => x == day.value), 1);
     }
-    console.log('days: ', this.selectedDays);
   }
 
   getInitialData() {
@@ -136,6 +135,8 @@ export class DailyTripComponent implements OnInit {
     this.tripService.getTrips(Constant.GET_TRIPS, types, pageIndex, pageSize, categoryId)
       .subscribe(
         (res: any) => {
+          console.log('resXX', res);
+
           this.trips = res.items;
           this.totalCount = res.count;
           this.gettingData = false;
@@ -235,12 +236,12 @@ export class DailyTripComponent implements OnInit {
     this.selectedDays = [];
     this.pickupTime = { hour: 13, minute: 0, second: 0 };
 
-
     if (itemToEdit) {
       let pickupDate = new Date(itemToEdit.pickupDate);
       let terminalDate = new Date(itemToEdit.terminalDate);
       this.pickupDateModel = { year: pickupDate.getFullYear(), month: pickupDate.getMonth() + 1, day: pickupDate.getDate() };
-      this.pickupTime = { hour: pickupDate.getHours(), minute: pickupDate.getMinutes(), second: 0 };
+      // this.pickupTime = { hour: pickupDate.getHours(), minute: pickupDate.getMinutes(), second: 0 };
+      this.pickupTime = { hour: +itemToEdit.pickupHour, minute: +itemToEdit.pickupMinute, second: 0 };
       this.terminalDateModel = { year: terminalDate.getFullYear(), month: terminalDate.getMonth() + 1, day: terminalDate.getDate() };
       this.terminalTime = { hour: terminalDate.getHours(), minute: terminalDate.getMinutes(), second: 0 };
       this.selectedStations = itemToEdit.stations;
@@ -358,21 +359,7 @@ export class DailyTripComponent implements OnInit {
         timeBetweenStations: sta.timeTilNextStop
       });      
     }
-    console.log('result', result);
     formData.append('stations', JSON.stringify(result));
-    
-    // formData.append('stations', JSON.stringify(
-    //   stations2.map((x, index) => { 
-    //     return { 
-    //       stationId: x.stop._id, 
-    //       order: index + 1,
-    //       arrivalTime: {hour: this.pickupTime.hour + x. , minute: x.arrivalTime.split(':')[1].toString()},
-    //       departureTime: {hour: x.departureTime.split(':')[0].toString(), minute: x.departureTime.split(':')[1].toString()},
-    //       stopHeadingId: x.stopHeading._id,
-    //       timeBetweenStations: x.timeBetweenStations
-    //     } 
-    //   })
-    // ));
 
     formData.append('pickupStation', stations2[0].stop._id);
     formData.append('terminalStation', stations2[stations2.length - 1].stop._id);
