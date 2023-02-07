@@ -24,11 +24,14 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Station
+                                    Name
                                 </th>
                                 <th>
-                                    Station Number
+                                    Name (Ar)
                                 </th>
+                                <!-- <th>
+                                    Station Number
+                                </th> -->
                                 <th>
                                     Zone
                                 </th>
@@ -49,8 +52,11 @@
                                     {{ item.name }}
                                 </td>
                                 <td>
-                                    {{ item.stationNumber }}
+                                    {{ item.nameAr }}
                                 </td>
+                                <!-- <td>
+                                    {{ item.stationNumber }}
+                                </td> -->
                                 <td>
                                     {{ item.zoneId }}
                                 </td>
@@ -93,10 +99,15 @@
                         formControlName="name" placeholder="Enter station name.">
                 </div>
                 <div class="form-group">
+                    <label for="nameAr">Station name (Arabic)</label>
+                    <input type="text" class="form-control form-control-lg" id="nameAr" autocomplete="false"
+                        formControlName="nameAr" placeholder="Enter station name in arabic.">
+                </div>
+                <!-- <div class="form-group">
                     <label for="stationNumber">Station number</label>
                     <input type="text" class="form-control form-control-lg" id="stationNumber" autocomplete="false"
                         formControlName="stationNumber" placeholder="Enter station number.">
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="zoneId">Station zone Id</label>
                     <select class="form-control" formControlName="zoneId">

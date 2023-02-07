@@ -14,6 +14,10 @@ export class SidebarComponent implements OnInit {
   public boatsCollapsed = false;
   public packagesCollapsed = false;
   public samplePagesCollapsed = false;
+  public listsCollapsed = false;
+  public operationCollapsed = false;
+  public planningCollapsed = false;
+  public passengersNCollapsed = false;
   
   sharedUserData: Admin = new Admin();
 

@@ -90,7 +90,8 @@ export class StationComponent implements OnInit {
   buildForm(itemToEdit?: IStation) {
     this.addEditForm = this.fb.group({
       name: [itemToEdit ? itemToEdit.name : '', Validators.required],
-      stationNumber: [itemToEdit ? itemToEdit.stationNumber : '', Validators.required],
+      nameAr: [itemToEdit ? itemToEdit.nameAr : '', Validators.required],
+      // stationNumber: [itemToEdit ? itemToEdit.stationNumber : '', Validators.required],
       zoneId: [itemToEdit ? itemToEdit.zoneId : '', Validators.required],
       longitude: [itemToEdit ? itemToEdit.location.coordinates[0] : '', Validators.required],
       latitude: [itemToEdit ? itemToEdit.location.coordinates[1] : '', Validators.required],
@@ -137,7 +138,8 @@ export class StationComponent implements OnInit {
     let model = {
       _id: this.stationToEditId ? this.stationToEditId : null,
       name: form.get('name').value,
-      stationNumber: form.get('stationNumber').value,
+      nameAr: form.get('nameAr').value,
+      // stationNumber: form.get('stationNumber').value,
       zoneId: form.get('zoneId').value,
       longitude: +form.get('longitude').value,
       latitude: +form.get('latitude').value,
