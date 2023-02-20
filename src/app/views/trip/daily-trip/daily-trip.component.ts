@@ -74,6 +74,8 @@ export class DailyTripComponent implements OnInit {
   ];
   selectedDays: number[] = [];
 
+  duplicating: boolean = false;
+
   constructor(
     private tripService: TripService,
     private sharedData: SharedDataService,
@@ -152,7 +154,7 @@ export class DailyTripComponent implements OnInit {
     this.gettingData = true;
     if (!this.addEditForm.invalid) {
       let model = this.getModelFromForm(this.addEditForm);
-      if (this.isEditItem) {
+      if(this.isEditItem && !this.duplicating) {
         this.tripService.update(Constant.UPDATE_TRIP, model)
           .subscribe(
             (res: any) => {
@@ -206,11 +208,17 @@ export class DailyTripComponent implements OnInit {
       );
   }
 
-  openAddModal(modal, itemToEdit: ITrip = null) {
+  openAddModal(modal, itemToEdit: ITrip = null, duplicate: boolean = false) {
+    this.duplicating = duplicate;
     if (itemToEdit) {
       this.isEditItem = true;
       this.tripToEditId = itemToEdit._id;
       this.tripToEditParentId = itemToEdit.parentTripId;
+      if(duplicate){
+        itemToEdit.code = itemToEdit.code.split('#days#')[0] + '-';
+      }else{
+        itemToEdit.code = itemToEdit.code.split('#days#')[0];
+      }
       this.buildForm(itemToEdit);
 
       // for (let i = 0; i < itemToEdit.stations.length; i++) {
