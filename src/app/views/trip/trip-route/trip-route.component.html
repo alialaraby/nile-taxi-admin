@@ -233,6 +233,10 @@
                     <button type="button" class="btn btn-warning btn-fw" (click)="addFormField()">Add Stop</button>
                 </div>
 
+                <p class="w-100 text-danger font-weight-bold" *ngIf="resError && resError.length > 0">
+                    Already exist: {{ resError }}
+                </p>
+
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success"
                         [disabled]="addEditForm.invalid || stops.invalid || stopsTimesTilNextStop.invalid || stopsWaitingTimes.invalid">Submit</button>

@@ -134,7 +134,9 @@
                     </div>
                 </ng-template>
 
-
+                <p class="w-100 text-danger font-weight-bold" *ngIf="resError && resError.length > 0">
+                    Already exist: {{ resError }}
+                </p>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" [disabled]="addEditForm.invalid">Submit</button>

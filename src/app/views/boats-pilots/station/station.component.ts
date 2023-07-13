@@ -31,6 +31,8 @@ export class StationComponent implements OnInit {
   pageSize: number = 10;
   totalCount: number = 0;
 
+  resError = '';
+
   constructor(
     private dataService: DataService,
     private sharedData: SharedDataService,
@@ -99,6 +101,8 @@ export class StationComponent implements OnInit {
   }
 
   add() {
+    this.resError = '';
+
     this.gettingData = true;
     if (!this.addEditForm.invalid) {
       let model = this.getModelFromForm(this.addEditForm);
@@ -111,9 +115,12 @@ export class StationComponent implements OnInit {
               this.modalService.dismissAll();
             },
             (error) => {
+              if(error.OriginalError.status && (error.OriginalError.status == 409 || error.OriginalError.status == 400)){
+                this.resError = error?.OriginalError?.error?.alreadyExistProps;
+              }
               this.gettingData = false;
               this._responseHandler.HandelError(error);
-              this.modalService.dismissAll();
+              // this.modalService.dismissAll();
             }
           );
       } else {
@@ -125,9 +132,12 @@ export class StationComponent implements OnInit {
               this.modalService.dismissAll();
             },
             (error) => {
+              if(error.OriginalError.status && (error.OriginalError.status == 409 || error.OriginalError.status == 400)){
+                this.resError = error?.OriginalError?.error?.alreadyExistProps;
+              }
               this.gettingData = false;
               this._responseHandler.HandelError(error);
-              this.modalService.dismissAll();
+              // this.modalService.dismissAll();
             }
           );
       }

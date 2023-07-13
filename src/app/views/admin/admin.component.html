@@ -84,6 +84,11 @@
             </button>
         </div>
         <div class="modal-body m-3">
+
+            <p class="w-100 text-danger font-weight-bold" *ngIf="resError && resError.length > 0">
+                Already exist: {{ resError }}
+            </p>
+
             <form [formGroup]="addEditForm" class="pt-3" (ngSubmit)="add()">
                 <div class="form-group">
                     <label for="fullName">Full name</label>

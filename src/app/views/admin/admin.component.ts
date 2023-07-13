@@ -24,6 +24,8 @@ export class AdminComponent implements OnInit {
   pageSize: number = 10;
   totalCount: number = 0;
 
+  resError = '';
+
   adminRoles = [AdminRoles.SuperAdmin, AdminRoles.Admin, AdminRoles.CorporateAdmin, AdminRoles.Analyst, AdminRoles.WalkInAdmin];
 
   constructor(
@@ -83,6 +85,7 @@ export class AdminComponent implements OnInit {
   }
 
   add() {
+    this.resError = '';
     this.gettingData = true;
     if (!this.addEditForm.invalid) {
       this.dataService.add(Constant.ADD_ADMIN, this.addEditForm.value)
@@ -93,9 +96,13 @@ export class AdminComponent implements OnInit {
             this.modalService.dismissAll();
           },
           (error) => {
+            if(error.OriginalError.status && error.OriginalError.status == 409){
+              this.resError = error?.OriginalError?.error?.alreadyExistProps;
+            }
+            
             this.gettingData = false;
             this._responseHandler.HandelError(error);
-            this.modalService.dismissAll();
+            // this.modalService.dismissAll();
           }
         );
     }

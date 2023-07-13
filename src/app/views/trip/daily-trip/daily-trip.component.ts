@@ -75,7 +75,7 @@ export class DailyTripComponent implements OnInit {
   selectedDays: number[] = [];
 
   duplicating: boolean = false;
-
+  resError = '';
   constructor(
     private tripService: TripService,
     private sharedData: SharedDataService,
@@ -137,8 +137,6 @@ export class DailyTripComponent implements OnInit {
     this.tripService.getTrips(Constant.GET_TRIPS, types, pageIndex, pageSize, categoryId)
       .subscribe(
         (res: any) => {
-          console.log('resXX', res);
-
           this.trips = res.items;
           this.totalCount = res.count;
           this.gettingData = false;
@@ -151,6 +149,7 @@ export class DailyTripComponent implements OnInit {
   }
 
   add() {
+    this.resError = '';
     this.gettingData = true;
     if (!this.addEditForm.invalid) {
       let model = this.getModelFromForm(this.addEditForm);
@@ -166,9 +165,12 @@ export class DailyTripComponent implements OnInit {
               // this.stations2 = new FormArray([], Validators.required);
             },
             (error) => {
+              if(error.OriginalError.status && (error.OriginalError.status == 409 || error.OriginalError.status == 400)){
+                this.resError = error?.OriginalError?.error?.alreadyExistProps;
+              }
               this.gettingData = false;
               this._responseHandler.HandelError(error);
-              this.modalService.dismissAll();
+              // this.modalService.dismissAll();
             }
           );
       } else {
@@ -183,9 +185,12 @@ export class DailyTripComponent implements OnInit {
               // this.stations2 = new FormArray([], Validators.required);
             },
             (error) => {
+              if(error.OriginalError.status && (error.OriginalError.status == 409 || error.OriginalError.status == 400)){
+                this.resError = error?.OriginalError?.error?.alreadyExistProps;
+              }
               this.gettingData = false;
               this._responseHandler.HandelError(error);
-              this.modalService.dismissAll();
+              // this.modalService.dismissAll();
             }
           );
       }
