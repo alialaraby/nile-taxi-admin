@@ -84,6 +84,7 @@
                                     <span [ngSwitch]="item.status">
                                         <label *ngSwitchCase="'accepted'" class="badge badge-success">Accepted</label>
                                         <label *ngSwitchCase="'rejected'" class="badge badge-danger">Rejected</label>
+                                        <label *ngSwitchCase="'cancelled'" class="badge badge-danger">Cancelled</label>
                                         <label *ngSwitchDefault class="badge badge-warning">Pending</label>
                                     </span>
                                 </td>
@@ -103,10 +104,10 @@
                                 </td>
                                 <td *ngIf="!sharedUserData.isAnalystAdmin">
                                     <button type="button" class="btn btn-warning btn-sm btn-p8"
-                                        [disabled]="['accepted', 'rejected'].includes(item.status)"
+                                        [disabled]="['accepted', 'rejected', 'cancelled'].includes(item.status)"
                                         (click)="openApproveModal(approveModal, item)">Approve</button>
                                     <button type="button" class="btn btn-danger btn-sm btn-p8"
-                                        [disabled]="['accepted', 'rejected'].includes(item.status)"
+                                        [disabled]="['accepted', 'rejected', 'cancelled'].includes(item.status)"
                                         (click)="openRejectModal(rejectModal, item)">Reject</button>
                                 </td>
                             </tr>
@@ -133,7 +134,7 @@
             </button>
         </div>
         <div class="modal-body m-3">
-            <span class="text-danger font-weight-bold">Reject</span> fuel request.
+            <span class="text-danger font-weight-bold">Reject</span> request.
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" (click)="rejectRequest()">Reject</button>
