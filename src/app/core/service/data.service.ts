@@ -16,7 +16,7 @@ export class DataService {
 
     constructor(private http: HttpClient) { }
 
-    public getAll(url: string, pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
+    public getAll(url: string, pageIndex: number = 0, pageSize: number = 100): Observable<Object> {
         return this.http.post(environment.baseUrl + url, { pageIndex, pageSize })
             .pipe(catchError(this.handleError));
     }
@@ -51,7 +51,7 @@ export class DataService {
             .pipe(catchError(this.handleError));
     }
 
-    public getCorporateMembers(url: string, _id: string, pageIndex: number = 0, pageSize: number = 10): Observable<Object> {
+    public getCorporateMembers(url: string, _id: string, pageIndex: number = 0, pageSize: number = 100): Observable<Object> {
         return this.http.post(environment.baseUrl + url, { _id, pageIndex, pageSize })
             .pipe(catchError(this.handleError));
     }
