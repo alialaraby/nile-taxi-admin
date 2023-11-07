@@ -177,7 +177,6 @@ export class TripRouteComponent implements OnInit {
     // let stopsArrivalTimes = this.extractData(form.get('stopsArrivalTimes').value) as any;
     // let stopsDepartureTimes = this.extractData(form.get('stopsDepartureTimes').value) as any;
     // let timesBetweenStations = this.extractData(form.get('timesBetweenStations').value);
-
     let stopsData = [];
     // let nowDate = new Date();
     
@@ -187,15 +186,17 @@ export class TripRouteComponent implements OnInit {
         order: i+1,
         stopHeading: stopsHeadings[i],
         waitingTime: stopsWaitingTimes[i],
-        timeTilNextStop: stopsTimesTilNextStop[i],
-
-        // arrivalTime: stopsArrivalTimes[i],
-        // departureTime: stopsDepartureTimes[i],
-        // arrivalTime: {year: nowDate.getFullYear(), month: nowDate.getMonth(), day: nowDate.getDate(), hour: stopsArrivalTimes[i].hour, minute: stopsArrivalTimes[i].minute},
-        // departureTime: {year: nowDate.getFullYear(), month: nowDate.getMonth(), day: nowDate.getDate(), hour: stopsDepartureTimes[i].hour, minute: stopsDepartureTimes[i].minute},
-        // timeBetweenStations: timesBetweenStations[i],
+        timeTilNextStop: stopsTimesTilNextStop[i]
       })
     }
+
+    stopsData.push({
+      stop: stopsHeadings[stops.length - 1],
+      order: stops.length,
+      stopHeading: stopsHeadings[stops.length - 1],
+      waitingTime: 0,
+      timeTilNextStop: 0
+    })
     formData.append('stops', JSON.stringify(stopsData));
 
     return formData;
