@@ -69,11 +69,15 @@ export class PriceMatrixComponent implements OnInit {
     let priceM: IPriceMatrix;
     let oldValue;
     if (row == 4) {
-      priceM = this.priceMatrix.find(x => x.name == 'zone 5A');
+      priceM = this.priceMatrix.find(x => x.name == 'zone 5a');
       oldValue = priceM.toZonesPrices[column];
       priceM.toZonesPrices[column] = value;
     } else if (row == 5) {
-      priceM = this.priceMatrix.find(x => x.name == 'zone 5B');
+      priceM = this.priceMatrix.find(x => x.name == 'zone 5b');
+      oldValue = priceM.toZonesPrices[column];
+      priceM.toZonesPrices[column] = value;
+    } else if (row == 6) {
+      priceM = this.priceMatrix.find(x => x.name == `zone 6`);
       oldValue = priceM.toZonesPrices[column];
       priceM.toZonesPrices[column] = value;
     } else {
