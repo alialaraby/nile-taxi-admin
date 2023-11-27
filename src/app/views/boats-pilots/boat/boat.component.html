@@ -254,132 +254,159 @@
         </div>
         <div class="modal-body m-3">
             <form [formGroup]="addEditForm" class="pt-3" (ngSubmit)="add()">
-                <div class="form-group">
-                    <label for="boatName">Boat name</label>
-                    <input type="text" class="form-control form-control-lg" id="boatName" autocomplete="false"
-                        formControlName="boatName" placeholder="Enter boat name.">
+                
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="boatName">Boat name</label>
+                        <input type="text" class="form-control form-control-lg" id="boatName" autocomplete="false"
+                            formControlName="boatName" placeholder="Enter boat name.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="serial">Serial</label>
+                        <input type="text" class="form-control form-control-lg" id="serial" autocomplete="false"
+                            formControlName="serial" placeholder="Enter serial.">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="serial">Serial</label>
-                    <input type="text" class="form-control form-control-lg" id="serial" autocomplete="false"
-                        formControlName="serial" placeholder="Enter serial.">
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="model">Model</label>
+                        <input type="text" class="form-control form-control-lg" id="model" autocomplete="false"
+                            formControlName="model" placeholder="Enter model.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="capacity">Capacity</label>
+                        <input type="number" class="form-control form-control-lg" id="capacity" autocomplete="false"
+                            formControlName="capacity" placeholder="Enter capacity.">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="model">Model</label>
-                    <input type="text" class="form-control form-control-lg" id="model" autocomplete="false"
-                        formControlName="model" placeholder="Enter model.">
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="hoursNeededForMaintenance">Hours needed for maintenance</label>
+                        <input type="number" class="form-control form-control-lg" id="hoursNeededForMaintenance"
+                            autocomplete="false" formControlName="hoursNeededForMaintenance"
+                            placeholder="Enter maintenance hours.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="assignedPilotId">Skipper</label>
+                        <select class="form-control" formControlName="assignedPilotId">
+                            <option value="" selected>Skipper</option>
+                            <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="fuelCapacity">Fuel capacity</label>
+                        <input type="number" class="form-control form-control-lg" id="fuelCapacity" autocomplete="false"
+                            formControlName="fuelCapacity" placeholder="Enter fuel capacity.">
+                    </div>
+    
+                    <div class="form-group col-6">
+                        <label for="fuelType">Fuel type</label>
+                        <select class="form-control" formControlName="fuelType">
+                            <option value="" selected>Fuel Type</option>
+                            <option *ngFor="let type of fuelTypes" [value]="type">{{ type }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="expectedFuelConsumption">Expected fuel consumption</label>
+                        <input type="number" class="form-control form-control-lg" id="expectedFuelConsumption" autocomplete="false"
+                            formControlName="expectedFuelConsumption" placeholder="Enter expectedFuelConsumption.">
+                    </div>
+    
+                    <div class="form-group col-6">
+                        <label for="type">type</label>
+                        <input type="text" class="form-control form-control-lg" id="type" autocomplete="false"
+                            formControlName="type" placeholder="Enter type.">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="modelYear">Model year</label>
+                        <input type="text" class="form-control form-control-lg" id="modelYear" autocomplete="false"
+                            formControlName="modelYear" placeholder="Enter modelYear.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="launchDate">Launch date</label>
+                        <input type="date" class="form-control form-control-lg" id="launchDate" autocomplete="false"
+                            formControlName="launchDate" placeholder="Enter launchDate.">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="length">length</label>
+                        <input type="number" class="form-control form-control-lg" id="length" autocomplete="false"
+                            formControlName="length" placeholder="Enter length.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="beam">beam</label>
+                        <input type="text" class="form-control form-control-lg" id="beam" autocomplete="false"
+                            formControlName="beam" placeholder="Enter beam.">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="license">license</label>
+                        <input type="text" class="form-control form-control-lg" id="license" autocomplete="false"
+                            formControlName="license" placeholder="Enter license.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="licenseRenewalDate">License renewal date</label>
+                        <input type="date" class="form-control form-control-lg" id="licenseRenewalDate" autocomplete="false"
+                            formControlName="licenseRenewalDate" placeholder="Enter licenseRenewalDate.">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="engineBrand">Engine brand</label>
+                        <input type="text" class="form-control form-control-lg" id="engineBrand" autocomplete="false"
+                            formControlName="engineBrand" placeholder="Enter engineBrand.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="engineModel">Engine model</label>
+                        <input type="text" class="form-control form-control-lg" id="engineModel" autocomplete="false"
+                            formControlName="engineModel" placeholder="Enter engineModel.">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="engineModelYear">Engine model year</label>
+                        <input type="text" class="form-control form-control-lg" id="engineModelYear" autocomplete="false"
+                            formControlName="engineModelYear" placeholder="Enter engineModelYear.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="engineSerial">Engine serial</label>
+                        <input type="text" class="form-control form-control-lg" id="engineSerial" autocomplete="false"
+                            formControlName="engineSerial" placeholder="Enter engineSerial.">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="engineHours">Engine hours</label>
+                        <input type="number" class="form-control form-control-lg" id="engineHours" autocomplete="false"
+                            formControlName="engineHours" placeholder="Enter engineHours.">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="topSpeed">Top speed</label>
+                        <input type="number" class="form-control form-control-lg" id="topSpeed" autocomplete="false"
+                            formControlName="topSpeed" placeholder="Enter topSpeed.">
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="capacity">Capacity</label>
-                    <input type="number" class="form-control form-control-lg" id="capacity" autocomplete="false"
-                        formControlName="capacity" placeholder="Enter capacity.">
-                </div>
-
-                <div class="form-group">
-                    <label for="hoursNeededForMaintenance">hours Needed For Maintenance</label>
-                    <input type="number" class="form-control form-control-lg" id="hoursNeededForMaintenance"
-                        autocomplete="false" formControlName="hoursNeededForMaintenance"
-                        placeholder="Enter maintenance hours.">
-                </div>
-
-                <div class="form-group">
-                    <label for="assignedPilotId">Skipper</label>
-                    <select class="form-control" formControlName="assignedPilotId">
-                        <option value="" selected>Skipper</option>
-                        <option *ngFor="let pilot of pilots" [value]="pilot._id">{{ pilot.fullName }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="fuelCapacity">Fuel capacity</label>
-                    <input type="number" class="form-control form-control-lg" id="fuelCapacity" autocomplete="false"
-                        formControlName="fuelCapacity" placeholder="Enter fuel capacity.">
-                </div>
-
-                <div class="form-group">
-                    <label for="fuelType">Fuel type</label>
-                    <select class="form-control" formControlName="fuelType">
-                        <option value="" selected>Fuel Type</option>
-                        <option *ngFor="let type of fuelTypes" [value]="type">{{ type }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="expectedFuelConsumption">expectedFuelConsumption</label>
-                    <input type="number" class="form-control form-control-lg" id="expectedFuelConsumption" autocomplete="false"
-                        formControlName="expectedFuelConsumption" placeholder="Enter expectedFuelConsumption.">
-                </div>
-
-                <div class="form-group">
-                    <label for="type">type</label>
-                    <input type="text" class="form-control form-control-lg" id="type" autocomplete="false"
-                        formControlName="type" placeholder="Enter type.">
-                </div>
-                <div class="form-group">
-                    <label for="modelYear">modelYear</label>
-                    <input type="text" class="form-control form-control-lg" id="modelYear" autocomplete="false"
-                        formControlName="modelYear" placeholder="Enter modelYear.">
-                </div>
-                <div class="form-group">
-                    <label for="launchDate">launchDate</label>
-                    <input type="date" class="form-control form-control-lg" id="launchDate" autocomplete="false"
-                        formControlName="launchDate" placeholder="Enter launchDate.">
-                </div>
-
-                <div class="form-group">
-                    <label for="length">length</label>
-                    <input type="number" class="form-control form-control-lg" id="length" autocomplete="false"
-                        formControlName="length" placeholder="Enter length.">
-                </div>
-                <div class="form-group">
-                    <label for="beam">beam</label>
-                    <input type="text" class="form-control form-control-lg" id="beam" autocomplete="false"
-                        formControlName="beam" placeholder="Enter beam.">
-                </div>
-                <div class="form-group">
-                    <label for="license">license</label>
-                    <input type="text" class="form-control form-control-lg" id="license" autocomplete="false"
-                        formControlName="license" placeholder="Enter license.">
-                </div>
-                <div class="form-group">
-                    <label for="licenseRenewalDate">licenseRenewalDate</label>
-                    <input type="date" class="form-control form-control-lg" id="licenseRenewalDate" autocomplete="false"
-                        formControlName="licenseRenewalDate" placeholder="Enter licenseRenewalDate.">
-                </div>
-
-                <div class="form-group">
-                    <label for="engineBrand">engineBrand</label>
-                    <input type="text" class="form-control form-control-lg" id="engineBrand" autocomplete="false"
-                        formControlName="engineBrand" placeholder="Enter engineBrand.">
-                </div>
-                <div class="form-group">
-                    <label for="engineModel">engineModel</label>
-                    <input type="text" class="form-control form-control-lg" id="engineModel" autocomplete="false"
-                        formControlName="engineModel" placeholder="Enter engineModel.">
-                </div>
-                <div class="form-group">
-                    <label for="engineModelYear">engineModelYear</label>
-                    <input type="text" class="form-control form-control-lg" id="engineModelYear" autocomplete="false"
-                        formControlName="engineModelYear" placeholder="Enter engineModelYear.">
-                </div>
-                <div class="form-group">
-                    <label for="engineSerial">engineSerial</label>
-                    <input type="text" class="form-control form-control-lg" id="engineSerial" autocomplete="false"
-                        formControlName="engineSerial" placeholder="Enter engineSerial.">
-                </div>
-                <div class="form-group">
-                    <label for="engineHours">engineHours</label>
-                    <input type="number" class="form-control form-control-lg" id="engineHours" autocomplete="false"
-                        formControlName="engineHours" placeholder="Enter engineHours.">
-                </div>
-                <div class="form-group">
-                    <label for="topSpeed">topSpeed</label>
-                    <input type="number" class="form-control form-control-lg" id="topSpeed" autocomplete="false"
-                        formControlName="topSpeed" placeholder="Enter topSpeed.">
-                </div>
-                <div class="form-group">
-                    <label for="averageSpeed">averageSpeed</label>
+                    <label for="averageSpeed">Average speed</label>
                     <input type="number" class="form-control form-control-lg" id="averageSpeed" autocomplete="false"
                         formControlName="averageSpeed" placeholder="Enter averageSpeed.">
                 </div>

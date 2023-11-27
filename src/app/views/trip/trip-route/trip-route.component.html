@@ -126,7 +126,7 @@
                 <div class="row ml-3" style="width: 105%;">
                     <div class="form-group col-3 px-0">
                         <ng-container formArrayName="stops">
-                            <div class="row m-0 w-100" *ngFor="let item of stops.controls; index as i">
+                            <div class="row m-0 w-100 my-1" *ngFor="let item of stops.controls; index as i">
                                 <label for="stops" class="d-block w-100">Stop - {{ i + 1 }} <span
                                         class="text-danger">*</span></label>
                                 <div class="row w-100 m-0 mb-2">
@@ -192,7 +192,7 @@
 
                     <div class="form-group col-3 px-0">
                         <ng-container formArrayName="stopsHeadings">
-                            <div class="row mt-1" *ngFor="let item of stopsHeadings.controls; index as i">
+                            <div class="row mt-1 mb-2" *ngFor="let item of stopsHeadings.controls; index as i">
                                 <div class="col-9 px-0">
                                     <label>Stop - {{ i + 1 }} - Heading <span class="text-danger">*</span></label>
                                     <div class="input-group">

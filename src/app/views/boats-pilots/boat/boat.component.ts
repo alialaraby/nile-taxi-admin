@@ -134,7 +134,7 @@ export class BoatComponent implements OnInit {
       this.isEditItem = false;
       this.buildForm();
     }
-    this.modalService.open(modal);
+    this.modalService.open(modal, {size: 'lg'});
   }
 
   openDeleteItem(modal: any, item: IBoat) {
