@@ -4,7 +4,7 @@ import { IStation } from "./station";
 
 export interface IRequestedTrip {
     _id: string;
-    passenger: IPassenger;
+    passenger?: IPassenger;
     pickupStation: IStation;
     terminalStation: IStation;
     numberOfSeats: number;
@@ -15,4 +15,6 @@ export interface IRequestedTrip {
     isDeleted: boolean;
     isCancelled: boolean;
     createdAt: Date;
+
+    reservations?: any[];
 }

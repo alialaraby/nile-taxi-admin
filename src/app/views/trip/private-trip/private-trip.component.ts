@@ -25,7 +25,7 @@ export class PrivateTripComponent implements OnInit {
   // selectedPilotId: string = '';
   selectedBoatId: string = '';
   selectedPrice: string = '';
-  requestedTrips: IRequestedTrip | IPoolingTripRequest[] = [];
+  requestedTrips: IRequestedTrip[] | IPoolingTripRequest[] = [];
   selectedTripDetails: IRequestedTrip | IPoolingTripRequest;
 
   sharedUserData: Admin = new Admin();
@@ -207,12 +207,9 @@ export class PrivateTripComponent implements OnInit {
     return poolingRequest.reservations.find(x => x.price <= 0) != undefined ? true : false;
   }
 
-  approvePoolingRequest(poolingRequest: IPoolingTripRequest, selectedBoatId: string){
-    console.log({
-      poolingRequest, selectedBoatId, selectedTripDetails: this.selectedTripDetails
-    });
+  approvePoolingRequest(poolingRequestId: string, selectedBoatId: string){
     this.sendingRequest = true;
-    this.requestedTripService.approvePoolingRequest(Constant.APPROVE_POOLING_REQUEST, poolingRequest._id, selectedBoatId, this.selectedTripDetails)
+    this.requestedTripService.approvePoolingRequest(Constant.APPROVE_POOLING_REQUEST, poolingRequestId, selectedBoatId, this.selectedTripDetails)
       .subscribe(
         (res: any) => {
           this.sendingRequest = false;
