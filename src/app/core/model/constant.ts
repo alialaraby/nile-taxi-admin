@@ -44,6 +44,8 @@ export class Constant {
     public static GET_REQUESTED_TRIPS = 'get-trip-requests';
     public static APPROVE_REQUESTED_TRIP = 'accept-trip-request';
     public static REJECT_REQUESTED_TRIP = 'reject-trip-request';
+    public static APPROVE_POOLING_REQUEST = 'accept-pooling-request';
+    public static REJECT_POOLING_REQUEST = 'reject-pooling-request';
 
     public static ADD_PROMOCODE = 'add-promocode';
     public static UPDATE_PROMOCODE = 'update-promocode';

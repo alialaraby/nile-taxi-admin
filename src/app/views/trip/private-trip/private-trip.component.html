@@ -16,7 +16,7 @@
                     <div class="form-group col-md-4">
                         <label for="code">Select Type</label>
                         <select class="form-control" (change)="filterTypes($event.target.value)">
-                            <option value="" [selected]="selectedTypes.length > 1">Trip Type</option>
+                            <!-- <option value="" [selected]="selectedTypes.length > 1">Trip Type</option> -->
                             <option *ngFor="let type of tripTypes" [value]="type">{{ type }}</option>
                         </select>
                     </div>
@@ -37,88 +37,175 @@
 
                 <empty-list *ngIf="requestedTrips.length <= 0"></empty-list>
 
-                <!-- Table -->
-                <div class="table-responsive" *ngIf="requestedTrips.length > 0">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Passenger
-                                </th>
-                                <th>
-                                    From/To
-                                </th>
-                                <th>
-                                    Seats
-                                </th>
-                                <th>
-                                    Status
-                                </th>
-                                <th>
-                                    Type
-                                </th>
-                                <th>
-                                    Round Trip
-                                </th>
-                                <th>
-                                    Creation Date
-                                </th>
-                                <th *ngIf="!sharedUserData.isAnalystAdmin">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of requestedTrips">
-                                <td>
-                                    {{ item.passenger.fullName }}
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
-                                        (click)="openTripDetails(moreModal, item)">Details</button>
-                                </td>
-                                <td>
-                                    {{ item.numberOfSeats }}
-                                </td>
-                                <td>
-                                    <span [ngSwitch]="item.status">
-                                        <label *ngSwitchCase="'accepted'" class="badge badge-success">Accepted</label>
-                                        <label *ngSwitchCase="'rejected'" class="badge badge-danger">Rejected</label>
-                                        <label *ngSwitchCase="'cancelled'" class="badge badge-danger">Cancelled</label>
-                                        <label *ngSwitchDefault class="badge badge-warning">Pending</label>
-                                    </span>
-                                </td>
-                                <td>
-                                    {{ item.type }}
-                                </td>
-                                <td>
-                                    <ng-container *ngIf="item.isRoundTrip; else elseNotRoundTripTemplate">
-                                        <label class="badge badge-success">YES</label>
-                                    </ng-container>
-                                    <ng-template #elseNotRoundTripTemplate>
-                                        <label class="badge badge-danger">NO</label>
-                                    </ng-template>
-                                </td>
-                                <td>
-                                    {{ item.createdAt | date:'mediumDate' }}
-                                </td>
-                                <td *ngIf="!sharedUserData.isAnalystAdmin">
-                                    <button type="button" class="btn btn-warning btn-sm btn-p8"
-                                        [disabled]="['accepted', 'rejected', 'cancelled'].includes(item.status)"
-                                        (click)="openApproveModal(approveModal, item)">Approve</button>
-                                    <button type="button" class="btn btn-danger btn-sm btn-p8"
-                                        [disabled]="['accepted', 'rejected', 'cancelled'].includes(item.status)"
-                                        (click)="openRejectModal(rejectModal, item)">Reject</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <!-- Private Table -->
+                <ng-container *ngIf="selectedType == typeEnum.Private; else elseTemplate">
+                    <div class="table-responsive" *ngIf="requestedTrips.length > 0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Passenger
+                                    </th>
+                                    <th>
+                                        From/To
+                                    </th>
+                                    <th>
+                                        Seats
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Type
+                                    </th>
+                                    <th>
+                                        Round Trip
+                                    </th>
+                                    <th>
+                                        Creation Date
+                                    </th>
+                                    <th *ngIf="!sharedUserData.isAnalystAdmin">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of requestedTrips">
+                                    <td>
+                                        {{ item.passenger.fullName }}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
+                                            (click)="openTripDetails(moreModal, item)">Details</button>
+                                    </td>
+                                    <td>
+                                        {{ item.numberOfSeats }}
+                                    </td>
+                                    <td>
+                                        <span [ngSwitch]="item.status">
+                                            <label *ngSwitchCase="'accepted'" class="badge badge-success">Accepted</label>
+                                            <label *ngSwitchCase="'rejected'" class="badge badge-danger">Rejected</label>
+                                            <label *ngSwitchCase="'cancelled'" class="badge badge-danger">Cancelled</label>
+                                            <label *ngSwitchDefault class="badge badge-warning">Pending</label>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{ item.type }}
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="item.isRoundTrip; else elseNotRoundTripTemplate">
+                                            <label class="badge badge-success">YES</label>
+                                        </ng-container>
+                                        <ng-template #elseNotRoundTripTemplate>
+                                            <label class="badge badge-danger">NO</label>
+                                        </ng-template>
+                                    </td>
+                                    <td>
+                                        {{ item.createdAt | date:'mediumDate' }}
+                                    </td>
+                                    <td *ngIf="!sharedUserData.isAnalystAdmin">
+                                        <button type="button" class="btn btn-warning btn-sm btn-p8"
+                                            [disabled]="['accepted', 'rejected', 'cancelled'].includes(item.status)"
+                                            (click)="openApproveModal(approveModal, item)">Approve</button>
+                                        <button type="button" class="btn btn-danger btn-sm btn-p8"
+                                            [disabled]="['accepted', 'rejected', 'cancelled'].includes(item.status)"
+                                            (click)="openRejectModal(rejectModal, item)">Reject</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                    <ngb-pagination class="d-flex mt-4 justify-content-center pagination-warning"
+                        (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize"
+                        [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
+                </ng-container>
+                <!-- Pooling Table -->
+                <ng-template #elseTemplate>
+                    <div class="table-responsive" *ngIf="requestedTrips.length > 0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Pickup
+                                    </th>
+                                    <th>
+                                        Terminal
+                                    </th>
+                                    <th>
+                                        Pickup Date
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Total Seats
+                                    </th>
+                                    <th>
+                                        Reservations
+                                    </th>
+                                    <th>
+                                        Creation Date
+                                    </th>
+                                    <th *ngIf="!sharedUserData.isAnalystAdmin">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of requestedTrips">
+                                    <td>
+                                        {{ item.pickupStation.name }}
+                                    </td>
+                                    <td>
+                                        {{ item.terminalStation.name }}
+                                    </td>
+                                    <td>
+                                        {{ item.pickupDate | date: 'MMM d, y, h:mm a' }}
+                                    </td>
+                                    <td>
+                                        <span [ngSwitch]="item.status">
+                                            <label *ngSwitchCase="'accepted'" class="badge badge-success">Accepted</label>
+                                            <label *ngSwitchCase="'rejected'" class="badge badge-danger">Rejected</label>
+                                            <label *ngSwitchCase="'cancelled'" class="badge badge-danger">Cancelled</label>
+                                            <label *ngSwitchDefault class="badge badge-warning">Pending</label>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{ item.totalSeats }}
+                                    </td>
+                                    <td>
+                                        {{ item.reservations.length }} Reservations
+                                        <br>
+                                        <button type="button" class="btn btn-outline-info btn-sm btn-p8" *ngIf="item"
+                                            (click)="openReservationsDetails(reservationsModal, item)">Details</button>
+                                    </td>
+                                    <!-- <td>
+                                        <ng-container *ngIf="item.isRoundTrip; else elseNotRoundTripTemplate">
+                                            <label class="badge badge-success">YES</label>
+                                        </ng-container>
+                                        <ng-template #elseNotRoundTripTemplate>
+                                            <label class="badge badge-danger">NO</label>
+                                        </ng-template>
+                                    </td> -->
+                                    <td>
+                                        {{ item.createdAt | date:'mediumDate' }}
+                                    </td>
+                                    <td *ngIf="!sharedUserData.isAnalystAdmin">
+                                        <button type="button" class="btn btn-warning btn-sm btn-p8"
+                                            [disabled]="['accepted', 'rejected', 'cancelled'].includes(item.status)"
+                                            (click)="openReservationsDetails(reservationsModal, item)">Actions</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                    <ngb-pagination class="d-flex mt-4 justify-content-center pagination-warning"
+                        (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize"
+                        [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
+                </ng-template>                
 
-                <!-- Pagination -->
-                <ngb-pagination class="d-flex mt-4 justify-content-center pagination-warning"
-                    (pageChange)="pageChange($event)" [collectionSize]="totalCount" [maxSize]="5" [pageSize]="pageSize"
-                    [page]="pageIndex" aria-label="Default pagination"></ngb-pagination>
             </div>
         </div>
     </div>
@@ -137,8 +224,10 @@
             <span class="text-danger font-weight-bold">Reject</span> request.
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="rejectRequest()">Reject</button>
+            <button type="button" class="btn btn-primary" (click)="rejectRequest()" [disabled]="sendingRequest">Reject</button>
             <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+
+            <p class="w-100 font-weight-bold my-3 text-center" *ngIf="sendingRequest">Updating...</p>
         </div>
     </div>
 </ng-template>
@@ -169,6 +258,8 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" [disabled]="sendingRequest" (click)="approveRequest()">Approve</button>
             <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+
+            <p class="w-100 font-weight-bold my-3 text-center" *ngIf="sendingRequest">Updating...</p>
         </div>
     </div>
 </ng-template>
@@ -200,6 +291,68 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #reservationsModal let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content p-3">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Reservations details</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body m-3">
+            
+            <div class="row">
+                <div class="form-group w-100">
+                    <label for="boat">Choose Boat</label>
+                    <select class="form-control" #poolingBoat>
+                        <!-- <option value="" selected>Boat</option> -->
+                        <option *ngFor="let boat of boats" [value]="boat._id">{{ boat.boatName }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive" *ngIf="selectedTripDetails.reservations && selectedTripDetails.reservations.length > 0">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Passenger
+                            </th>
+                            <th>
+                                Seats
+                            </th>
+                            <th>
+                                price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of selectedTripDetails.reservations">
+                            <td style="width: 50%;">
+                                {{ item.passenger.fullName }}
+                            </td>
+                            <td>
+                                {{ item.numberOfSeats }}
+                            </td>
+                            <td>
+                                <input type="number" [value]="item.price" (keyup)="setReservationPrice(item._id, price.value)" #price class="form-control form-control-lg" id="price" autocomplete="false" placeholder="Enter Price.">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" [disabled]="checkMissingPrices(selectedTripDetails) || ['accepted', 'rejected', 'cancelled'].includes(selectedTripDetails.status) || sendingRequest" (click)="approvePoolingRequest(selectedTripDetails._id, poolingBoat.value)">Approve</button>
+            <button type="button" class="btn btn-danger" [disabled]="['accepted', 'rejected', 'cancelled'].includes(selectedTripDetails.status) || sendingRequest" (click)="rejectPoolingRequest(selectedTripDetails._id)">Reject</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>
+
+            <p class="w-100 font-weight-bold my-3 text-center" *ngIf="sendingRequest">Updating...</p>
         </div>
 
     </div>
